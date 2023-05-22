@@ -1,0 +1,40 @@
+import java.util.*;
+
+public class FlopCombinationsWithHoleCards {
+
+    private static final List<String> RANKS = Arrays.asList("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
+    private static final List<String> SUITS = Arrays.asList("c", "d", "h", "s");
+
+    public static void main(String[] args) {
+        FlopCombinationsWithHoleCards flopCombinations = new FlopCombinationsWithHoleCards();
+        List<String> deck = flopCombinations.generateDeck();
+        List<List<String>> combinations = flopCombinations.generateFlopAndHoleCardCombinations(deck);
+        System.out.println("Total combinations: " + combinations.size());
+    }
+
+    private List<String> generateDeck() {
+        List<String> deck = new ArrayList<>();
+        for (String rank : RANKS) {
+            for (String suit : SUITS) {
+                deck.add(rank + suit);
+            }
+        }
+        return deck;
+    }
+
+    private List<List<String>> generateFlopAndHoleCardCombinations(List<String> deck) {
+        List<List<String>> combinations = new ArrayList<>();
+        for (int i = 0; i < deck.size(); i++) {
+            for (int j = i + 1; j < deck.size(); j++) {
+                for (int k = j + 1; k < deck.size(); k++) {
+                    for (int l = k + 1; l < deck.size(); l++) {
+                        for (int m = l + 1; m < deck.size(); m++) {
+                            combinations.add(Arrays.asList(deck.get(i), deck.get(j), deck.get(k), deck.get(l), deck.get(m)));
+                        }
+                    }
+                }
+            }
+        }
+        return combinations;
+    }
+}

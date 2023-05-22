@@ -1,0 +1,14 @@
+//package evaluate_streets;
+
+import java.math.BigDecimal;
+
+/*- **************************************************************************** 
+* This Class
+* 
+* @author PEAK_
+*******************************************************************************/
+
+
+
+public class HoleCardAction implements Constants {
+}

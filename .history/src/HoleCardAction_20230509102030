@@ -1,0 +1,78 @@
+//package evaluate_streets;
+
+import java.math.BigDecimal;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.io.File;
+import java.text.DecimalFormat;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
+/*- ******************************************************************************
+ * This class defines a range of hands The hands are in a Container class. 
+ * This array represents the commonly used 13 X 13 matrix to represent suited,
+ * ofsuit, and pairs
+ * An element is true if that card is in the range.
+ * 
+ * In previkous versions a 13 X 13 array was indexd directly.
+ * If the values in the array are assigned in playability order or Expected Value 
+ * order then we can simply use that single value and not an array at all.
+ * 
+ * The purpose of this class ( and the previous HandRange class) is to select an action
+ * based or on the hole cards. 
+ * 
+ * The hole cards are represented by the 13 X 13 matrix index for a value of 
+ * 0 to 168.
+ * 
+ * The action is based on the bet that the player is facing:
+ *      REFLOP_LIMP, PREFLOP_OPEN, PREFLOP_CALL, PREFLOP_BET3, PREFLOP_BET4, 
+ *      PREFLOP_ALLIN, PREFLOP_CALL_ALLIN. 
+ * 
+ * The player can respond to the action to him by:
+ *      LIMP, OPEN, CALL, BET3, CALL_BET3, BET4, CALL_BET4, ALLIN, CALL_ALLIN.
+ *
+ * In this class we use an array of index values that represent the last value for 
+ * the last card in that range. 
+ * Ranges are creted in either playability or EV order, so it is contigueous with
+ * no gaps. The last card is all that we need.
+ * 
+ * THis class supports all combinations of actions to a player and the response 
+ * based on the hole cards index ( 0 - 168).
+ * 
+ * We use an 2 dimensional array. The first indexis the action to the playes,
+ * PREFLOP_x. The second index is the response FOLD, LIMP, ...
+ * The value in the array is the largest hole card index that supports the action.
+ * 
+ *  The result of this can be expressed in an array that is 
+ * This is a new experimental Class derived from the HandRange Class:
+ * 		HandRange used a boolean array representing the 169 possible hands.
+ * 		This class uses an integers array, not boolean, representing the 169 possible hands.
+ * 		The integer values 
+ * 
+ * The int values are < 0 for hand is not this range and > 0 for hand is in this range.
+ * In a future revision I may combine ranges
+ * For example:
+ * 		1		hand is in this range
+ * 		10	Hand is limp		 
+ * 		20	Hand is open
+ *		21	Hand is open if 1 opponent and we are IP
+ *		22	Hand is open if 1 opponent and we are OOP
+ * 		30	Hand is call	 	
+ * 		40	Hand is bet3	 	
+ * 
+ * Lots to think about
+ * 
+ * @author PEAK_
+****************************************************************************** */
+
+
+
+public class HoleCardAction implements Constants {
+}

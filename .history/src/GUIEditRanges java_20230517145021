@@ -1,0 +1,15 @@
+//package evaluate_streets;
+/*-  ******************************************************************************
+ *  @author PEAK_ 
+ * ****************************************************************************** */
+public class GUIEditRanges implements Constants {
+	/*-  ******************************************************************************
+ *  @author PEAK_ 
+ * ****************************************************************************** */
+
+	private public class GUIEditRanges implements Constants {
+        () {
+		throw new IllegalStateException("Utility class");
+        }
+    }
+}
