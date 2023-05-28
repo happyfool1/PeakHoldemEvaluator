@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GUIAnalyzeMany",
+            "request": "launch",
+            "mainClass": "GUIAnalyzeMany",
+            "projectName": "PeakHoldemEvaluator_7aedcd91"
+        },
+        {
+            "type": "java",
+            "name": "GUIEditRanges",
+            "request": "launch",
+            "mainClass": "GUIEditRanges",
+            "projectName": "PeakHoldemEvaluator_7aedcd91"
+        },
+        {
+            "type": "java",
             "name": "GUI",
             "request": "launch",
             "mainClass": "GUI",
@@ -20,163 +34,10 @@
         },
         {
             "type": "java",
-            "name": "GUI",
+            "name": "GUIAlalizeMany",
             "request": "launch",
-            "mainClass": "GUI",
+            "mainClass": "GUIAlalizeMany",
             "projectName": "PeakHoldemEvaluator_7aedcd91"
-        },
-        {
-            "type": "java",
-            "name": "EditRange",
-            "request": "launch",
-            "mainClass": "EditRange",
-            "projectName": "PeakHoldemEvaluator_7aedcd91"
-        },
-        {
-            "type": "java",
-            "name": "EditRange",
-            "request": "launch",
-            "mainClass": "EditRange",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "App",
-            "request": "launch",
-            "mainClass": "App",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "Build",
-            "request": "launch",
-            "mainClass": "Build",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "Build2",
-            "request": "launch",
-            "mainClass": "Build2",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "Calculate",
-            "request": "launch",
-            "mainClass": "Calculate",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "CallBetOrRaise",
-            "request": "launch",
-            "mainClass": "CallBetOrRaise",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "ColorDisplay",
-            "request": "launch",
-            "mainClass": "ColorDisplay",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "DisplayImage",
-            "request": "launch",
-            "mainClass": "DisplayImage",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "DisplayImage2",
-            "request": "launch",
-            "mainClass": "DisplayImage2",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "DisplayPNG",
-            "request": "launch",
-            "mainClass": "DisplayPNG",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "DragAndDropExample",
-            "request": "launch",
-            "mainClass": "DragAndDropExample",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "FileUtils",
-            "request": "launch",
-            "mainClass": "FileUtils",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "FlopCombinationsWithHoleCards",
-            "request": "launch",
-            "mainClass": "FlopCombinationsWithHoleCards",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "GUI",
-            "request": "launch",
-            "mainClass": "GUI",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "GUILogin",
-            "request": "launch",
-            "mainClass": "GUILogin",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "HandRangeConverter",
-            "request": "launch",
-            "mainClass": "HandRangeConverter",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "LoginSystem",
-            "request": "launch",
-            "mainClass": "LoginSystem",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "ReplaceStringInAllJavaFiles",
-            "request": "launch",
-            "mainClass": "ReplaceStringInAllJavaFiles",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "SearchAll",
-            "request": "launch",
-            "mainClass": "SearchAll",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
-        },
-        {
-            "type": "java",
-            "name": "Test",
-            "request": "launch",
-            "mainClass": "Test",
-            "projectName": "PeakHoldemEvaluator_cceeb1cb"
         }
     ]
 }
