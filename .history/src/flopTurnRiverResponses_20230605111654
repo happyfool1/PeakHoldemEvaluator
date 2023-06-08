@@ -1,0 +1,17 @@
+//package evaluate_streets;
+
+/*-  **************************************************************************************
+* This Class contains the methods used for Showdown.
+* When the River evaluation is complete it will call showdownValue() to calculate the 
+* relative value of the made hand on the River.
+*
+* After all players have completed the River evaluation showdown() will be called to
+* determine the winner using values saved by showdownValue().
+* A tie is possible but unusual.
+* 
+* @author PEAK_
+* 
+***************************************************************************************/
+
+public class FlopTurnRiverResponse implements Constants {
+}

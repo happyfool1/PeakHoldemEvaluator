@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SearchAll",
+            "request": "launch",
+            "mainClass": "SearchAll",
+            "projectName": "PeakHoldemEvaluator_7aedcd91"
+        },
+        {
+            "type": "java",
             "name": "GUIAnalyzeMany",
             "request": "launch",
             "mainClass": "GUIAnalyzeMany",
