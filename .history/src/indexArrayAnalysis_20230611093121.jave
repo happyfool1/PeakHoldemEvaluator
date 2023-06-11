@@ -1,0 +1,19 @@
+//package evaluate_streets;
+
+/*-  ******************************************************************************
+* This Class analyzes the index arrays.
+*   
+* 
+* @author PEAK_
+ ****************************************************************************** */
+
+public class IndexArrayAnalysis implements Constants {
+
+    // Constructor
+    IndexArrayAnalysis(){
+
+    }
+
+
+    
+}

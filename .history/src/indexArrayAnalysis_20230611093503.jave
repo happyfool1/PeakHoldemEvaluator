@@ -1,0 +1,24 @@
+//package evaluate_streets;
+
+/*-  ******************************************************************************
+* This Class analyzes the index arrays.
+*  An instance of this Class must be created for every array that is being analyzed. 
+* 
+* @author PEAK_
+ ****************************************************************************** */
+
+public class IndexArrayAnalysis implements Constants {
+
+    // Constructor
+    IndexArrayAnalysis(){
+
+    }
+
+
+/*- ******************************************************************************
+* Make a local copy of 3 index arrays.
+ ****************************************************************************** */
+void copyArrays(int [] drawArray, int [] madeArray, int [] showdownArray) {
+}
+
+}

@@ -1,0 +1,25 @@
+//package evaluate_streets;
+
+/*-  ******************************************************************************
+ * This Class simply updates the arrays in the Class ManyData.
+ * It is called after each player completes a street, at showdown, and after all hands 
+ * have been played. 
+* 
+* The public methods are:
+* 1. updateFlop()
+* 2. updateTurn()
+* 3. updateRiver()
+* 4. updateShowdowns()
+* 5. updateSummary()
+*
+* The first 4 update arrays using several indexes and and values from:
+* EvalData.drawArray, EvalData,madeArray, EvalData.showdownHand.
+*
+* summary performs some simple calculations such as adding all of the rows in an array.
+*  
+* 
+* @author PEAK_
+ ****************************************************************************** */
+
+public class IndexArrayAnalysis implements Constants {
+}

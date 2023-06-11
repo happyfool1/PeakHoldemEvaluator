@@ -1,0 +1,47 @@
+//package evaluate_streets;
+import java.util.Arrays;
+
+
+/*-  ******************************************************************************
+* This Class analyzes the index arrays.
+*  An instance of this Class must be created for every array that is being analyzed. 
+* 
+* @author PEAK_
+ ****************************************************************************** */
+
+public class IndexArrayAnalysis implements Constants {
+
+    // Constructor
+    IndexArrayAnalysis(){
+
+    }
+
+ int[][] drawArray;  
+ int[][] madeArray;  
+ int[][] showdownArray;  
+
+
+ int[][] drawArraySorted;  
+ int[][] madeArraySorted;  
+ int[][] showdownArraySorted;  	   
+
+
+/*- ******************************************************************************
+* Make a local copy of 3 index arrays.
+ ****************************************************************************** */
+void copyArrays(int [][] drawArray, int [][] madeArray, int [][] showdownArray) {
+this.drawArray = drawArray;
+this.dataMadeArray = madeArray;
+this.showdownArrayArray = showdownArray;
+this.drawArraySorted = drawArray;
+this.dataMadeArraySorted = madeArray;
+this.showdownArrayArraySorted = showdownArray;
+Arrays.sort(drawArraySorted);
+Arrays.
+
+}
+
+
+
+
+}

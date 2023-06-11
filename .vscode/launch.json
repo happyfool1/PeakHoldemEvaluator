@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GUIAnalyzeIndexArrays",
+            "request": "launch",
+            "mainClass": "GUIAnalyzeIndexArrays",
+            "projectName": "PeakHoldemEvaluator_7aedcd91"
+        },
+        {
+            "type": "java",
             "name": "SearchAll",
             "request": "launch",
             "mainClass": "SearchAll",
