@@ -282,55 +282,46 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
         panelCheckBoxesHML.setBounds(300, 380, 450, 20);
         Border hmlFlopBorder = BorderFactory.createTitledBorder("Flop nHML Reports");
         panelCheckBoxesHML.setBorder(hmlFlopBorder);
-        panelCheckBoxes.add(panelCheckBoxesHML);
 
         panelCheckBoxesHHML = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesHHML.setBounds(300, 380, 450, 20);
         Border hmlTurnBorder = BorderFactory.createTitledBorder("Turn HML Reports");
         panelCheckBoxesHHML.setBorder(hmlTurnBorder);
-        panelCheckBoxes.add(panelCheckBoxesHHML);
 
         panelCheckBoxesHHHML = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesHHHML.setBounds(300, 380, 450, 40);
         Border hmlRiverBorder = BorderFactory.createTitledBorder("River HML Reports");
         panelCheckBoxesHHHML.setBorder(hmlRiverBorder);
-        panelCheckBoxes.add(panelCheckBoxesHHHML);
 
         panelCheckBoxesWetDryFlop = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesWetDryFlop.setBounds(300, 380, 450, 20);
         Border wetDryBorderFlop = BorderFactory.createTitledBorder("Flop Wet Dry Reports");
         panelCheckBoxesWetDryFlop.setBorder(wetDryBorderFlop);
-        panelCheckBoxes.add(panelCheckBoxesWetDryFlop);
 
         panelCheckBoxesSumOfHoleCardsFlop = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesSumOfHoleCardsFlop.setBounds(300, 380, 450, 20);
         Border sumOfHoleCardsFlopBorder = BorderFactory.createTitledBorder("Flop Sum of Hole Card Values Reports");
         panelCheckBoxesSumOfHoleCardsFlop.setBorder(sumOfHoleCardsFlopBorder);
-        panelCheckBoxes.add(panelCheckBoxesSumOfHoleCardsFlop);
 
         panelCheckBoxesSumOfBoardCardsFlop = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesSumOfBoardCardsFlop.setBounds(300, 380, 450, 20);
         Border sumOfBoardCardsBorderFlop = BorderFactory.createTitledBorder("Flop Sum of Board Card Values Reports");
         panelCheckBoxesSumOfBoardCardsFlop.setBorder(sumOfBoardCardsBorderFlop);
-        panelCheckBoxes.add(panelCheckBoxesSumOfBoardCardsFlop);
 
         panelCheckBoxesTypeOf1755Flop = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesTypeOf1755Flop.setBounds(300, 380, 450, 20);
         Border typeOf17ffBorderFlop = BorderFactory.createTitledBorder("Flop Type of 1755 Flop Reports");
         panelCheckBoxesTypeOf1755Flop.setBorder(typeOf17ffBorderFlop);
-        panelCheckBoxes.add(panelCheckBoxesTypeOf1755Flop);
 
         panelCheckBoxesIndexFlop = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesIndexFlop.setBounds(300, 380, 450, 20);
         Border indexBorderFlop = BorderFactory.createTitledBorder("Flop Index calculated using gaps Reports");
         panelCheckBoxesIndexFlop.setBorder(indexBorderFlop);
-        panelCheckBoxes.add(panelCheckBoxesIndexFlop);
 
         panelCheckBoxesTypeFlop = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesTypeFlop.setBounds(300, 380, 450, 20);
         Border typFlopBorderFlop = BorderFactory.createTitledBorder("Ed Miller  Type Reports");
         panelCheckBoxesTypeFlop.setBorder(typFlopBorderFlop);
-        panelCheckBoxes.add(panelCheckBoxesTypeFlop);
 
         hundred.setFont(fs);
         hundred.addActionListener(this);
@@ -569,13 +560,13 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
 
         panelCheckBoxes.add(panelCheckBoxesHML);
         panelCheckBoxes.add(panelCheckBoxesHHML);
-        panelCheckBoxes.add(panelCheckBoxesHHHML);
         panelCheckBoxes.add(panelCheckBoxesWetDryFlop);
-        panelCheckBoxes.add(panelCheckBoxesIndexFlop);
-        panelCheckBoxes.add(panelCheckBoxesSumOfHoleCardsFlop);
-        panelCheckBoxes.add(panelCheckBoxesSumOfBoardCardsFlop);
         panelCheckBoxes.add(panelCheckBoxesTypeOf1755Flop);
-        panelCheckBoxes.add(panelCheckBoxesTypeFlop);
+        // panelCheckBoxes.add(panelCheckBoxesHHHML);
+        // panelCheckBoxes.add(panelCheckBoxesIndexFlop);
+        // panelCheckBoxes.add(panelCheckBoxesSumOfHoleCardsFlop);
+        // panelCheckBoxes.add(panelCheckBoxesSumOfBoardCardsFlop);
+        // panelCheckBoxes.add(panelCheckBoxesTypeFlop);
 
         run.setFont(fc);
         run.setPreferredSize(new Dimension(15, 15));
@@ -678,48 +669,73 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
         // Simulate the play of xxx hands, Preflop, Flop, Turn, and River
         Evaluate.doSimulationDataCollection(number);
 
-        IndexArray hmFlop = new IndexArray(IndexArrays.hmlDrawFlop, IndexArrays.hmlMadeFlop,
+        IndexArrayDrawMadeWin hmlFlop = new IndexArrayDrawMadeWin(IndexArrays.hmlDrawFlop, IndexArrays.hmlMadeFlop,
                 IndexArrays.hmlShowdownFlop,
-                IndexArrays.hmlDrawFlopToMadeRiver, IndexArrays.hmlMadeFlopToMadeRiver,
-                IndexArrays.hmlDrawFlopToMadeWon, IndexArrays.hmlMadeFlopToMadeWon,
                 HML_FLOP_ST, DRAW_ARRAY_ST,
                 MADE_ARRAY_ST);
 
-        IndexArrayReport reportFlop = new IndexArrayReport();
-        reportFlop.reportDraw(10, 100, "Flop Draws with HML Index", hmFlop);
-        reportFlop.reportMade(10, 400, "Flop  Made hands with HML Index", hmFlop);
-        reportFlop.reportShowdown(10, 600, "Flop  Showdown hands with HML Index", hmFlop);
+        IndexArrayDrawMadeWin hmlTurn = new IndexArrayDrawMadeWin(IndexArrays.hmlDrawTurn, IndexArrays.hmlMadeTurn,
+                IndexArrays.hmlShowdownTurn,
+                HML_TURN_ST, DRAW_ARRAY_ST,
+                MADE_ARRAY_ST);
 
+        IndexArrayDrawMadeWin wetDryFlop = new IndexArrayDrawMadeWin(IndexArrays.wetDryDrawFlop,
+                IndexArrays.wetDryMadeFlop,
+                IndexArrays.wetDryShowdownFlop,
+                WET_DRY_ST, DRAW_ARRAY_ST,
+                MADE_ARRAY_ST);
+
+        IndexArrayDrawMadeWin typeOf1755Flop = new IndexArrayDrawMadeWin(IndexArrays.typeOf1755DrawFlop,
+                IndexArrays.typeOf1755MadeFlop,
+                IndexArrays.typeOf1755ShowdownFlop,
+                TYPE_OF_1755_ST, DRAW_ARRAY_ST,
+                MADE_ARRAY_ST);
+
+        IndexArrayReport reportFlop = new IndexArrayReport();
         if (hmlDrawFlop.isSelected()) {
-            reportFlop.reportDraw(10, 100, "Flop Draws with HML Index", hmFlop);
+            reportFlop.reportDraw(10, 100, "Flop Draws with HML Index", hmlFlop);
         }
         if (hmlMadeFlop.isSelected()) {
-            reportFlop.reportMade(10, 400, "Flop  Made hands with HML Index", hmFlop);
+            reportFlop.reportMade(10, 400, "Flop  Made hands with HML Index", hmlFlop);
 
         }
         if (hmlShowdownFlop.isSelected()) {
-            reportFlop.reportShowdown(10, 600, "Flop  Showdown hands with HML Index", hmFlop);
-
+            reportFlop.reportShowdown(10, 600, "Flop  Showdown hands with HML Index", hmlFlop);
         }
 
-        // Simulate the play of xxx hands, Preflop, Flop, Turn, and River
-        Evaluate.initialize();
-        Evaluate.doSimulationDataCollection(number);
+        IndexArrayReport reportTurn = new IndexArrayReport();
         if (hmlDrawTurn.isSelected()) {
-            ReportHML.reportDrawTurn(20, 200);
+            reportTurn.reportDraw(10, 100, "Turn Draws with HML Index", hmlTurn);
         }
         if (hmlMadeTurn.isSelected()) {
-            ReportHML.reportMadeTurn(20, 220);
+            reportTurn.reportMade(10, 400, "Turn  Made hands with HML Index", hmlTurn);
+        }
+        if (hmlShowdownTurn.isSelected()) {
+            reportTurn.reportShowdown(10, 600, "Turn  Showdown hands with HML Index", hmlTurn);
         }
 
-        if (hmlShowdownTurn.isSelected()) {
-            ReportHML.reportShowdownTurn(20, 240);
+        IndexArrayReport reportFlopWetDry = new IndexArrayReport();
+        if (wetDryDrawFlop.isSelected()) {
+            reportFlopWetDry.reportDraw(10, 100, "Flop Draws Wet Dry Index", wetDryFlop);
         }
-        if (hmlMadeRiver.isSelected()) {
-            ReportHML.reportMadeRiver(30, 300);
+        if (wetDryMadeFlop.isSelected()) {
+            reportFlopWetDry.reportMade(10, 400, "Flop  Made hands Wet Dry Index", wetDryFlop);
+
         }
-        if (hmlShowdownRiver.isSelected()) {
-            ReportHML.reportShowdownRiver(30, 320);
+        if (wetDryShowdownFlop.isSelected()) {
+            reportFlopWetDry.reportShowdown(10, 600, "Flop  Showdown hands Wet Dry Index", wetDryFlop);
+        }
+
+        IndexArrayReport reportFlopTypeOf1755 = new IndexArrayReport();
+        if (typeOf1755DrawFlop.isSelected()) {
+            reportFlopTypeOf1755.reportDraw(10, 100, "Flop Draws type of 1755 Index", typeOf1755Flop);
+        }
+        if (typeOf1755MadeFlop.isSelected()) {
+            reportFlopTypeOf1755.reportMade(10, 400, "Flop  Made type of 1755Dry Index", typeOf1755Flop);
+
+        }
+        if (typeOf1755ShowdownFlop.isSelected()) {
+            reportFlopTypeOf1755.reportShowdown(10, 600, "Flop  Showdown hands type of 1755 Index", typeOf1755Flop);
         }
 
     }

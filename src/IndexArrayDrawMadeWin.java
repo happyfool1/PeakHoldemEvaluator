@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 * @author PEAK_
  ****************************************************************************** */
 
-public class IndexArray implements Constants {
+public class IndexArrayDrawMadeWin implements Constants {
 
     /*- ***************************************************************************************** 
     Ideas TODO
@@ -163,7 +163,7 @@ public class IndexArray implements Constants {
     Wide: The flop doesn't significantly narrow down the potential hand range, leaving it wide open.
      ***************************************************************************************** */
 
-    IndexArray() {
+    IndexArrayDrawMadeWin() {
     }
 
     /*- **************************************************************************** 
@@ -191,8 +191,7 @@ public class IndexArray implements Constants {
     *
     *   Strategy suggestions are about the same as with wet / dry.
     ****************************************************************************** */
-    IndexArray(int[][] drawArray, int[][] madeArray, int[][] showdownArray,
-            int[][][] drawToMadeRiver, int[][][] madeToMadeRiver, int[][][] drawToMadeWon, int[][][] madeToMadeWon,
+    IndexArrayDrawMadeWin(int[][] drawArray, int[][] madeArray, int[][] showdownArray,
             String[] rowNames, String[] drawColNames, String[] madeColNames) {
 
         this.drawArray = new int[drawArray.length][drawArray[0].length];
@@ -201,11 +200,6 @@ public class IndexArray implements Constants {
         this.allArrayRowNames = new String[rowNames.length];
         this.drawArrayColNames = new String[drawColNames.length];
         this.madeArrayColNames = new String[madeColNames.length];
-
-        this.drawToMadeRiver = new int[drawToMadeRiver.length][drawToMadeRiver[0].length][drawToMadeRiver[0][0].length];
-        this.madeToMadeRiver = new int[madeToMadeRiver.length][madeToMadeRiver[0].length][madeToMadeRiver[0][0].length];
-        this.drawToMadeWon = new int[drawToMadeWon.length][drawToMadeWon[0].length][drawToMadeWon[0][0].length];
-        this.madeToMadeWon = new int[madeToMadeWon.length][madeToMadeWon[0].length][madeToMadeWon[0][0].length];
 
         this.drawArrayPer = new double[this.drawArray.length][this.drawArray[0].length];
         this.madeArrayPer = new double[this.madeArray.length][this.madeArray[0].length];
@@ -227,24 +221,16 @@ public class IndexArray implements Constants {
         copyArray(drawColNames, this.drawArrayColNames);
         copyArray(madeColNames, this.madeArrayColNames);
 
-        copyArray(drawToMadeRiver, this.drawToMadeRiver);
-        copyArray(madeToMadeRiver, this.madeToMadeRiver);
-        copyArray(drawToMadeWon, this.drawToMadeWon);
-        copyArray(madeToMadeWon, this.madeToMadeWon);
-
         this.madeSumOfAllValues = 0;
         this.drawSumOfAllValues = 0;
         this.showdownSumOfAllValues = 0;
-        this.drawToMadeRiverSumOfAllValues = 0;
-        this.madeToMadeRiverSumOfAllValues = 0;
-        this.drawToMadeWonSumOfAllValues = 0;
-        this.madeToMadeWonSumOfAllValues = 0;
 
         calculateArrays();
         createIndexArrayList();
         createIndexArrayRowAndColumnList();
         findBestAndWorst();
-        System.out.println(stringStrategy());
+        findBestAndWorstOverall();
+        // System.out.println(stringStrategy());
     }
 
     /*- **************************************************************************************
@@ -265,15 +251,15 @@ public class IndexArray implements Constants {
 
         // Getters and setters
         private double getPercentage() {
-            return percentage;
+            return this.percentage;
         }
 
         private int getRow() {
-            return row;
+            return this.row;
         }
 
         private int getCol() {
-            return column;
+            return this.column;
         }
     }
 
@@ -323,34 +309,6 @@ public class IndexArray implements Constants {
         for (int i = 0; i < this.showdownArray.length; i++) {
             for (int j = 0; j < this.showdownArray[0].length; j++) {
                 this.showdownSumOfAllValues += this.showdownArray[i][j];
-            }
-        }
-        for (int i = 0; i < this.drawToMadeRiver.length; i++) {
-            for (int j = 0; j < this.drawToMadeRiver[0].length; j++) {
-                for (int k = 0; k < this.drawToMadeRiver[0][0].length; k++) {
-                    this.drawToMadeRiverSumOfAllValues += this.drawToMadeRiver[i][j][k];
-                }
-            }
-        }
-        for (int i = 0; i < this.madeToMadeRiver.length; i++) {
-            for (int j = 0; j < this.madeToMadeRiver[0].length; j++) {
-                for (int k = 0; k < this.madeToMadeRiver[0][0].length; k++) {
-                    this.madeToMadeRiverSumOfAllValues += this.madeToMadeRiver[i][j][k];
-                }
-            }
-        }
-        for (int i = 0; i < this.drawToMadeWon.length; i++) {
-            for (int j = 0; j < this.drawToMadeWon[0].length; j++) {
-                for (int k = 0; k < this.drawToMadeWon[0][0].length; k++) {
-                    this.drawToMadeWonSumOfAllValues += this.drawToMadeWon[i][j][k];
-                }
-            }
-        }
-        for (int i = 0; i < this.madeToMadeWon.length; i++) {
-            for (int j = 0; j < this.madeToMadeWon[0].length; j++) {
-                for (int k = 0; k < this.madeToMadeWon[0][0].length; k++) {
-                    this.madeToMadeWonSumOfAllValues += this.madeToMadeWon[i][j][k];
-                }
             }
         }
 
@@ -413,19 +371,21 @@ public class IndexArray implements Constants {
     ***************************************************************************************** */
     private void createIndexArrayList() {
         for (int row = 0; row < drawArrayPer.length; row++) {
-            for (int column = 0; column < drawArrayPer[row].length; column++) {
+            for (int column = 0; column < drawArrayPer[0].length; column++) {
                 drawEntries.add(new PercentageEntry(drawArrayPer[row][column], row, column));
             }
         }
         drawEntries.sort(Comparator.comparing(PercentageEntry::getPercentage));
+
         for (int row = 0; row < madeArrayPer.length; row++) {
             for (int column = 0; column < madeArrayPer[row].length; column++) {
                 madeEntries.add(new PercentageEntry(madeArrayPer[row][column], row, column));
             }
         }
         madeEntries.sort(Comparator.comparing(PercentageEntry::getPercentage));
+
         for (int row = 0; row < showdownArrayPer.length; row++) {
-            for (int column = 0; column < showdownArrayPer[row].length; column++) {
+            for (int column = 0; column < showdownArrayPer[0].length; column++) {
                 showdownEntries.add(new PercentageEntry(showdownArrayPer[row][column], row, column));
             }
         }
@@ -433,27 +393,21 @@ public class IndexArray implements Constants {
 
         // Now reversed
         for (int row = 0; row < drawArrayPer.length; row++) {
-            for (int column = 0; column < drawArrayPer[row].length; column++) {
+            for (int column = 0; column < drawArrayPer[0].length; column++) {
                 drawEntriesReversed.add(new PercentageEntry(drawArrayPer[row][column], row, column));
             }
         }
         drawEntriesReversed.sort(Comparator.comparing(PercentageEntry::getPercentage).reversed());
-
-        for (int row = 0; row < drawArrayPer.length; row++) {
-            for (int column = 0; column < drawArrayPer[row].length; column++) {
-                madeEntriesReversed.add(new PercentageEntry(drawArrayPer[row][column], row, column));
-            }
-        }
-        madeEntriesReversed.sort(Comparator.comparing(PercentageEntry::getPercentage).reversed());
 
         for (int row = 0; row < madeArrayPer.length; row++) {
             for (int column = 0; column < madeArrayPer[row].length; column++) {
                 madeEntriesReversed.add(new PercentageEntry(madeArrayPer[row][column], row, column));
             }
         }
-        showdownEntriesReversed.sort(Comparator.comparing(PercentageEntry::getPercentage).reversed());
+        madeEntriesReversed.sort(Comparator.comparing(PercentageEntry::getPercentage).reversed());
+
         for (int row = 0; row < showdownArrayPer.length; row++) {
-            for (int column = 0; column < showdownArrayPer[row].length; column++) {
+            for (int column = 0; column < showdownArrayPer[0].length; column++) {
                 showdownEntriesReversed.add(new PercentageEntry(showdownArrayPer[row][column], row, column));
             }
         }
@@ -485,6 +439,7 @@ public class IndexArray implements Constants {
             drawTotalColPerEntries.add(new PairEntry(drawColTotalPer[col], col));
         }
         drawTotalColPerEntries.sort(Comparator.comparing(PairEntry::getPercentage));
+
         for (int col = 0; col < madeColTotalPer.length; col++) {
             madeTotalColPerEntries.add(new PairEntry(madeColTotalPer[col], col));
         }
@@ -504,10 +459,12 @@ public class IndexArray implements Constants {
             madeTotalRowPerEntriesReversed.add(new PairEntry(madeRowTotalPer[row], row));
         }
         madeTotalRowPerEntriesReversed.sort(Comparator.comparing(PairEntry::getPercentage).reversed());
+
         for (int row = 0; row < showdownRowTotalPer.length; row++) {
             showdownTotalRowPerEntriesReversed.add(new PairEntry(showdownRowTotalPer[row], row));
         }
         showdownTotalRowPerEntriesReversed.sort(Comparator.comparing(PairEntry::getPercentage).reversed());
+
         for (int col = 0; col < drawColTotalPer.length; col++) {
             drawTotalColPerEntriesReversed.add(new PairEntry(drawColTotalPer[col], col));
         }
@@ -517,6 +474,7 @@ public class IndexArray implements Constants {
             madeTotalColPerEntriesReversed.add(new PairEntry(madeColTotalPer[col], col));
         }
         madeTotalColPerEntriesReversed.sort(Comparator.comparing(PairEntry::getPercentage).reversed());
+
         for (int col = 0; col < showdownColTotalPer.length; col++) {
             showdownTotalColPerEntriesReversed.add(new PairEntry(showdownColTotalPer[col], col));
         }
@@ -537,11 +495,11 @@ public class IndexArray implements Constants {
             if (p != 0.) {
                 bestDrawRowsPer[count] = p;
                 bestDrawRows[count] = drawTotalRowPerEntriesReversed.get(ndx).getRowOrCol();
-                ++ndx;
                 if (++count >= 3) {
                     break;
                 }
             }
+            ndx++;
         }
         count = 0;
         ndx = 0;
@@ -550,11 +508,11 @@ public class IndexArray implements Constants {
             if (p != 0.) {
                 worstDrawRowsPer[count] = p;
                 worstDrawRows[count] = drawTotalRowPerEntries.get(ndx).getRowOrCol();
-                ++ndx;
                 if (++count >= 3) {
                     break;
                 }
             }
+            ndx++;
         }
 
         count = 0;
@@ -562,40 +520,67 @@ public class IndexArray implements Constants {
         for (int i = 0; i < madeTotalRowPerEntriesReversed.size(); i++) {
             p = madeTotalRowPerEntriesReversed.get(ndx).getPercentage();
             if (p != 0.) {
-                bestDrawRowsPer[count] = p;
-                bestDrawRows[count] = madeTotalRowPerEntriesReversed.get(ndx).getRowOrCol();
-                ++ndx;
+                bestMadeRowsPer[count] = p;
+                bestMadeRows[count] = madeTotalRowPerEntriesReversed.get(ndx).getRowOrCol();
                 if (++count >= 3) {
                     break;
                 }
             }
+            ndx++;
         }
         count = 0;
         ndx = 0;
         for (int i = 0; i < madeTotalRowPerEntries.size(); i++) {
             p = madeTotalRowPerEntries.get(ndx).getPercentage();
             if (p != 0.) {
-                worstDrawRowsPer[count] = p;
-                worstDrawRows[count] = madeTotalRowPerEntries.get(ndx).getRowOrCol();
-                ++ndx;
+                worstMadeRowsPer[count] = p;
+                worstMadeRows[count] = madeTotalRowPerEntries.get(ndx).getRowOrCol();
                 if (++count >= 3) {
                     break;
                 }
             }
+            ++ndx;
         }
 
         count = 0;
+        ndx = 1;
+        for (int i = 0; i < drawTotalColPerEntriesReversed.size(); i++) {
+            p = drawTotalColPerEntriesReversed.get(ndx).getPercentage();
+            if (p != 0.) {
+                bestDrawColsPer[count] = p;
+                bestDrawCols[count] = drawTotalColPerEntriesReversed.get(ndx).getRowOrCol();
+                if (++count >= 3) {
+                    break;
+                }
+            }
+            ndx++;
+        }
+        count = 0;
         ndx = 0;
+        for (int i = 0; i < drawTotalColPerEntries.size(); i++) {
+            p = drawTotalColPerEntries.get(ndx).getPercentage();
+            if (p != 0.) {
+                worstDrawColsPer[count] = p;
+                worstDrawCols[count] = drawTotalColPerEntries.get(ndx).getRowOrCol();
+                if (++count >= 3) {
+                    break;
+                }
+            }
+            ++ndx;
+        }
+
+        count = 0;
+        ndx = 1;
         for (int i = 0; i < madeTotalColPerEntriesReversed.size(); i++) {
             p = madeTotalColPerEntriesReversed.get(ndx).getPercentage();
             if (p != 0.) {
                 bestMadeColsPer[count] = p;
                 bestMadeCols[count] = madeTotalColPerEntriesReversed.get(ndx).getRowOrCol();
-                ++ndx;
                 if (++count >= 3) {
                     break;
                 }
             }
+            ++ndx;
         }
         count = 0;
         ndx = 0;
@@ -609,19 +594,48 @@ public class IndexArray implements Constants {
                     break;
                 }
             }
+            ++ndx;
         }
+
         count = 0;
         ndx = 0;
-        for (int i = 0; i < showdownTotalColPerEntriesReversed.size(); i++) {
-            p = showdownTotalColPerEntriesReversed.get(ndx).getPercentage();
+        for (int i = 0; i < showdownTotalRowPerEntriesReversed.size(); i++) {
+            p = showdownTotalRowPerEntriesReversed.get(ndx).getPercentage();
             if (p != 0.) {
-                bestShowdownwColsPer[count] = p;
-                bestShowdownwCols[count] = showdownTotalColPerEntriesReversed.get(ndx).getRowOrCol();
-                ++ndx;
+                bestShowdownRowsPer[count] = p;
+                bestShowdownRows[count] = drawTotalRowPerEntriesReversed.get(ndx).getRowOrCol();
                 if (++count >= 3) {
                     break;
                 }
             }
+            ndx++;
+        }
+        count = 0;
+        ndx = 0;
+        for (int i = 0; i < showdownTotalRowPerEntries.size(); i++) {
+            p = drawTotalRowPerEntries.get(ndx).getPercentage();
+            if (p != 0.) {
+                worstShowdownRowsPer[count] = p;
+                worstShowdownRows[count] = drawTotalRowPerEntries.get(ndx).getRowOrCol();
+                if (++count >= 3) {
+                    break;
+                }
+            }
+            ndx++;
+        }
+
+        count = 0;
+        ndx = 1;
+        for (int i = 0; i < showdownTotalColPerEntriesReversed.size(); i++) {
+            p = showdownTotalColPerEntriesReversed.get(ndx).getPercentage();
+            if (p != 0.) {
+                bestShowdownwColsPer[count] = p;
+                bestShowdownCols[count] = showdownTotalColPerEntriesReversed.get(ndx).getRowOrCol();
+                if (++count >= 3) {
+                    break;
+                }
+            }
+            ndx++;
         }
         count = 0;
         ndx = 0;
@@ -630,11 +644,11 @@ public class IndexArray implements Constants {
             if (p != 0.) {
                 worstShowdownColsPer[count] = p;
                 worstShowdownCols[count] = showdownTotalColPerEntries.get(ndx).getRowOrCol();
-                ++ndx;
                 if (++count >= 3) {
                     break;
                 }
             }
+            ++ndx;
         }
     }
 
@@ -679,22 +693,25 @@ public class IndexArray implements Constants {
     * The 5 best and the 5 worst are found.
     * Looks at complete array, not single roows or columns.
     * Helper to constructor 
+    * Skip column 0 for best because it in MADE_NONE or DRAW_NONE
     ***************************************************************************************** */
     private void findBestAndWorstOverall() {
         int count = 0;
+        int c = 0;
         int ndx = 0;
         double p;
         for (int i = 0; i < drawEntriesReversed.size(); i++) {
             p = drawEntriesReversed.get(ndx).getPercentage();
-            if (p != 0.) {
+            c = drawEntriesReversed.get(ndx).getCol();
+            if (p != 0. && c != 0) {
                 bestDraw5Per[count] = p;
                 bestDraw5Row[count] = drawEntriesReversed.get(ndx).getRow();
                 bestDraw5Col[count] = drawEntriesReversed.get(ndx).getCol();
-                ++ndx;
                 if (++count >= 5) {
                     break;
                 }
             }
+            ndx++;
         }
         count = 0;
         ndx = 0;
@@ -704,25 +721,26 @@ public class IndexArray implements Constants {
                 worstDraw5Per[count] = p;
                 worstDraw5Row[count] = drawEntries.get(ndx).getRow();
                 worstDraw5Col[count] = drawEntries.get(ndx).getCol();
-                ++ndx;
                 if (++count >= 5) {
                     break;
                 }
             }
+            ndx++;
         }
         count = 0;
         ndx = 0;
         for (int i = 0; i < madeEntriesReversed.size(); i++) {
             p = madeEntriesReversed.get(ndx).getPercentage();
-            if (p != 0.) {
+            c = madeEntriesReversed.get(ndx).getCol();
+            if (p != 0. && c != 0) {
                 bestMade5Per[count] = p;
                 bestMade5Row[count] = madeEntriesReversed.get(ndx).getRow();
                 bestMade5Col[count] = madeEntriesReversed.get(ndx).getCol();
-                ++ndx;
                 if (++count >= 5) {
                     break;
                 }
             }
+            ++ndx;
         }
         count = 0;
         ndx = 0;
@@ -732,26 +750,27 @@ public class IndexArray implements Constants {
                 worstMade5Per[count] = p;
                 worstMade5Row[count] = madeEntries.get(ndx).getRow();
                 worstMade5Col[count] = madeEntries.get(ndx).getCol();
-                ++ndx;
                 if (++count >= 5) {
                     break;
                 }
             }
+            ndx++;
         }
 
         count = 0;
         ndx = 0;
         for (int i = 0; i < showdownEntriesReversed.size(); i++) {
             p = showdownEntriesReversed.get(ndx).getPercentage();
-            if (p != 0.) {
+            c = showdownEntriesReversed.get(ndx).getCol();
+            if (p != 0. && c != 0) {
                 bestShowdown5Per[count] = p;
                 bestShowdown5Row[count] = showdownEntriesReversed.get(ndx).getRow();
                 bestShowdown5Col[count] = showdownEntriesReversed.get(ndx).getCol();
-                ++ndx;
                 if (++count >= 5) {
                     break;
                 }
             }
+            ndx++;
         }
         count = 0;
         ndx = 0;
@@ -761,11 +780,11 @@ public class IndexArray implements Constants {
                 worstShowdown5Per[count] = p;
                 worstShowdown5Row[count] = showdownEntries.get(ndx).getRow();
                 worstShowdown5Col[count] = showdownEntries.get(ndx).getCol();
-                ++ndx;
                 if (++count >= 5) {
                     break;
                 }
             }
+            ndx++;
         }
     }
 
@@ -813,8 +832,6 @@ public class IndexArray implements Constants {
     private void indexArrayListInSortedOrder() {
         for (PairEntry entry : drawTotalRowPerEntries) {
             int r = entry.getRowOrCol();
-            System.out.println(
-                    "Percentage: " + entry.getPercentage() + ", Row: " + RANGE_BET4 + " " + allArrayRowNames[r]);
         }
     }
 
@@ -858,14 +875,16 @@ public class IndexArray implements Constants {
                 + allArrayRowNames[worstMadeRows[0]] + ", "
                 + Format.formatPer(bestMadeRowsPer[1]) + " " + allArrayRowNames[worstMadeRows[1]]
                 + Format.formatPer(bestMadeRowsPer[2]) + " " + ", " + allArrayRowNames[worstMadeRows[2]] + "\r\n";
-        st += "The best Showdownw rows were " + Format.formatPer(bestShowdownwRowsPer[0]) + " "
-                + allArrayRowNames[bestShowdownwRows[0]] + ", "
-                + Format.formatPer(bestShowdownwRowsPer[1]) + allArrayRowNames[bestShowdownwRows[1]]
-                + Format.formatPer(bestShowdownwRowsPer[2]) + ", " + allArrayRowNames[bestShowdownwRows[2]] + "\r\n";
+
+        st += "The best Showdownw rows were " + Format.formatPer(bestShowdownRowsPer[0]) + " "
+                + allArrayRowNames[bestShowdownRows[0]] + ", "
+                + Format.formatPer(bestShowdownRowsPer[1]) + allArrayRowNames[bestShowdownRows[1]]
+                + Format.formatPer(bestShowdownRowsPer[2]) + ", " + allArrayRowNames[bestShowdownRows[2]] + "\r\n";
         st += "The worst Showdown rows were " + Format.formatPer(worstShowdownRowsPer[0])
                 + allArrayRowNames[worstShowdownRows[0]] + ", "
                 + Format.formatPer(worstShowdownRowsPer[1]) + allArrayRowNames[worstShowdownRows[1]]
-                + Format.formatPer(worstShowdownRowsPer[2]) + ", " + allArrayRowNames[worstShowdownRows[2]] + "\r\n";
+                + Format.formatPer(worstShowdownRowsPer[2]) + ", " + allArrayRowNames[worstShowdownRows[2]]
+                + "\r\n\r\n";
 
         st += "The best Draw cols were " + Format.formatPer(bestDrawColsPer[0]) + " "
                 + drawArrayColNames[bestDrawCols[0]]
@@ -886,18 +905,18 @@ public class IndexArray implements Constants {
                 + Format.formatPer(worstMadeColsPer[1]) + " " + madeArrayColNames[worstMadeCols[1]]
                 + Format.formatPer(worstMadeColsPer[2]) + " " + ", " + madeArrayColNames[worstMadeCols[2]] + "\r\n";
         st += "The best Showdownw cols were " + Format.formatPer(bestShowdownwColsPer[0]) + " "
-                + madeArrayColNames[bestShowdownwCols[0]] + ", "
-                + Format.formatPer(bestShowdownwColsPer[1]) + " " + madeArrayColNames[bestShowdownwCols[1]]
-                + Format.formatPer(bestShowdownwColsPer[2]) + " " + ", " + madeArrayColNames[bestShowdownwCols[2]]
+                + madeArrayColNames[bestShowdownCols[0]] + ", "
+                + Format.formatPer(bestShowdownwColsPer[1]) + " " + madeArrayColNames[bestShowdownCols[1]]
+                + Format.formatPer(bestShowdownwColsPer[2]) + " " + ", " + madeArrayColNames[bestShowdownCols[2]]
                 + "\r\n";
         st += "The worst Showdown cols were " + Format.formatPer(worstShowdownColsPer[0]) + " "
                 + madeArrayColNames[worstShowdownCols[0]]
                 + ", " + Format.formatPer(worstShowdownColsPer[1]) + " " + madeArrayColNames[worstShowdownCols[1]]
                 + ", " + Format.formatPer(worstShowdownColsPer[2]) + " " + madeArrayColNames[worstShowdownCols[2]]
-                + "\r\n";
+                + "\r\n\r\n";
         st += "The drawSumOfAllValues was " + drawSumOfAllValues + "\r\n";
         st += "The madeSumOfAllValues was " + madeSumOfAllValues + "\r\n";
-        st += "The showdownSumOfAllValues was " + showdownSumOfAllValues + "\r\n";
+        st += "The showdownSumOfAllValues was " + showdownSumOfAllValues + "\r\n\r\n";
         st += "The best 5 draws were \r\n"
                 + Format.formatPer(bestDraw5Per[0]) + " " + allArrayRowNames[bestDraw5Row[0]] + ", "
                 + drawArrayColNames[bestDraw5Col[1]] + "\r\n"
@@ -928,11 +947,6 @@ public class IndexArray implements Constants {
     int[][] drawArray;
     int[][] madeArray;
     int[][] showdownArray;
-
-    int[][][] drawToMadeRiver;
-    int[][][] madeToMadeRiver;
-    int[][][] drawToMadeWon;
-    int[][][] madeToMadeWon;
 
     // Converted to percentage of all values in array
     double[][] drawArrayPer;
@@ -989,24 +1003,20 @@ public class IndexArray implements Constants {
     double[] drawToMadeWonColTotalPer;
     double[] madeToMadeWonRowTotalPer;
     double[] madeToMadeWonColTotalPer;
-    int drawToMadeRiverSumOfAllValues;
-    int madeToMadeRiverSumOfAllValues;
-    int drawToMadeWonSumOfAllValues;
-    int madeToMadeWonSumOfAllValues;
 
     // top 3 high and low row percentages
     int[] bestDrawRows = new int[3];
     int[] worstDrawRows = new int[3];
     int[] bestMadeRows = new int[3];
     int[] worstMadeRows = new int[3];
-    int[] bestShowdownwRows = new int[3];
+    int[] bestShowdownRows = new int[3];
     int[] worstShowdownRows = new int[3];
     // top 3 high and low col percentages
     int[] bestDrawCols = new int[3];
     int[] worstDrawCols = new int[3];
     int[] bestMadeCols = new int[3];
     int[] worstMadeCols = new int[3];
-    int[] bestShowdownwCols = new int[3];
+    int[] bestShowdownCols = new int[3];
     int[] worstShowdownCols = new int[3];
 
     // Percentage value
@@ -1014,7 +1024,7 @@ public class IndexArray implements Constants {
     double[] worstDrawRowsPer = new double[3];
     double[] bestMadeRowsPer = new double[3];
     double[] worstMadeRowsPer = new double[3];
-    double[] bestShowdownwRowsPer = new double[3];
+    double[] bestShowdownRowsPer = new double[3];
     double[] worstShowdownRowsPer = new double[3];
     // Percentage Value
     double[] bestDrawColsPer = new double[3];

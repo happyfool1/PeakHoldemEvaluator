@@ -434,7 +434,7 @@ public interface Constants {
 	/*- *****************************************************************************
 	 * Made hand types
 	  ******************************************************************************/
- 	int MADE_NONE = 0;
+	int MADE_NONE = 0;
 
 	int MADE_BOARD_PAIR = 1;
 
@@ -446,48 +446,38 @@ public interface Constants {
 
 	int MADE_OVER_PAIR = 5;
 
-	int MADE_BOARD_TWO_PAIR = 6;
+	int MADE_BOTTOM_TWO_PAIR = 6;
 
-	int MADE_BOARD_PAIR_PLUS_UNDER_PAIR = 7;
+	int MADE_TOP_AND_BOTTOM_TWO_PAIR = 7;
 
-	int MADE_BOARD_PAIR_PLUS_OVER_PAIR = 8;
+	int MADE_TOP_TWO_PAIR = 8;
 
-	int MADE_BOTTOM_TWO_PAIR = 9;
+	int MADE_SET = 9;
 
-	int MADE_TOP_AND_BOTTOM_TWO_PAIR = 10;
+	int MADE_STRAIGHT = 10;
 
-	int MADE_TOP_TWO_PAIR = 11;
+	int MADE_FLUSH = 11;
 
-	int MADE_BOARD_SET = 12;
+	int MADE_FULL_HOUSE = 12;
 
-	int MADE_SET = 13;
+	int MADE_FOUR_OF_A_KIND = 13;
 
-	int MADE_STRAIGHT = 14;
+	int MADE_STRAIGHT_FLUSH = 14;
 
-	int MADE_FLUSH = 15;
+	int MADE_ROYAL_FLUSH = 15;
 
-	int MADE_FULL_HOUSE = 16;
-
-	int MADE_FOUR_OF_A_KIND = 17;
-
-	int MADE_STRAIGHT_FLUSH = 18;
-
-	int MADE_ROYAL_FLUSH = 19;
-
-	int MADE_SIZE = 20;
-	int MADE_SHORT_SIZE = 16;
+	int MADE_SIZE = 16;
+	int MADE_SHORT_SIZE = 11;
 
 	// TODO addae for Rules but might be a good idea
 	int MADE_OVERCARDS = -1;
 	int MADE_ACE_HIGH = -2;
 	int MADE_POCKET_PAIR_BELOW_TP = -3;
 	int MADE_WEAK_PAIR = -4;
-	int MADE_TWO_PAIR = -5;
 
 	String[] MADE_ARRAY_ST = { "No hand", "Board Pair", "Bottom Pair", "Middle Pair", "Top Pair", "Over Pair",
-			"Board two Pair", "Board Pair + Under Pair", "Board Pair + Over Pair", "Bottom 2 pair",
-			"Top-Bottom 2 Pair", "Top 2 Pair", "Board Set", "Set", "Straight", "Flush", "Full house", "Four of a Kind",
-			"Straight flush", "Royal flush" };
+			"Bottom 2 Pair", "Top-Bottom 2 Pair", "Top 2 Pair", "Set", "Straight", "Flush", "Full house",
+			"Four of a Kind","Straight flush", "Royal flush" };
 
 	/*- *****************************************************************************
 	 * Draws
@@ -505,8 +495,8 @@ public interface Constants {
 	int DRAW_FLUSH_OESD = 5;
 
 	int DRAW_SIZE = 6;
-	
-// TODO addae for Rules but might be a good idea
+
+	// TODO addae for Rules but might be a good idea
 	int DRAW_FLUSH_PAIR = -1;
 	int DRAW_GUTSHOT_OESD_PAIR = -2;
 	int DRAW_GUTSHOT_HIGH = -3;
@@ -520,21 +510,19 @@ public interface Constants {
 	/*- *****************************************************************************
 	 *Rules
 	 ******************************************************************************/
-	 int RULE_OP_CHECK = 0;
- 	 int RULE_OP_BET1 = 1;
-	 int RULE_OP_BET2 = 2;
-	 int RULE_OP_BET3 = 3;
-	 int RULE_OP_BET4 = 4;
-	 int RULE_OP_ALLIN = 5;
-	 int RULE_OP_ACTIONS = 6;
+	int RULE_OP_CHECK = 0;
+	int RULE_OP_BET1 = 1;
+	int RULE_OP_BET2 = 2;
+	int RULE_OP_BET3 = 3;
+	int RULE_OP_BET4 = 4;
+	int RULE_OP_ALLIN = 5;
+	int RULE_OP_ACTIONS = 6;
 	/*- Returned Values. */
 
-	 int RULE_BET = 0;
-	 int RULE_CALL = 1;
-	 int RULE_ALLIN = 2;
-	 int RULE_NO_ACTION = 3;
-
-
+	int RULE_BET = 0;
+	int RULE_CALL = 1;
+	int RULE_ALLIN = 2;
+	int RULE_NO_ACTION = 3;
 
 	/*- *****************************************************************************
 	 * HLM analysis of Flop - High Medium Low

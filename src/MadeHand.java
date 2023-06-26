@@ -51,7 +51,7 @@
 * 
 ***************************************************************************************/
 
-public class Made implements Constants {
+public class MadeHand implements Constants {
 	int type;
 	boolean ok; // Is hand valid
 	Card[] cards = new Card[7];
@@ -76,7 +76,7 @@ public class Made implements Constants {
 	int result;
 
 	// Constructor
-	public Made() {
+	public MadeHand() {
 
 	}
 
@@ -358,13 +358,9 @@ public class Made implements Constants {
 		if (EvalData.boardPair && isPair()) {
 			return MADE_BOARD_PAIR;
 		}
-		if (EvalData.boardTwoPair && isTwoPair()) {
-			return MADE_BOARD_TWO_PAIR;
-		}
-		if (EvalData.boardSet && isSet()) {
-			return MADE_BOARD_SET;
-		}
-		return MADE_NONE;
+
+		
+	return MADE_NONE;
 	}
 
 	/*- ************************************************************************************
@@ -563,12 +559,9 @@ public class Made implements Constants {
 	
 	/*- ************************************************************************************/
 	int whatKindOfTwoPair() {
-		if (EvalData.boardPair) {
-			if (this.pair1Value >= EvalData.boardHighCardValue1) {
-				return MADE_BOARD_PAIR_PLUS_OVER_PAIR;
-			} else {
-				return MADE_BOARD_PAIR_PLUS_UNDER_PAIR;
-			}
+		if (EvalData.boardTwoPair) {
+			return MADE_NONE;
+			
 		}
 		if (this.pair1Value >= EvalData.boardHighCardValue1 && this.pair2Value >= EvalData.boardHighCardValue2) {
 			return MADE_TOP_TWO_PAIR;

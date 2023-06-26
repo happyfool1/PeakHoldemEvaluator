@@ -129,11 +129,22 @@ public class IndexArrayClassification implements Constants {
 			Logger.logError("ERROR HML index invalid " + EvalData.hmlIndexFlop);
 		}
 
-		flopType();
 		wetDry();
+		if (EvalData.boardArray[BOARD_WET]) {
+			EvalData.wetDryIndex = WET;
+		} else if (EvalData.boardArray[BOARD_DRY]) {
+			EvalData.wetDryIndex = DRY;
+		} else {
+			EvalData.wetDryIndex = NOT_WET_DRY;
+		}
 
-		boardIndexesFlop();
+		EvalData.flop1755Index = Flop1755Methods.getFlopIndex(EvalData.board[0], EvalData.board[1], EvalData.board[2]);
+		EvalData.typeOf1755Index = Flop1755Methods.lookupFlopType(EvalData.board[0], EvalData.board[1],
+				EvalData.board[2]);
 
+flopTextureC();
+
+		edMillerFlopType();
 		flopTextureSuitednessConnectedness();
 		flopTexturePairBroadway();
 		flopTextureStrengthSuitedness();
@@ -142,15 +153,9 @@ public class IndexArrayClassification implements Constants {
 		flopTextureValueSpreadX();
 		flopTextureA();
 		flopTexturB();
-		flopTexturC();
+		
 		flopTexturD();
 
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			if (EvalData.boardArray[i]) {
-				EvalData.wetDryIndex = i;
-				break;
-			}
-		}
 	}
 
 	/*- ************************************************************************************
@@ -171,35 +176,6 @@ public class IndexArrayClassification implements Constants {
 		if (EvalData.hmlIndexRiver == -1 || EvalData.hmlIndexRiver >= HML_RIVER_SIZE) {
 			Logger.logError("ERROR HML River index invalid " + EvalData.hmlIndexRiver);
 		}
-	}
-
-	/*- *****************************************************************************F
-	 * This method looks Calculate indexes for Flop and put in EvalData.
-	 * Somewhat still experimental. 
-	 * I will be testing to determine if these indexes are useful, running
-	 * millions of hands and determining how an index relates to best hand.
-	 * If there is good correlation then figure out howe to use.
-	 * 
-	 * Flop only.
-	 * 
-	 * EvalData is updated. 
-	 *		EvalData.sumOfHoleCardSuited 
-	 *		EvalData.sumOfHoleCardOffsuit   
-	 *		EvalData.sumOfHoleCardPair   	
-	 *		EvalData.sumOfFlopCards
-	  ******************************************************************************/
-	private static void boardIndexesFlop() {
-
-		// Sum of board values
-		EvalData.sumOfBoardValuesFlop = EvalData.board[0].value + EvalData.board[1].value + EvalData.board[2].value;
-
-		EvalData.sumOfHoleCardValues = EvalData.holeCard1.value + EvalData.holeCard2.value;
-
-		EvalData.flopIndex = Flop1755Methods.getFlopIndex(EvalData.board[0], EvalData.board[1], EvalData.board[2]);
-
-		EvalData.flop1755Index = EvalData.flopIndex;
-		EvalData.flopTypeOf1755 = Flop1755Methods.lookupFlopType(EvalData.board[0], EvalData.board[1],
-				EvalData.board[2]);
 	}
 
 	/*- *****************************************************************************
@@ -517,7 +493,7 @@ public class IndexArrayClassification implements Constants {
 	 * These are flops that lead to boards that tend to be won by straights, flushes, 
 	 * full houses and big two pair hands.
 	***************************************************************************************************/
-	private static void flopType() {
+	private static void edMillerFlopType() {
 		EvalData.type = TYPE_NONE;
 		// Type1 people either hit these flops hard, or not at all.
 		// K32 rainbow
@@ -545,8 +521,6 @@ public class IndexArrayClassification implements Constants {
 			EvalData.type = TYPE3;
 		}
 
-		EvalData.sumOfHandValuesFlop[EvalData.seat] = EvalData.both[0].value + EvalData.both[1].value
-				+ EvalData.both[2].value + EvalData.both[3].value + EvalData.both[4].value;
 	}
 
 	/*- *****************************************************************************
@@ -898,7 +872,7 @@ public class IndexArrayClassification implements Constants {
 		}
 
 		// Return the combined characterization as an integer
-		EvalData.suitednessConnectednessIndex = (suitType - 1) * 3 + connectivityType;
+		//EvalData.suitednessConnectednessIndex = (suitType - 1) * 3 + connectivityType;
 	}
 
 	/*- *****************************************************************************
@@ -942,7 +916,7 @@ public class IndexArrayClassification implements Constants {
 		int broadwayPotentialType;
 		int broadwayCount = 0;
 		for (int i = 0; i < 3; i++) {
-			if (EvalData.board[i].value >= TEN && EvalData.board[i].value  <= ACE) { // 10, J, Q, K, A
+			if (EvalData.board[i].value >= TEN && EvalData.board[i].value <= ACE) { // 10, J, Q, K, A
 				broadwayCount++;
 			}
 		}
@@ -1215,17 +1189,17 @@ public class IndexArrayClassification implements Constants {
 		// Calculate the gaps
 		int gap1 = EvalData.board[1].value - EvalData.board[0].value;
 		int gap2 = EvalData.board[2].value - EvalData.board[1].value;
-	
+
 		// Compare the gaps to determine the category
 		if (gap1 == 0 && gap2 == 0) {
 			return "Group 0";
-		} else if ((gap1 == 0 && gap2 == 0) ) {
+		} else if ((gap1 == 0 && gap2 == 0)) {
 			return "Group 1";
-		} else if ((gap1 == 1 && gap2 == 1)  ) {
+		} else if ((gap1 == 1 && gap2 == 1)) {
 			return "Group 2";
-		} else if ((gap1 == 0 && gap2 == 2) ) {
+		} else if ((gap1 == 0 && gap2 == 2)) {
 			return "Group 3";
-		} else if ((gap1 == 1 && gap2 == 2) ) {
+		} else if ((gap1 == 1 && gap2 == 2)) {
 			return "Group 4";
 		} else {
 			return "Group 5";
@@ -1331,34 +1305,107 @@ public class IndexArrayClassification implements Constants {
 	  Finally, we return the combined characterization of the flop.
 	
 	*****************************************************************************/
-	private static String flopTexturC() {
+	private static void flopTexturCX() {
 		// Determine suit type
-		String suitType;
-		if (EvalData.board[0].suit == EvalData.board[1].suit && EvalData.board[1].suit == EvalData.board[2].suit) {
-			suitType = "Monotone";
-		} else if (EvalData.board[0].suit == EvalData.board[1].suit || EvalData.board[1].suit == EvalData.board[2].suit
-				|| EvalData.board[0].suit == EvalData.board[2].suit) {
-			suitType = "Two-tone";
-		} else {
-			suitType = "Rainbow";
+		int suitedType = 0;
+		if (EvalData.boardF0) {
+			suitedType = 0;
+		} else if (EvalData.boardF2) {
+			suitedType = 1;
+		} else if (EvalData.boardF3) {
+			suitedType = 2;
 		}
 
 		// Determine connectivity type
-		String connectivityType;
-		if (EvalData.board[1].value - EvalData.board[0].value == 1
-				&& EvalData.board[2].value - EvalData.board[1].value == 1) {
-			connectivityType = "Connected";
-		} else if (EvalData.board[1].value - EvalData.board[0].value == 1
-				|| EvalData.board[2].value - EvalData.board[1].value == 1) {
-			connectivityType = "Semi-connected";
-		} else {
-			connectivityType = "Unconnected";
+		int connectivityType = 0;
+		if (EvalData.boardGap1_2 > 2 && EvalData.boardGap2_3 > 2) {
+			connectivityType = 0;
+		} else if (EvalData.boardGap1_2 == 2 && EvalData.boardGap2_3 == 2) {
+			connectivityType = 1;
+		} else if ((EvalData.boardGap1_2 == 1 && EvalData.boardGap2_3 == 2)
+				|| (EvalData.boardGap1_2 == 2 && EvalData.boardGap2_3 == 1)) {
+			connectivityType = 2;
+		} else if (EvalData.boardGap1_2 == 1 && EvalData.boardGap2_3 == 1) {
+			connectivityType = 3;
 		}
 
-		// Return the combined characterization
-		return suitType + " " + connectivityType;
+		int pairType = 0;
+		if (EvalData.boardPair) {
+			pairType = 1;
+		}
+
+		int aceType = 0;
+		if (EvalData.boardValue1 == ACE) {
+			aceType = 1;
+		}
+
+		int bigCardType = 0;
+		if (EvalData.boardValue1 < TEN) {
+			bigCardType = 0;
+		} else if (EvalData.boardValue1 >= TEN && EvalData.boardValue2 < TEN) {
+			bigCardType = 1;
+		} else if (EvalData.boardValue1 >= TEN && EvalData.boardValue2 >= TEN && EvalData.boardValue3 < TEN) {
+			bigCardType = 3;
+		} else if (EvalData.boardValue1 >= TEN && EvalData.boardValue2 >= TEN && EvalData.boardValue3 >= TEN) {
+			bigCardType = 4;
+		}
+		// Example not correct
+	String[] SCBPA_ST = {"Rainbow","2 Suited","3 Suited", "No Gaps","2 Gap 2 Gap","1 Gap 2 Gap","1 Gap 1 Gap", 
+		"No Pairs","1 Pairs","Ace High","All < Ten","1 > Ten","2 > Ten","3 > Ten"};
+	 
+		// How can  I combine the values suitedType connectivityType pairType aceType and bigCardType 
+		// into a single integer value and index a String array SCBPA_ST with string that represents 
+		// the combined characterization of the flop but with strings like Rainbow 2 Gap 2 Gap Ace high No Pairs 1 > Ten . ?
+		// show string array SCBPA_ST with string that represents the combined characterization of the flop 
+	      
+		//EvalData.suitedConnectedBigPairedAceIndex = suitedType + (connectivityType + 3) + (pairType + 4) + 
+		//+ (aceType + 5) + (bigCardType + 6);
+
+		// 2 + 3+3 + 4+1 + 5=1 + 6+4 = 25
+	
 	}
 
+
+
+static String[] SCBPA_ST = {"Rainbow, Not Connected, No Pair, Low Cards",
+                     "Rainbow, Not Connected, No Pair, High Card",
+                     "Rainbow, Not Connected, Pair, Low Cards",
+                     "Rainbow, Not Connected, Pair, High Card",
+                     "Rainbow, Connected, No Pair, Low Cards",
+                     "Rainbow, Connected, No Pair, High Card",
+                     "Rainbow, Connected, Pair, Low Cards",
+                     "Rainbow, Connected, Pair, High Card",
+                     "2 Suited, Not Connected, No Pair, Low Cards",
+                     "2 Suited, Not Connected, No Pair, High Card",
+                     "2 Suited, Not Connected, Pair, Low Cards",
+                     "2 Suited, Not Connected, Pair, High Card",
+                     "2 Suited, Connected, No Pair, Low Cards",
+                     "2 Suited, Connected, No Pair, High Card",
+                     "2 Suited, Connected, Pair, Low Cards",
+                     "2 Suited, Connected, Pair, High Card"};
+
+
+private static void flopTextureC() {
+    // Determine suit type
+    int suitedType = EvalData.boardF0 ? 0 : 1;
+
+    // Determine connectivity type
+    int connectivityType = (EvalData.boardGap1_2 > 2 && EvalData.boardGap2_3 > 2) ? 0 : 1;
+
+    // Determine pair type
+    int pairType = EvalData.boardPair ? 1 : 0;
+
+    // Determine big card type
+    int bigCardType = EvalData.boardValue1 >= TEN ? 1 : 0;
+
+    // Calculate the index
+    int combinedIndex = suitedType * 2 * 2 * 2 + connectivityType * 2 * 2 + pairType * 2 + bigCardType;
+
+    // Now combinedIndex can be used to index into the string array SCBPA_ST
+    String flopDescription = SCBPA_ST[combinedIndex];
+
+    // Do something with flopDescription...
+}
 	/*-***************************************************************************
 	* This method will classify a Flop.
 	* TODO

@@ -74,12 +74,12 @@ public class Showdown implements Constants {
 			EvalData.maxValue = EvalData.highCard1 + 808000;
 		} else if (max == MADE_STRAIGHT) {
 			EvalData.maxValue = EvalData.highCard1 + 806000;
-		} else if (max == MADE_BOARD_SET || max == MADE_SET) {
+		} else if (max ==  BOARD_SET || max == MADE_SET) {
 			EvalData.maxValue = EvalData.highCard1 + 804000;
-		} else if (max == MADE_BOARD_PAIR_PLUS_UNDER_PAIR || max == MADE_BOARD_PAIR_PLUS_OVER_PAIR
+		} else if (max ==  BOARD_PAIR  
 				|| max == MADE_BOTTOM_TWO_PAIR ||
 				max == MADE_TOP_TWO_PAIR || max == MADE_TOP_AND_BOTTOM_TWO_PAIR || max == MADE_BOTTOM_PAIR
-				|| max == MADE_BOARD_TWO_PAIR) {
+				|| max ==  BOARD_TWO_PAIR) {
 			EvalData.maxValue = 800000 + EvalData.highCard1 * 100 + EvalData.highCard2 * 10 + EvalData.kicker1;
 		} else if (max == MADE_BOARD_PAIR || max == MADE_BOTTOM_PAIR ||
 				max == MADE_MIDDLE_PAIR || max == MADE_TOP_PAIR

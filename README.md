@@ -1,55 +1,54 @@
-I'm sharing this code on GitHub so that everyone can freely use it. However, I request you to credit me if you incorporate it into your own project.
+ We've made some game-changing enhancements in our recent update. We've introduced three brand new interactive tools designed to improve your poker game:
 
-This project is used to analyze thousands or millions of simulated hands.
- Using a monte-carlo methodology determine characteristics of a Hold'em 
- 6-max no limit game. 
- Specifically to find ways to characterize a Flop, such as HML ( High Medium Low )
- which results in only 10 Flop types. A million or more hands are run, and for 
- each hand run the draws and made hands and other data is analyzed and collected
- in arrays which will be analyzed after a run is completed. 
- We analyze each street and Showdown.
- 
- This is not a final implementation. We will be experimenting continuously trying to find ways to characterize 
- a Flop that will result in  information on how best to play a hand. 
- For example for a Flop type:
-   It may result in a high percentage of made hands and we do not have a made hand.
-   It may result in a low percentage of made hands and we hve have a made hand.
-   It may result in a high percentage of strong draws.
-   It may result in a low percentage of strong draws.
-   It may result in a a high percentage of times that the made hand is the winning
-   hand at Showdown.
-   See the GUIAnalyzeMany Class.
+GUIAnalyzeIndexArrays – This cutting-edge tool simulates and analyses thousands of poker hands, evaluating various flop types based on the hands' results. It's our most critical feature in this update and will greatly help to identify key flop characteristics that can influence your gameplay strategy.
 
-There is a companion project PeakHoldemHandHistory that analyzes over ten million Pokerstars Hand History files
-to determine basically the same things and much more. It looks at things like how bet size effects how frequently a 
-player will call or fold. Far too many other things to describe here. It will be released here within a couple of
-months.
+GUI – A dynamic tool that enables you to choose hole cards and board cards and then runs an in-depth analysis of draws, made hands, and showdown potential.
 
-In support of this objective are several classes that do things like analyze the board and hole cards to determine
-draws and made hands. Useful just for itself. See the GUI Class.
+GUIEditRanges – A nifty tool that allows you to adjust hand ranges for preflop play, which is essential in creating a strategic approach.
 
-This code is a work in progress, almost finished. Its origins lie within the PeakHoldem 6-max Texas Hold'em product I started developing years ago. Unfortunately, due to health issues, I wasn't able to finish the product, even though it was nearly complete. PeakHoldem never saw an official launch.
+Please note that these tools are currently being perfected, and we appreciate your patience and feedback during this period.
 
-Now that my health has improved, I plan to finish this project and another one that analyzes Hand History. Despite these plans, I don't intend to commercially sell either of the projects.
+GUIAnalyzeIndexArrays is central to our mission of discovering valuable flop board characteristics to optimize your hand play strategy. With it, you can now run thousands of random hands, studying each player's hands at every stage (Flop, Turn, River, and Showdown). Once all hands have been played, the data is stored and analysed to help fine-tune your game strategy.
 
-Through both the PeakHoldemEvaluator and PeakHoldemHandHistory, my goal has been to present unique ways of analyzing poker hands. For instance, in Hand History, I've examined how different bet sizes affect a player's response and tried to figure out the optimal bet size for different outcomes. I'm conducting this analysis using a over 10 million hands.
+We've also debunked the conventional wisdom of characterizing flops as wet, dry, or neutral – a flawed and limited approach. Instead, we're exploring alternative, more accurate ways to characterize a flop, such as using High, Medium, Low (HML) rating systems, or evaluating connectivity, suitedness, card value, and pairs. Our goal is to offer better, evidence-based strategic options for players.
 
-In PeakHoldemEvaluator, I've tried to devise ways to categorize game boards, such as HML (High, Medium, Low), aiming to provide an alternative to the conventional wet/dry type of analysis. The objective is to determine the best strategy for playing hands on the 10 Flop HML types or the 1755 possible Flops.
+Our code is designed to be flexible and user-friendly, making the addition of new flop characterization algorithms quick and straightforward.
 
-Many Classes have been coded as part of this project, most of which have been fully tested. I don't want my effort on PeakHoldem to go to waste. Given that I don't plan to market it, I'll make most of the code publicly available. Some modifications will be needed to separate the code from PeakHoldem.
+In our upcoming update, expect to see new algorithms and features that suggest how to play a hand based on various scenarios: missing the flop, connecting with draws, or making hands. This guidance, although somewhat subjective, will be more grounded and precise as we continue refining our systems.
 
-There are multiple useful classes within this project that could aid you in your own projects, such as the deck and card classes. They're not exclusive to this project. For example, if you need to deal cards randomly, these classes can be of help.
+To help us in our mission, we've been using ChatGPT as an assistant, providing ideas for flop characterization and guiding hand play based on analysis.
 
-This project also introduces some novel Classes, containing preflop ranges and editors that were utilized in PeakHoldem and later generalized. These include the HandRange, HandRangeMultiple, EditRange, and GUIEditRange classes.
+The GUI tool will also boost your gaming experience. It's a fantastic experimental platform where you can select or randomize hole and board cards for in-depth analysis. Whether you want to play and analyse one hand or several, GUI provides the flexibility you need.
 
-The HandHistor class could be valuable, as it creates Hand History files resembling those from PokerStars, which can even be imported into Holdem Manager.
+GUIEditRanges offers another level of strategy refinement. Simulating 6-player preflop play, it uses hand ranges to determine play strategies based on position and betting sequence. You can adjust these ranges to suit your style or strategy, offering you greater control over your game.
 
-PeakHoldemEvaluator, which is part of this project, runs millions of hands, collecting information on various aspects like characterizing a Flop as HML or as one of 1755 possible Flops and assessing each flop's performance at Showdown.
+Additionally, keep an eye out for our upcoming project, PeakHoldemHandHistory, soon to be launched on GitHub. It offers detailed analysis of over 10 million PokerStars 6-max no limit $1/$ hand history files, delivering insights and strategic considerations that no other application currently provides. The information derived from this tool will feed into your gameplay, guiding your decisions based on real-world data.
 
-Another project, PeakHoldemSimulator, emulates a Texas Hold'em 6-max no limit game. It leverages this Class to evaluate the Hero's hand in the game, amassing detailed data. For opponents, it collects information only at Showdown when his hole cards are known. This simulator is unique as it is entirely controlled by external files editable by the user.
+Join us on this journey of poker mastery as we strive to provide you with the best analytical tools and strategic advice. Be prepared for some surprises along the way as we discover new insights into the game's dynamics. Stay tuned for our upcoming updates, and in the meantime, happy gaming!
 
-PeakHoldemHandHistory, analyzes over 10 million Hand History files, providing a deeper level of evaluation than existing tools like Holdem Manager.
 
-As for me, I'm an 80-year-old coder who wrote my first program in 1965, in machine language, no less. I spent 30 years working for IBM, during which I developed three compilers and contributed to the Fortran optimizer. Most of my career was in manufacturing engineering, and I was friends with the designer of the IBM PC. No one knows his name. Now retired, I continue to code to keep my mind active. I'm an old-timer learning new tricks.
+We are sharing our advanced poker analysis project code on GitHub for everyone to freely utilize. However, if you decide to use it in your own project, kindly remember to give due credit.
+
+This project is all about in-depth analysis of thousands, even millions, of simulated poker hands. By employing a Monte Carlo methodology, we can dive into the intricacies of a 6-max no-limit Hold'em game. Our main focus is to devise ways to categorize a flop, for example, using the High-Medium-Low (HML) method, resulting in only 10 flop types. For every hand run, we collate detailed data on draws, made hands, and other aspects for post-run analysis, covering every stage including the showdown.
+
+Please note that this project is constantly evolving as we persistently experiment to find the most informative ways to characterize a flop, thus guiding you to play your hand most effectively. Whether it's a scenario that leads to a high percentage of made hands, strong draws, or instances where the made hand becomes the winning hand at showdown, we're uncovering it all. Refer to the GUIAnalyzeMany Class for more insights.
+
+A companion project called PeakHoldemHandHistory is also in the pipeline, where we delve into over ten million PokerStars Hand History files, investigating factors such as the influence of bet size on a player's decision to call or fold, amongst many other aspects. Expect its release in a couple of months.
+
+Moreover, the project has several supporting classes that analyze the board and hole cards to determine draws and made hands. The GUI Class is particularly noteworthy.
+
+A bit of history about this work – its roots lie in the PeakHoldem 6-max Texas Hold'em product I started years ago. Due to health issues, the project was left incomplete, although it was nearly finished. Now, with improved health, I plan to complete this and the Hand History analysis project. However, I don't plan to commercialize them.
+
+With PeakHoldemEvaluator and PeakHoldemHandHistory, I aim to provide unique perspectives on poker hand analysis. A majority of the classes coded for this project are tested and will soon be available publicly.
+
+The code contains multiple useful classes that could support your projects, including deck and card classes. For instance, if you need to deal cards randomly, these classes can be of assistance.
+
+We're also introducing innovative classes with preflop ranges and editors, like HandRange, HandRangeMultiple, EditRange, and GUIEditRange, among others. The HandHistor class, which creates PokerStars-like Hand History files, could also prove to be beneficial.
+
+PeakHoldemEvaluator, a key part of this project, conducts detailed assessments of millions of hands. It characterizes flops either as HML or as one of the 1755 possible flops, and reviews each flop's performance at showdown.
+
+Another intriguing venture, PeakHoldemSimulator, replicates a 6-max no-limit Texas Hold'em game, using this Class to evaluate the Hero's hand in the game and gather extensive data.
+
+Finally, about me - I'm an 80-year-old coder who wrote my first program in 1965, in machine language. I spent 30 years at IBM, where I developed three compilers and contributed to the Fortran optimizer. Most of my career was in manufacturing engineering, test equipment, procedures, automation, and data collection.  I've been coding ever since to keep my mind active. Always learning, always evolving! I go way back. I was friends with the designer of the IBM PC. No one knows his name. Now retired, I continue to code to keep my mind active. I'm an old-timer learning new tricks.
 
 

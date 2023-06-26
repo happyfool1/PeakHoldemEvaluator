@@ -113,6 +113,13 @@ public class IndexArrayUpdate implements Constants {
 		++IndexArrays.madeFlop[EvalData.seat];
 		++IndexArrays.flopArraysCount;
 		++IndexArrays.boardArrayFlopCount;
+
+		++IndexArrays.wetDryDrawFlop[EvalData.wetDryIndex][EvalData.drawTypeFlop[EvalData.seat]];
+		++IndexArrays.wetDryMadeFlop[EvalData.wetDryIndex][EvalData.madeTypeFlop[EvalData.seat]];
+
+		++IndexArrays.typeOf1755DrawFlop[EvalData.typeOf1755Index][EvalData.drawTypeFlop[EvalData.seat]];
+		++IndexArrays.typeOf1755MadeFlop[EvalData.typeOf1755Index][EvalData.madeTypeFlop[EvalData.seat]];
+
 	}
 
 	/*-  ******************************************************************************
@@ -164,6 +171,10 @@ public class IndexArrayUpdate implements Constants {
 				++IndexArrays.hmlShowdownRiver[EvalData.hmlIndexRiver][EvalData.showdownHand[i]];
 				++IndexArrays.hmlShowdownMadeWinsRiver[EvalData.hmlIndexRiver][EvalData.showdownHand[i]];
 				++IndexArrays.hmlShowdownMadeWinsRiver[EvalData.hmlIndexFlop][EvalData.showdownHand[i]];
+
+				++IndexArrays.wetDryShowdownFlop[EvalData.wetDryIndex][EvalData.showdownHand[i]];
+				++IndexArrays.typeOf1755ShowdownFlop[EvalData.typeOf1755Index][EvalData.showdownHand[i]];
+
 				++IndexArrays.showdownCount;
 			}
 		}
@@ -173,6 +184,7 @@ public class IndexArrayUpdate implements Constants {
 				++IndexArrays.hmlDrawFlopToMadeWon[EvalData.hmlIndexFlop][EvalData.drawTypeFlop[i]][EvalData.showdownHand[i]];
 				++IndexArrays.hmlMadeTurnToMadeWon[EvalData.hmlIndexTurn][EvalData.madeTypeTurn[i]][EvalData.showdownHand[i]];
 				++IndexArrays.hmlDrawTurnToMadeWon[EvalData.hmlIndexTurn][EvalData.drawTypeTurn[i]][EvalData.showdownHand[i]];
+
 			}
 		}
 	}

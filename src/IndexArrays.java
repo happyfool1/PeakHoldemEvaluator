@@ -70,7 +70,7 @@ public class IndexArrays implements Constants {
 		}
 
 		// Wet / Dry
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < WET_DRY_SIZE; i++) {
 			for (int j = 0; j < DRAW_SIZE; j++) {
 				wetDryDrawFlop[i][j] = 0;
 			}
@@ -79,7 +79,7 @@ public class IndexArrays implements Constants {
 				wetDryShowdownFlop[i][j] = 0;
 			}
 		}
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < WET_DRY_SIZE; i++) {
 			for (int j = 0; j < DRAW_SIZE; j++) {
 				wetDryDrawTurn[i][j] = 0;
 			}
@@ -88,7 +88,7 @@ public class IndexArrays implements Constants {
 				wetDryShowdownTurn[i][j] = 0;
 			}
 		}
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i <WET_DRY_SIZE; i++) {
 			for (int j = 0; j < DRAW_SIZE; j++) {
 				wetDryDrawRiver[i][j] = 0;
 			}
@@ -199,7 +199,6 @@ public class IndexArrays implements Constants {
 				for (int k = 0; k < MADE_SIZE; k++) {
 					hmlMadeFlopToMadeRiver[i][j][k] = 0;
 					hmlMadeFlopToMadeWon[i][j][k] = 0;
-					;
 				}
 			}
 		}
@@ -208,7 +207,6 @@ public class IndexArrays implements Constants {
 				for (int k = 0; k < MADE_SIZE; k++) {
 					hmlDrawTurnToMadeRiver[i][j][k] = 0;
 					hmlDrawTurnToMadeWon[i][j][k] = 0;
-					;
 				}
 			}
 		}
@@ -217,10 +215,79 @@ public class IndexArrays implements Constants {
 				for (int k = 0; k < MADE_SIZE; k++) {
 					hmlMadeTurnToMadeRiver[i][j][k] = 0;
 					hmlMadeTurnToMadeWon[i][j][k] = 0;
-					;
 				}
 			}
 		}
+
+		// Wet DRy
+		for (int i = 0; i < WET_DRY_SIZE; i++) {
+			for (int j = 0; j < DRAW_SIZE; j++) {
+				for (int k = 0; k < MADE_SIZE; k++) {
+					wetDryDrawFlopToMadeRiver[i][j][k] = 0;
+					wetDryDrawFlopToMadeWon[i][j][k] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < WET_DRY_SIZE; i++) {
+			for (int j = 0; j < MADE_SIZE; j++) {
+				for (int k = 0; k < MADE_SIZE; k++) {
+					wetDryMadeFlopToMadeRiver[i][j][k] = 0;
+					wetDryMadeFlopToMadeWon[i][j][k] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < WET_DRY_SIZE; i++) {
+			for (int j = 0; j < DRAW_SIZE; j++) {
+				for (int k = 0; k < MADE_SIZE; k++) {
+					wetDryDrawTurnToMadeRiver[i][j][k] = 0;
+					wetDryDrawTurnToMadeWon[i][j][k] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < WET_DRY_SIZE; i++) {
+			for (int j = 0; j < MADE_SIZE; j++) {
+				for (int k = 0; k < MADE_SIZE; k++) {
+					wetDryMadeTurnToMadeRiver[i][j][k] = 0;
+					wetDryMadeTurnToMadeWon[i][j][k] = 0;
+				}
+			}
+		}
+
+		// TYpe of 1755
+		for (int i = 0; i < TYPE_OF_1755_SIZE; i++) {
+			for (int j = 0; j < DRAW_SIZE; j++) {
+				for (int k = 0; k < MADE_SIZE; k++) {
+					typeOf1755DrawFlopToMadeRiver[i][j][k] = 0;
+					typeOf1755DrawFlopToMadeWon[i][j][k] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < TYPE_OF_1755_SIZE; i++) {
+			for (int j = 0; j < MADE_SIZE; j++) {
+				for (int k = 0; k < MADE_SIZE; k++) {
+					typeOf1755MadeFlopToMadeRiver[i][j][k] = 0;
+					typeOf1755MadeFlopToMadeWon[i][j][k] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < TYPE_OF_1755_SIZE; i++) {
+			for (int j = 0; j < DRAW_SIZE; j++) {
+				for (int k = 0; k < MADE_SIZE; k++) {
+					typeOf1755DrawTurnToMadeRiver[i][j][k] = 0;
+					typeOf1755DrawTurnToMadeWon[i][j][k] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < TYPE_OF_1755_SIZE; i++) {
+			for (int j = 0; j < MADE_SIZE; j++) {
+				for (int k = 0; k < MADE_SIZE; k++) {
+					typeOf1755MadeTurnToMadeRiver[i][j][k] = 0;
+					typeOf1755MadeTurnToMadeWon[i][j][k] = 0;
+				}
+			}
+		}
+
+		
 
 		hmlCountFlop = 0;
 		hmlCountTurn = 0;
@@ -276,17 +343,17 @@ public class IndexArrays implements Constants {
 	static int[][] hmlShowdownMadeWinsRiver = new int[HML_RIVER_SIZE][MADE_SIZE];
 
 	// Wet / Dry
-	static int[][] wetDryDrawFlop = new int[4][DRAW_SIZE];
-	static int[][] wetDryMadeFlop = new int[4][MADE_SIZE];
-	static int[][] wetDryShowdownFlop = new int[4][MADE_SIZE];
+	static int[][] wetDryDrawFlop = new int[WET_DRY_SIZE][DRAW_SIZE];
+	static int[][] wetDryMadeFlop = new int[WET_DRY_SIZE][MADE_SIZE];
+	static int[][] wetDryShowdownFlop = new int[WET_DRY_SIZE][MADE_SIZE];
 
-	static int[][] wetDryDrawTurn = new int[4][DRAW_SIZE];
-	static int[][] wetDryMadeTurn = new int[4][MADE_SIZE];
-	static int[][] wetDryShowdownTurn = new int[4][MADE_SIZE];
+	static int[][] wetDryDrawTurn = new int[WET_DRY_SIZE][DRAW_SIZE];
+	static int[][] wetDryMadeTurn = new int[WET_DRY_SIZE][MADE_SIZE];
+	static int[][] wetDryShowdownTurn = new int[WET_DRY_SIZE][MADE_SIZE];
 
-	static int[][] wetDryDrawRiver = new int[4][DRAW_SIZE];
-	static int[][] wetDryMadeRiver = new int[4][MADE_SIZE];
-	static int[][] wetDryShowdownRiver = new int[4][MADE_SIZE];
+	static int[][] wetDryDrawRiver = new int[WET_DRY_SIZE][DRAW_SIZE];
+	static int[][] wetDryMadeRiver = new int[WET_DRY_SIZE][MADE_SIZE];
+	static int[][] wetDryShowdownRiver = new int[WET_DRY_SIZE][MADE_SIZE];
 
 	// typeOf1755
 	static int[][] typeOf1755DrawFlop = new int[TYPE_OF_1755_SIZE][DRAW_SIZE];
@@ -381,6 +448,28 @@ public class IndexArrays implements Constants {
 	static int[][][] hmlDrawTurnToMadeWon = new int[HML_TURN_SIZE][DRAW_SIZE][MADE_SIZE];
 	static int[][][] hmlMadeFlopToMadeWon = new int[HML_FLOP_SIZE][MADE_SIZE][MADE_SIZE];
 	static int[][][] hmlMadeTurnToMadeWon = new int[HML_TURN_SIZE][MADE_SIZE][MADE_SIZE];
+
+	static int[][][] wetDryDrawFlopToMadeRiver = new int[WET_DRY_SIZE][DRAW_SIZE][MADE_SIZE];
+	static int[][][] wetDryDrawTurnToMadeRiver = new int[WET_DRY_SIZE][DRAW_SIZE][MADE_SIZE];
+	static int[][][] wetDryMadeFlopToMadeRiver = new int[WET_DRY_SIZE][MADE_SIZE][MADE_SIZE];
+	static int[][][] wetDryMadeTurnToMadeRiver = new int[WET_DRY_SIZE][MADE_SIZE][MADE_SIZE];
+
+	static int[][][] wetDryDrawFlopToMadeWon = new int[WET_DRY_SIZE][DRAW_SIZE][MADE_SIZE];
+	static int[][][] wetDryDrawTurnToMadeWon = new int[WET_DRY_SIZE][DRAW_SIZE][MADE_SIZE];
+	static int[][][] wetDryMadeFlopToMadeWon = new int[WET_DRY_SIZE][MADE_SIZE][MADE_SIZE];
+	static int[][][] wetDryMadeTurnToMadeWon = new int[WET_DRY_SIZE][MADE_SIZE][MADE_SIZE];
+
+	static int[][][] typeOf1755DrawFlopToMadeRiver = new int[TYPE_OF_1755_SIZE][DRAW_SIZE][MADE_SIZE];
+	static int[][][] typeOf1755DrawTurnToMadeRiver = new int[TYPE_OF_1755_SIZE][DRAW_SIZE][MADE_SIZE];
+	static int[][][] typeOf1755MadeFlopToMadeRiver = new int[TYPE_OF_1755_SIZE][MADE_SIZE][MADE_SIZE];
+	static int[][][] typeOf1755MadeTurnToMadeRiver = new int[TYPE_OF_1755_SIZE][MADE_SIZE][MADE_SIZE];
+
+	static int[][][] typeOf1755DrawFlopToMadeWon = new int[TYPE_OF_1755_SIZE][DRAW_SIZE][MADE_SIZE];
+	static int[][][] typeOf1755DrawTurnToMadeWon = new int[TYPE_OF_1755_SIZE][DRAW_SIZE][MADE_SIZE];
+	static int[][][] typeOf1755MadeFlopToMadeWon = new int[TYPE_OF_1755_SIZE][MADE_SIZE][MADE_SIZE];
+	static int[][][] typeOf1755MadeTurnToMadeWon = new int[TYPE_OF_1755_SIZE][MADE_SIZE][MADE_SIZE];
+
+
 
 	/*-  ***********************************************************************************
 	* Number of hands counted, not games

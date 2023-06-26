@@ -30,7 +30,7 @@ public class EvalData implements Constants {
 	static Card holeCards[][] = new Card[PLAYERS][2];
 	static int[] bothIndexs = new int[PLAYERS];
 	static Draw[] draw = { new Draw(), new Draw(), new Draw(), new Draw(), new Draw(), new Draw() };
-	static Made[] hand = { new Made(), new Made(), new Made(), new Made(), new Made(), new Made() };
+	static MadeHand[] hand = { new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand() };
 	static Card holeCard1 = null; // Copy from Hands for active seat
 	static Card holeCard2 = null;
 	static int[] handIndexes = new int[PLAYERS];
@@ -204,10 +204,10 @@ public class EvalData implements Constants {
 	/*-  ************************************************************************************* 
 	 For the hand currently being evaluated, inderxed by player number, 
 	* A single int value is saved for each player not folded for each street.
-	* The type is the larger id fhere is more than one.
+	* The type is the larger if there is more than one.
 	* See Constamts MADE_ and DRAW_ for details.
 	*************************************************************************************** */
-	 static int[] madeTypeFlop = new int[PLAYERS];
+	static int[] madeTypeFlop = new int[PLAYERS];
 	static int[] madeTypeTurn = new int[PLAYERS];
 	static int[] madeTypeRiver = new int[PLAYERS];
 	static int[] drawTypeFlop = new int[PLAYERS];
@@ -281,27 +281,24 @@ public class EvalData implements Constants {
 	static int hmlIndexFlop = -1;
 	static int hmlIndexTurn = -1;
 	static int hmlIndexRiver = -1;
-	static int[] sumOfHandValuesFlop = new int[PLAYERS];
-	static int sumOfBoardValuesFlop = -1;
-	static int sumOfHoleCardValues = -1;
 	static int wetDryIndex = -1;
+	static int typeOf1755Index = -1; // Type of 1755 flop
 
-	static int bestFlopIndex = -1; // Index into drawAndMadeArray for Flop
-	static int bestTurnIndex = -1; // Index into boardArray for Turn
-	static int bestRiverIndex = -1; // Index into boardArray for River
-	static int handIndex = -1; // Hole cards
-	static int hmlIndex = -1; // Index into HMLArray
 	static int flop1755Index = -1; // Index into array of 1755 Flops, all possible
-	static int flopTypeOf1755 = -1; // Type of 1755 flop
+	static int suitedConnectedBigPairedAceIndex = -1;
 
-	static int suitednessConnectednessIndex = -1;
+	
 	static int pairBroadwayIndex = -1;
 	static int strengthSuitednessIndex = -1;
 	static int distributionFlushPotentialIndex = -1;
 	static int connectednessValueIndex = -1;
 
+	static int bestFlopIndex = -1; // Index into drawAndMadeArray for Flop
+	static int bestTurnIndex = -1; // Index into boardArray for Turn
+	static int bestRiverIndex = -1; // Index into boardArray for River
+	static int handIndex = -1; // Hole cards
+
 	// Array indexes
-	static int flopIndex = -1;
 	static int boardArrayIndex = -1;
 	/*-  **************************************************************************************
 	 * Results of hand analysis individual variables
@@ -515,7 +512,6 @@ public class EvalData implements Constants {
 	static void initialize() {
 
 		for (int i = 0; i < PLAYERS; i++) {
-			sumOfHandValuesFlop[i] = -1;
 			bothIndexs[i] = -1;
 			handIndexes[i] = -1;
 			hands[i] = "";
@@ -630,9 +626,6 @@ public class EvalData implements Constants {
 		bestTurnIndex = -1;
 		bestRiverIndex = -1;
 		handIndex = -1;
-		hmlIndex = -1;
-		flop1755Index = -1;
-		flopTypeOf1755 = -1;
 		winnerShowdown = -1;
 
 		cardCount = -1;

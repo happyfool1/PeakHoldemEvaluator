@@ -30,7 +30,7 @@ public class IndexArrayAnalysis implements Constants {
     /*- *************************************************************************
      * 
     *************************************************************************** */
-    static void analyze(IndexArray array){
+    static void analyze(IndexArrayDrawMadeWin array){
         
     }
 
