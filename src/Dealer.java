@@ -235,7 +235,6 @@ public class Dealer implements Constants {
 			EvalData.showdownRank[i] = -1;
 			EvalData.highCards1[i] = -1;
 			EvalData.highCards2[i] = -1;
-			EvalData.suits[i] = -1;
 			EvalData.kickers1[i] = -1;
 			EvalData.kickers2[i] = -1;
 			EvalData.kickers3[i] = -1;
@@ -252,34 +251,6 @@ public class Dealer implements Constants {
 	 * Initialize board global values
 	 ********************************************************************************/
 	static void boardGlobalValues() {
-		if (EvalData.street == FLOP) {
-			EvalData.boardValue1 = EvalData.board[0].value;
-			EvalData.boardValue2 = EvalData.board[1].value;
-			EvalData.boardValue3 = EvalData.board[2].value;
-			EvalData.boardGap1_2 = EvalData.boardValue1 - EvalData.boardValue2;
-			EvalData.boardGap2_3 = EvalData.boardValue2 - EvalData.boardValue3;
-		} else if (EvalData.street == TURN) {
-			EvalData.boardValue1 = EvalData.board[0].value;
-			EvalData.boardValue2 = EvalData.board[1].value;
-			EvalData.boardValue3 = EvalData.board[2].value;
-			EvalData.boardValue4 = EvalData.board[3].value;
-			EvalData.boardGap1_2 = EvalData.boardValue1 - EvalData.boardValue2;
-			EvalData.boardGap2_3 = EvalData.boardValue2 - EvalData.boardValue3;
-			EvalData.boardGap3_4 = EvalData.boardValue3 - EvalData.boardValue4;
-			EvalData.turnTexture = -1;
-
-		} else if (EvalData.street == RIVER) {
-			EvalData.boardValue1 = EvalData.board[0].value;
-			EvalData.boardValue2 = EvalData.board[1].value;
-			EvalData.boardValue3 = EvalData.board[2].value;
-			EvalData.boardValue4 = EvalData.board[3].value;
-			EvalData.boardValue5 = EvalData.board[4].value;
-			EvalData.boardGap1_2 = EvalData.boardValue1 - EvalData.boardValue2;
-			EvalData.boardGap2_3 = EvalData.boardValue2 - EvalData.boardValue3;
-			EvalData.boardGap3_4 = EvalData.boardValue3 - EvalData.boardValue4;
-			EvalData.boardGap4_5 = EvalData.boardValue4 - EvalData.boardValue5;
-		}
-
 		EvalData.boardAceHigh = false;
 		EvalData.boardPair = false;
 		EvalData.boardPairValue = -1;
@@ -304,13 +275,67 @@ public class Dealer implements Constants {
 		EvalData.boardStraightDraw = false;
 		EvalData.boardF4Draw = false;
 		EvalData.boardOesdDraw = false;
-
 		EvalData.gap0 = 0;
 		EvalData.gap1 = 0;
 		EvalData.gap2 = 0;
 		EvalData.gap0Score = 0;
 		EvalData.gap1Score = 0;
 		EvalData.gap2Score = 0;
+
+		if (EvalData.street == FLOP) {
+			EvalData.boardCards[0] = EvalData.board[0];
+			EvalData.boardCards[1] = EvalData.board[1];
+			EvalData.boardCards[2] = EvalData.board[2];
+			EvalData.boardCount = 3;
+			SortCards.quickSortCard(EvalData.boardCards, 0, 2);
+			// Board values
+			EvalData.boardValue1 = EvalData.board[0].value;
+			EvalData.boardValue2 = EvalData.board[1].value;
+			EvalData.boardValue3 = EvalData.board[2].value;
+			// Gaps between board cards
+			EvalData.boardGap1_2 = EvalData.boardValue1 - EvalData.boardValue2;
+			EvalData.boardGap2_3 = EvalData.boardValue2 - EvalData.boardValue3;
+			BoardAnalysis.doFlop();
+
+		} else if (EvalData.street == TURN) {
+			EvalData.boardCount = 4;
+			EvalData.boardCards[0] = EvalData.board[0];
+			EvalData.boardCards[1] = EvalData.board[1];
+			EvalData.boardCards[2] = EvalData.board[2];
+			EvalData.boardCards[3] = EvalData.board[3];
+			SortCards.quickSortCard(EvalData.boardCards, 0, 3);
+
+			// Board values
+			EvalData.boardValue1 = EvalData.board[0].value;
+			EvalData.boardValue2 = EvalData.board[1].value;
+			EvalData.boardValue3 = EvalData.board[2].value;
+			EvalData.boardValue4 = EvalData.board[3].value;
+			// Gaps between board cards
+			EvalData.boardGap1_2 = EvalData.boardValue1 - EvalData.boardValue2;
+			EvalData.boardGap2_3 = EvalData.boardValue2 - EvalData.boardValue3;
+			EvalData.boardGap3_4 = EvalData.boardValue3 - EvalData.boardValue4;
+			BoardAnalysis.doTurn();
+			EvalData.turnTexture = -1;
+		} else if (EvalData.street == RIVER) {
+			EvalData.boardCount = 5;
+			EvalData.boardCards[0] = EvalData.board[0];
+			EvalData.boardCards[1] = EvalData.board[1];
+			EvalData.boardCards[2] = EvalData.board[2];
+			EvalData.boardCards[3] = EvalData.board[3];
+			EvalData.boardCards[4] = EvalData.board[4];
+			SortCards.quickSortCard(EvalData.boardCards, 0, 4);
+			// Board values
+			EvalData.boardValue1 = EvalData.board[0].value;
+			EvalData.boardValue2 = EvalData.board[1].value;
+			EvalData.boardValue3 = EvalData.board[2].value;
+			EvalData.boardValue4 = EvalData.board[3].value;
+			EvalData.boardValue5 = EvalData.board[4].value;
+			EvalData.boardGap1_2 = EvalData.boardValue1 - EvalData.boardValue2;
+			EvalData.boardGap2_3 = EvalData.boardValue2 - EvalData.boardValue3;
+			EvalData.boardGap3_4 = EvalData.boardValue3 - EvalData.boardValue4;
+			EvalData.boardGap4_5 = EvalData.boardValue4 - EvalData.boardValue5;
+			BoardAnalysis.doRiver();
+		}
 	}
 
 	/*- ******************************************************************************

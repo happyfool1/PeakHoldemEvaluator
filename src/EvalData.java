@@ -30,7 +30,8 @@ public class EvalData implements Constants {
 	static Card holeCards[][] = new Card[PLAYERS][2];
 	static int[] bothIndexs = new int[PLAYERS];
 	static Draw[] draw = { new Draw(), new Draw(), new Draw(), new Draw(), new Draw(), new Draw() };
-	static MadeHand[] hand = { new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand() };
+	static MadeHand[] hand = { new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand(),
+			new MadeHand() };
 	static Card holeCard1 = null; // Copy from Hands for active seat
 	static Card holeCard2 = null;
 	static int[] handIndexes = new int[PLAYERS];
@@ -281,13 +282,11 @@ public class EvalData implements Constants {
 	static int hmlIndexFlop = -1;
 	static int hmlIndexTurn = -1;
 	static int hmlIndexRiver = -1;
-	static int wetDryIndex = -1;
-	static int typeOf1755Index = -1; // Type of 1755 flop
+	static int wetDryIndexFlop = -1;
+	static int typeOf1755IndexFlop = -1; // Type of 1755 flop
+	static int flop1755IndexFlop = -1; // Index into array of 1755 Flops, all possible
+	static int SCBPIndexFlop = -1; // Suited, Connected, Big card, Paired
 
-	static int flop1755Index = -1; // Index into array of 1755 Flops, all possible
-	static int suitedConnectedBigPairedAceIndex = -1;
-
-	
 	static int pairBroadwayIndex = -1;
 	static int strengthSuitednessIndex = -1;
 	static int distributionFlushPotentialIndex = -1;
@@ -313,7 +312,6 @@ public class EvalData implements Constants {
 	static int[] showdownHand = new int[PLAYERS];
 	static int[] highCards1 = new int[PLAYERS];
 	static int[] highCards2 = new int[PLAYERS];
-	static int[] suits = new int[PLAYERS];
 	static int[] kickers1 = new int[PLAYERS];
 	static int[] kickers2 = new int[PLAYERS];
 	static int[] kickers3 = new int[PLAYERS];
@@ -458,19 +456,7 @@ public class EvalData implements Constants {
 	/*- **************************************************************************** 
 	* Combined hole cards and board
 	*******************************************************************************/
-	static boolean bothGutshotDraw = false;
-	static boolean bothFlushDraw = false;
-	static boolean bothStraightDraw = false;
-	static boolean bothOesdDraw = false;
-	static boolean bothFlush = false;
-	static boolean bothStraight = false;
-	static boolean bothStraightAce = false;
-	static boolean bothNone = false;
-	static boolean bothPair = false;
-	static boolean both2Pair = false;
-	static boolean bothSet = false;
-	static boolean bothQuad = false;
-	static boolean bothFull = false;
+	
 	static boolean flopRainbow = false;
 	static boolean flop2Suited = false;
 	static boolean flop3Suited = false;
@@ -541,7 +527,6 @@ public class EvalData implements Constants {
 			showdownRank[i] = -1;
 			highCards1[i] = -1;
 			highCards2[i] = -1;
-			suits[i] = -1;
 			kickers1[i] = -1;
 			kickers2[i] = -1;
 			kickers3[i] = -1;
@@ -576,16 +561,6 @@ public class EvalData implements Constants {
 		}
 		for (int i = 0; i < FLOP_INDEX_SIZE; i++) {
 			flopArray[i] = false;
-		}
-
-		if (street == FLOP) {
-			for (int i = 0; i < PLAYERS; i++) {
-				// drawTypeFlop[i] = -1;
-				// drawTypeTurn[i] = -1;
-				// madeTypeFlop[i] = -1;
-				// madeTypeTurn[i] = -1;
-				// madeTypeRiver[i] = -1;
-			}
 		}
 
 		maxValue = -1;
@@ -663,60 +638,6 @@ public class EvalData implements Constants {
 		anyPaired = false;
 		straight = false;
 		flush = false;
-
-		boardAceHigh = false;
-		boardPair = false;
-		boardPairValue = -1;
-		boardTwoPair = false;
-		boardTwoPairValue1 = -1;
-		boardTwoPairValue2 = -1;
-		boardSet = false;
-		boardSetValue = -1;
-		boardHighCard = false;
-		boardHighCardValue = -1;
-		boardF0 = false;
-		boardF2 = false;
-		boardF3 = false;
-		boardF4 = false;
-		boardF4Draw = false;
-		boardFlushDraw = false;
-		boardStraightDraw = false;
-		boardOesdDraw = false;
-
-		flopHighCards = false;
-		flopOverCards = false;
-		flopAceHigh = false;
-		flopHoleCardPairedWithBoard = false;
-		flopPocketPair = false;
-		flopOverPair = false;
-		flopWeakPair = false;
-		flopMiddlePair = false;
-		flopBoardPair = false;
-		flopSet = false;
-		flopPaired = false;
-
-		bothGutshotDraw = false;
-		bothFlushDraw = false;
-		bothStraightDraw = false;
-		bothOesdDraw = false;
-		bothFlush = false;
-		bothStraight = false;
-		bothStraightAce = false;
-		bothNone = false;
-		bothPair = false;
-		both2Pair = false;
-		bothSet = false;
-		bothQuad = false;
-		bothFull = false;
-		flopRainbow = false;
-		flop2Suited = false;
-		flop3Suited = false;
-		gap0 = -1;
-		gap1 = -1;
-		gap2 = -1;
-		gap0Score = -1;
-		gap1Score = -1;
-		gap2Score = -1;
 		handsToPlay = 0;
 		interactive = false;
 

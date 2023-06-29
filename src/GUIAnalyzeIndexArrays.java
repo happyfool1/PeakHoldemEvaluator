@@ -41,9 +41,6 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
     *   hand at Showdown.
     *   And many more.
     *
-    *
-    *   
-    * 
     * @author PEAK_
     ***************************************************************************** */
 
@@ -99,35 +96,7 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
     private static final JCheckBox hmlMadeRiver = new JCheckBox("HHHML River Made Hand");
     private static final JCheckBox hmlShowdownRiver = new JCheckBox("HHHML River Showdown");
 
-    private JPanel panelCheckBoxesSumOfBoardCardsFlop;
-    private static final JCheckBox sumOfBoardCardsDrawFlop = new JCheckBox("Flop Sum Of Board Cards Made Hand");
-    private static final JCheckBox sumOfBoardCardsMadeFlop = new JCheckBox("Flop Sum Of BoardCards Made Hand");
-    private static final JCheckBox sumOfBoardCardsShowdownFlop = new JCheckBox("Flop Sum of Board Cards Showdown");
-
-    private JPanel panelCheckBoxesSumOfBoardCardsTurn;
-    private static final JCheckBox sumOfBoardCardsMadeTurn = new JCheckBox("Turn Sum Of BoardCards Made Hand");
-    private static final JCheckBox sumOfBoardCardsShowdownTurn = new JCheckBox("Turn Sum of Board Cards Showdown");
-
-    private JPanel panelCheckBoxesSumOfBoardCardsRiver;
-    private static final JCheckBox sumOfBoardCardsDrawRiver = new JCheckBox("River Sum Of Board Cards Made Hand");
-    private static final JCheckBox sumOfBoardCardsMadeRiver = new JCheckBox("River Sum Of BoardCards Made Hand");
-    private static final JCheckBox sumOfBoardCardsShowdownRiver = new JCheckBox("River Sum of Board Cards Showdown");
-
-    private JPanel panelCheckBoxesTypeFlop;
-    private static final JCheckBox typeDrawFlop = new JCheckBox("Type Draw");
-    private static final JCheckBox typeMadeFlop = new JCheckBox("Type Made Hand");
-    private static final JCheckBox typeShowdownFlop = new JCheckBox("Type Showdown");
-
-    private JPanel panelCheckBoxesTypeTurn;
-    private static final JCheckBox typeDrawTurn = new JCheckBox("Type Draw");
-    private static final JCheckBox typeMadeTurn = new JCheckBox("Type Made Hand");
-    private static final JCheckBox typeShowdownTurn = new JCheckBox("Type Showdown");
-
-    private JPanel panelCheckBoxesTypeRiver;
-    private static final JCheckBox typeMadeRiver = new JCheckBox("Type Made Hand");
-    private static final JCheckBox typeShowdownRiver = new JCheckBox("Type Showdown");
-
-    private JPanel panelCheckBoxesWetDryFlop;
+     private JPanel panelCheckBoxesWetDryFlop;
     private static final JCheckBox wetDryDrawFlop = new JCheckBox("Wet Dry Draw");
     private static final JCheckBox wetDryMadeFlop = new JCheckBox("Wet Dry Made Hand");
     private static final JCheckBox wetDryShowdownFlop = new JCheckBox("Wet Dry Showdown");
@@ -140,48 +109,6 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
     private JPanel panelCheckBoxesWetDryRiver;
     private static final JCheckBox wetDryMadeRiver = new JCheckBox("Wet Dry Made Hand");
     private static final JCheckBox wetDryShowdownRiver = new JCheckBox("Wet Dry Showdown");
-
-    private JPanel panelpanelCheckBoxesIndexFlop;
-    private static final JCheckBox indexesDrawFlop = new JCheckBox("Flop Indexes Draw");
-    private static final JCheckBox indexesMadeFlop = new JCheckBox("Flop Indexes Made Hand");
-    private static final JCheckBox indexesShowdownFlop = new JCheckBox("Flop Indexes Showdown");
-
-    private JPanel panelCheckBoxesIndexsTurn;
-    private static final JCheckBox indexesDrawTurn = new JCheckBox("Turn Indexes Draw");
-    private static final JCheckBox indexesMadeTurn = new JCheckBox("Turn Indexes Made Hand");
-    private static final JCheckBox indexesShowdownTurn = new JCheckBox("Turn Indexes Showdown");
-
-    private JPanel panelCheckBoxesIndexRiver;
-    private static final JCheckBox indexesMadeRiver = new JCheckBox("River Indexes Made Hand");
-    private static final JCheckBox indexesShowdownRiver = new JCheckBox("River Indexes Showdown");
-
-    private JPanel panelCheckBoxesSumOfHoleCardsFlop;
-    private static final JCheckBox sumOfHoleCardsDrawFlop = new JCheckBox("Flop Indexes Draw");
-    private static final JCheckBox sumOfHoleCardsMadeFlop = new JCheckBox("Flop Indexes Made Hand");
-    private static final JCheckBox sumOfHoleCardsShowdownFlop = new JCheckBox("Flop Indexes Showdown");
-
-    private JPanel panelCheckBoxesSumOfHoleCardsTurn;
-    private static final JCheckBox sumOfHoleCatdsDrawTurn = new JCheckBox("Turn Indexes Draw");
-    private static final JCheckBox sumOfHoleCardsMadeTurn = new JCheckBox("Turn Indexes Made Hand");
-    private static final JCheckBox sumOfHoleCardsShowdownTurn = new JCheckBox("Turn Indexes Showdown");
-
-    private JPanel panelCheckBoxesSumOfHoleCardsRiver;
-    private static final JCheckBox sumOfHoleCardsMadeRiver = new JCheckBox("River Indexes Made Hand");
-    private static final JCheckBox sumOfHoleCardsShowdownRiver = new JCheckBox("River Indexes Showdown");
-
-    private JPanel panelCheckBoxesTypeHoleCardsFlop;
-    private static final JCheckBox typeHoleCatdsDrawFlop = new JCheckBox("Hole Cards Type Draw");
-    private static final JCheckBox typeHoleCardsMadeFlop = new JCheckBox("Hole Cards Type Made Hand");
-    private static final JCheckBox typeHoleCardsShowdownFlop = new JCheckBox("Hole Cards Type Showdown");
-
-    private JPanel panelCheckBoxesTypeHoleCardsTurn;
-    private static final JCheckBox typeHoleCatdsDrawTurn = new JCheckBox("Hole Cards Type Draw");
-    private static final JCheckBox typeHoleCardsMadeTurn = new JCheckBox("Hole Cards Type Made Hand");
-    private static final JCheckBox typeHoleCardsShowdownTurn = new JCheckBox("Hole Cards Type Showdown");
-
-    private JPanel panelCheckBoxesTypeHoleCardsRiver;
-    private static final JCheckBox typeHoleCardsMadeRiver = new JCheckBox("Hole Cards Type Made Hand");
-    private static final JCheckBox typeHoleCardsShowdownRiver = new JCheckBox("Hole Cards Type Showdown");
 
     private JPanel panelCheckBoxesTypeOf1755Flop;
     private static final JCheckBox typeOf1755DrawFlop = new JCheckBox("HML Flop Draw");
@@ -197,19 +124,19 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
     private static final JCheckBox typeOf1755MadeRiver = new JCheckBox("HML River Made Hand");
     private static final JCheckBox typeOf1755ShowdownRiver = new JCheckBox("HML River Showdown");
 
-    private JPanel panelCheckBoxesIndexFlop;
-    private static final JCheckBox indexDrawFlop = new JCheckBox("Flop INdex Draw");
-    private static final JCheckBox indexMadeFlop = new JCheckBox("Flop Index Made Hand");
-    private static final JCheckBox indexShowdownFlop = new JCheckBox("Flop Index Showdown");
+    private JPanel panelCheckBoxesSCBPFlop;
+    private static final JCheckBox SCBPDrawFlop = new JCheckBox("SCBP Flop Draw");
+    private static final JCheckBox SCBPMadeFlop = new JCheckBox("SCBP Flop Made Hand");
+    private static final JCheckBox SCBPShowdownFlop = new JCheckBox("SCBP Flop Showdown");
 
-    private JPanel panelCheckBoxesIndexTurn;
-    private static final JCheckBox indexDrawTurn = new JCheckBox("Turn Index Draw");
-    private static final JCheckBox indexMadeTurn = new JCheckBox("Turn Index Made Hand");
-    private static final JCheckBox indexShowdownTurn = new JCheckBox("Turn Index Showdown");
+    private JPanel panelCheckBoxesSCBPTurn;
+    private static final JCheckBox SCBP5DrawTurn = new JCheckBox("SCBP Turn Draw");
+    private static final JCheckBox SCBP5MadeTurn = new JCheckBox("SCBP Turn Made Hand");
+    private static final JCheckBox SCBP5ShowdownTurn = new JCheckBox("SCBP Turn Showdown");
 
-    private JPanel panelCheckBoxesRivereIndexRivere;
-    private static final JCheckBox indexMadeRivere = new JCheckBox("Rivere Index Made Hand");
-    private static final JCheckBox findexShowdownRivere = new JCheckBox("Rivere Index Showdown");
+    private JPanel panelCheckBoxesSCBPRiver;
+    private static final JCheckBox SCBP5MadeRiver = new JCheckBox("SCBP River Made Hand");
+    private static final JCheckBox SCBP5ShowdownRiver = new JCheckBox("SCBP River Showdown");
 
     private static final JButton run = new JButton("Run");
 
@@ -298,30 +225,15 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
         Border wetDryBorderFlop = BorderFactory.createTitledBorder("Flop Wet Dry Reports");
         panelCheckBoxesWetDryFlop.setBorder(wetDryBorderFlop);
 
-        panelCheckBoxesSumOfHoleCardsFlop = new JPanel(new GridLayout(1, 3));
-        panelCheckBoxesSumOfHoleCardsFlop.setBounds(300, 380, 450, 20);
-        Border sumOfHoleCardsFlopBorder = BorderFactory.createTitledBorder("Flop Sum of Hole Card Values Reports");
-        panelCheckBoxesSumOfHoleCardsFlop.setBorder(sumOfHoleCardsFlopBorder);
-
-        panelCheckBoxesSumOfBoardCardsFlop = new JPanel(new GridLayout(1, 3));
-        panelCheckBoxesSumOfBoardCardsFlop.setBounds(300, 380, 450, 20);
-        Border sumOfBoardCardsBorderFlop = BorderFactory.createTitledBorder("Flop Sum of Board Card Values Reports");
-        panelCheckBoxesSumOfBoardCardsFlop.setBorder(sumOfBoardCardsBorderFlop);
-
         panelCheckBoxesTypeOf1755Flop = new JPanel(new GridLayout(1, 3));
         panelCheckBoxesTypeOf1755Flop.setBounds(300, 380, 450, 20);
-        Border typeOf17ffBorderFlop = BorderFactory.createTitledBorder("Flop Type of 1755 Flop Reports");
+        Border typeOf17ffBorderFlop = BorderFactory.createTitledBorder("Flop Type of 1755 Reports");
         panelCheckBoxesTypeOf1755Flop.setBorder(typeOf17ffBorderFlop);
 
-        panelCheckBoxesIndexFlop = new JPanel(new GridLayout(1, 3));
-        panelCheckBoxesIndexFlop.setBounds(300, 380, 450, 20);
-        Border indexBorderFlop = BorderFactory.createTitledBorder("Flop Index calculated using gaps Reports");
-        panelCheckBoxesIndexFlop.setBorder(indexBorderFlop);
-
-        panelCheckBoxesTypeFlop = new JPanel(new GridLayout(1, 3));
-        panelCheckBoxesTypeFlop.setBounds(300, 380, 450, 20);
-        Border typFlopBorderFlop = BorderFactory.createTitledBorder("Ed Miller  Type Reports");
-        panelCheckBoxesTypeFlop.setBorder(typFlopBorderFlop);
+        panelCheckBoxesSCBPFlop = new JPanel(new GridLayout(1, 3));
+        panelCheckBoxesSCBPFlop.setBounds(300, 380, 450, 20);
+        Border SCBPBorderFlop = BorderFactory.createTitledBorder("Flop Type of SCBP Reports");
+        panelCheckBoxesSCBPFlop.setBorder(SCBPBorderFlop);
 
         hundred.setFont(fs);
         hundred.addActionListener(this);
@@ -448,72 +360,6 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
         panelCheckBoxesWetDryFlop.add(wetDryShowdownFlop);
         panelCheckBoxesWetDryFlop.setBackground(BEIGE);
 
-        indexDrawFlop.setFont(fs);
-        indexDrawFlop.setPreferredSize(new Dimension(20, 20));
-        indexDrawFlop.addActionListener(this);
-        indexDrawFlop.setSelected(false);
-        indexDrawFlop.setBackground(WHEAT);
-        panelCheckBoxesIndexFlop.add(indexDrawFlop);
-
-        indexMadeFlop.setFont(fs);
-        indexMadeFlop.setPreferredSize(new Dimension(20, 20));
-        indexMadeFlop.addActionListener(this);
-        indexMadeFlop.setSelected(false);
-        indexMadeFlop.setBackground(WHEAT);
-        panelCheckBoxesIndexFlop.add(indexMadeFlop);
-
-        indexShowdownFlop.setFont(fs);
-        indexShowdownFlop.setPreferredSize(new Dimension(20, 20));
-        indexShowdownFlop.addActionListener(this);
-        indexShowdownFlop.setSelected(false);
-        indexShowdownFlop.setBackground(WHEAT);
-        panelCheckBoxesIndexFlop.add(indexShowdownFlop);
-        panelCheckBoxesIndexFlop.setBackground(WHEAT);
-
-        sumOfHoleCardsDrawFlop.setFont(fs);
-        sumOfHoleCardsDrawFlop.setPreferredSize(new Dimension(20, 20));
-        sumOfHoleCardsDrawFlop.addActionListener(this);
-        sumOfHoleCardsDrawFlop.setSelected(false);
-        sumOfHoleCardsDrawFlop.setBackground(KHAKI);
-        panelCheckBoxesSumOfHoleCardsFlop.add(sumOfHoleCardsDrawFlop);
-
-        sumOfHoleCardsMadeFlop.setFont(fs);
-        sumOfHoleCardsMadeFlop.setPreferredSize(new Dimension(20, 20));
-        sumOfHoleCardsMadeFlop.addActionListener(this);
-        sumOfHoleCardsMadeFlop.setBackground(KHAKI);
-        sumOfHoleCardsMadeFlop.setSelected(false);
-        panelCheckBoxesSumOfHoleCardsFlop.add(sumOfHoleCardsMadeFlop);
-
-        sumOfHoleCardsShowdownFlop.setFont(fs);
-        sumOfHoleCardsShowdownFlop.setPreferredSize(new Dimension(20, 20));
-        sumOfHoleCardsShowdownFlop.addActionListener(this);
-        sumOfHoleCardsShowdownFlop.setSelected(false);
-        sumOfHoleCardsShowdownFlop.setBackground(KHAKI);
-        panelCheckBoxesSumOfHoleCardsFlop.add(sumOfHoleCardsShowdownFlop);
-        panelCheckBoxesSumOfHoleCardsFlop.setBackground(KHAKI);
-
-        sumOfBoardCardsDrawFlop.setFont(fs);
-        sumOfBoardCardsDrawFlop.setPreferredSize(new Dimension(20, 20));
-        sumOfBoardCardsDrawFlop.addActionListener(this);
-        sumOfBoardCardsDrawFlop.setSelected(false);
-        sumOfBoardCardsDrawFlop.setBackground(LIGHT_PINK);
-        panelCheckBoxesSumOfBoardCardsFlop.add(sumOfBoardCardsDrawFlop);
-
-        sumOfBoardCardsMadeFlop.setFont(fs);
-        sumOfBoardCardsMadeFlop.setPreferredSize(new Dimension(20, 20));
-        sumOfBoardCardsMadeFlop.addActionListener(this);
-        sumOfBoardCardsMadeFlop.setSelected(false);
-        sumOfBoardCardsMadeFlop.setBackground(LIGHT_PINK);
-        panelCheckBoxesSumOfBoardCardsFlop.add(sumOfBoardCardsMadeFlop);
-
-        sumOfBoardCardsShowdownFlop.setFont(fs);
-        sumOfBoardCardsShowdownFlop.setPreferredSize(new Dimension(20, 20));
-        sumOfBoardCardsShowdownFlop.addActionListener(this);
-        sumOfBoardCardsShowdownFlop.setSelected(false);
-        sumOfBoardCardsShowdownFlop.setBackground(LIGHT_PINK);
-        panelCheckBoxesSumOfBoardCardsFlop.add(sumOfBoardCardsShowdownFlop);
-        panelCheckBoxesSumOfBoardCardsFlop.setBackground(LIGHT_PINK);
-
         typeOf1755DrawFlop.setFont(fs);
         typeOf1755DrawFlop.setPreferredSize(new Dimension(20, 20));
         typeOf1755DrawFlop.addActionListener(this);
@@ -536,37 +382,35 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
         panelCheckBoxesTypeOf1755Flop.add(typeOf1755ShowdownFlop);
         panelCheckBoxesTypeOf1755Flop.setBackground(LIGHT_SKY_BLUE);
 
-        typeDrawFlop.setFont(fs);
-        typeDrawFlop.setPreferredSize(new Dimension(20, 20));
-        typeDrawFlop.addActionListener(this);
-        typeDrawFlop.setSelected(false);
-        typeDrawFlop.setBackground(THISTLE);
-        panelCheckBoxesTypeFlop.add(typeDrawFlop);
+     
+        SCBPDrawFlop.setFont(fs);
+        SCBPDrawFlop.setPreferredSize(new Dimension(20, 20));
+        SCBPDrawFlop.addActionListener(this);
+        SCBPDrawFlop.setSelected(false);
+        SCBPDrawFlop.setBackground(TAN);
+        panelCheckBoxesSCBPFlop.add(SCBPDrawFlop);
 
-        typeMadeFlop.setFont(fs);
-        typeMadeFlop.setPreferredSize(new Dimension(20, 20));
-        typeMadeFlop.addActionListener(this);
-        typeMadeFlop.setSelected(false);
-        typeMadeFlop.setBackground(THISTLE);
-        panelCheckBoxesTypeFlop.add(typeMadeFlop);
+        SCBPMadeFlop.setFont(fs);
+        SCBPMadeFlop.setPreferredSize(new Dimension(20, 20));
+        SCBPMadeFlop.addActionListener(this);
+        SCBPMadeFlop.setSelected(false);
+        SCBPMadeFlop.setBackground(TAN);
+        panelCheckBoxesSCBPFlop.add(SCBPMadeFlop);
 
-        typeShowdownFlop.setFont(fs);
-        typeShowdownFlop.setPreferredSize(new Dimension(20, 20));
-        typeShowdownFlop.addActionListener(this);
-        typeShowdownFlop.setSelected(false);
-        typeShowdownFlop.setBackground(THISTLE);
-        panelCheckBoxesTypeFlop.add(typeShowdownFlop);
-        panelCheckBoxesTypeFlop.setBackground(THISTLE);
+        SCBPShowdownFlop.setFont(fs);
+        SCBPShowdownFlop.setPreferredSize(new Dimension(20, 20));
+        SCBPShowdownFlop.addActionListener(this);
+        SCBPShowdownFlop.setSelected(false);
+        SCBPShowdownFlop.setBackground(TAN);
+        panelCheckBoxesSCBPFlop.add(SCBPShowdownFlop);
+        panelCheckBoxesSCBPFlop.setBackground(TAN);
+
 
         panelCheckBoxes.add(panelCheckBoxesHML);
         panelCheckBoxes.add(panelCheckBoxesHHML);
         panelCheckBoxes.add(panelCheckBoxesWetDryFlop);
         panelCheckBoxes.add(panelCheckBoxesTypeOf1755Flop);
-        // panelCheckBoxes.add(panelCheckBoxesHHHML);
-        // panelCheckBoxes.add(panelCheckBoxesIndexFlop);
-        // panelCheckBoxes.add(panelCheckBoxesSumOfHoleCardsFlop);
-        // panelCheckBoxes.add(panelCheckBoxesSumOfBoardCardsFlop);
-        // panelCheckBoxes.add(panelCheckBoxesTypeFlop);
+        panelCheckBoxes.add(panelCheckBoxesSCBPFlop);
 
         run.setFont(fc);
         run.setPreferredSize(new Dimension(15, 15));
@@ -691,6 +535,12 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
                 TYPE_OF_1755_ST, DRAW_ARRAY_ST,
                 MADE_ARRAY_ST);
 
+        IndexArrayDrawMadeWin SCBPFlop = new IndexArrayDrawMadeWin(IndexArrays.SCBPDrawFlop,
+                IndexArrays.SCBPMadeFlop,
+                IndexArrays.SCBPShowdownFlop,
+                SCBP_ST, DRAW_ARRAY_ST,
+                MADE_ARRAY_ST);
+
         IndexArrayReport reportFlop = new IndexArrayReport();
         if (hmlDrawFlop.isSelected()) {
             reportFlop.reportDraw(10, 100, "Flop Draws with HML Index", hmlFlop);
@@ -736,6 +586,17 @@ public class GUIAnalyzeIndexArrays extends JFrame implements ActionListener, Con
         }
         if (typeOf1755ShowdownFlop.isSelected()) {
             reportFlopTypeOf1755.reportShowdown(10, 600, "Flop  Showdown hands type of 1755 Index", typeOf1755Flop);
+        }
+
+        IndexArrayReport reportFlopSCBP = new IndexArrayReport();
+        if (SCBPDrawFlop.isSelected()) {
+           reportFlopSCBP .reportDraw(10, 100, "Flop Draws SCPB Index", SCBPFlop);
+        }
+        if (SCBPMadeFlop.isSelected()) {
+           reportFlopSCBP .reportMade(10, 400, "Flop  Made SCPB Index", SCBPFlop);
+        }
+        if (SCBPShowdownFlop.isSelected()) {
+           reportFlopSCBP .reportShowdown(10, 600, "Flop  Showdown hands SCPBIndex", SCBPFlop);
         }
 
     }

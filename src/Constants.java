@@ -477,7 +477,7 @@ public interface Constants {
 
 	String[] MADE_ARRAY_ST = { "No hand", "Board Pair", "Bottom Pair", "Middle Pair", "Top Pair", "Over Pair",
 			"Bottom 2 Pair", "Top-Bottom 2 Pair", "Top 2 Pair", "Set", "Straight", "Flush", "Full house",
-			"Four of a Kind","Straight flush", "Royal flush" };
+			"Four of a Kind", "Straight flush", "Royal flush" };
 
 	/*- *****************************************************************************
 	 * Draws
@@ -492,11 +492,9 @@ public interface Constants {
 
 	int DRAW_FLUSH = 4;
 
-	int DRAW_FLUSH_OESD = 5;
+	int DRAW_SIZE = 5;
 
-	int DRAW_SIZE = 6;
-
-	// TODO addae for Rules but might be a good idea
+	// TODO added for Rules but might be a good idea
 	int DRAW_FLUSH_PAIR = -1;
 	int DRAW_GUTSHOT_OESD_PAIR = -2;
 	int DRAW_GUTSHOT_HIGH = -3;
@@ -504,8 +502,8 @@ public interface Constants {
 	int DRAW_OESD_PAIR = -5;
 	int DRAW_GUTSHOT_PAIR = -6;
 
-	String[] DRAW_ARRAY_ST = { "No draw", "Gutshot", "Straight", "OESD", "Flush",
-			"Flush OESD" };
+	String[] DRAW_ARRAY_ST = { "No draw", "Gutshot", "Straight Draw", "OESD", "Flush Draw",
+	};
 
 	/*- *****************************************************************************
 	 *Rules
@@ -586,6 +584,27 @@ public interface Constants {
 	String[] HML_RIVER_ST = { "LLLLL", "MLLLL", "MMLLL", "MMMLL", "MMMML", "MMMMM", "HLLLL",
 			"HMLLL", "HMMLL", "HMMML",
 			"HMMMM", "HHLLL", "HHMLL", "HHMML", "HHMMM", "HHHLL", "HHHML", "HHHMM", "HHHHL", "HHHHM", "HHHHH" };
+
+	/*- *****************************************************************************
+	 * Suited, Connected, Big Card, Paired
+	 ******************************************************************************/
+	int SCBP_SIZE = 16;
+	String[] SCBP_ST = { "Rbw,Not Con,No Pair,Low Cards",
+			"Rbw,Not Con,No Pair,High Card",
+			"Rbw,Not Con,Pair,Low Cards",
+			"Rbw,Not Con,Pair,High Card",
+			"Rbw,Con,No Pair,Low Cards",
+			"Rbw,Con,No Pair,High Card",
+			"Rbw,Con,Pair,Low Cards",
+			"Rbw,Con,Pair,High Card",
+			"2 St,Not Con,No Pair,Low Cards",
+			"2 St,Not Con,No Pair,High Card",
+			"2 St,Not Con,Pair,Low Cards",
+			"2 St,Not Con,Pair,High Card",
+			"2 St,Con,No Pair,Low Cards",
+			"2 St,Con,No Pair,High Card",
+			"2 St,Con,Pair,Low Cards",
+			"2 St,Con,Pair,High Card" };
 
 	/*- ***************************************************************************
 	* Flop texture Suitedness and connectedness

@@ -159,7 +159,6 @@ public class Showdown implements Constants {
 				st += "Waited a long time for a Royal Flush";
 			}
 			case MADE_STRAIGHT_FLUSH -> {
-				EvalData.suits[EvalData.seat] = EvalData.suit;
 				st += new StringBuilder().append("Straight Flush high card ")
 						.append(Card.CARDS_REVERSE[EvalData.highCard1]).append(SUITS_ST[EvalData.suit]).toString();
 			}

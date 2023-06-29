@@ -138,9 +138,9 @@ public class Draw implements Constants {
 			EvalData.kicker2 = this.kicker2;
 			EvalData.kicker3 = this.kicker3;
 			if (EvalData.street == FLOP) {
-							EvalData.drawTypeFlop[EvalData.seat] = this.type;
+				EvalData.drawTypeFlop[EvalData.seat] = this.type;
 			} else if (EvalData.street == TURN) {
-							EvalData.drawTypeTurn[EvalData.seat] = this.type;
+				EvalData.drawTypeTurn[EvalData.seat] = this.type;
 			}
 		} else {
 			Crash.log("Draw");
@@ -187,7 +187,6 @@ public class Draw implements Constants {
 			case DRAW_STRAIGHT -> result = isStraight();
 			case DRAW_OESD -> result = isOESD();
 			case DRAW_FLUSH -> result = isFlush();
-			case DRAW_FLUSH_OESD -> result = isFlushOESD();
 			default -> Crash.log("Invalid draw type " + type);
 		}
 		finish(type);
@@ -291,12 +290,22 @@ public class Draw implements Constants {
 			addBiggerCards();
 		}
 		SortCards.quickSortValue(this.cards, 0, 4);
-		if (!(this.cards[0].value == ACE && this.cards[2].value != FIVE && this.cards[2].value == FOUR
-				&& this.cards[2].value == THREE && this.cards[2].value != TWO)) {
-			return false;
+		if (this.cards[0].value == ACE && this.cards[2].value == FOUR
+				&& this.cards[3].value == THREE && this.cards[4].value != TWO) {
+					this.highCard1 = ACE;
+			return true;
 		}
-		this.highCard1 = ACE;
-		return true;
+		// xxxx_ _xxxx   A_432 is straight draw
+		if (this.cards[0].value - this.cards[1].value == 1 && this.cards[1].value - this.cards[2].value == 1 &&
+				this.cards[2].value - this.cards[3].value == 1  ) {
+					this.highCard1 =this.cards[0].value;
+       		return true;
+		}
+		if (this.cards[1].value - this.cards[2].value == 1 && this.cards[2].value - this.cards[3].value == 1 && this.cards[3].value - this.cards[4].value == 1) {
+			this.highCard1 =this.cards[1].value;
+			return true;
+		}
+		return false;
 	}
 
 	/*- ************************************************************************************

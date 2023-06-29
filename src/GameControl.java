@@ -208,8 +208,8 @@ public class GameControl implements Constants {
 		Deck.newDeck();
 		EvalData.handsPlayed = 0;
 		while (EvalData.handsPlayed <= numToPlay) {
-			if (numToPlay > 100000){
-				if (GUIAnalyzeIndexArrays.checkExit(EvalData.handsPlayed)){
+			if (numToPlay > 100000) {
+				if (GUIAnalyzeIndexArrays.checkExit(EvalData.handsPlayed)) {
 					return;
 				}
 			}
@@ -217,6 +217,9 @@ public class GameControl implements Constants {
 			Dealer.rotatePositions();
 			Dealer.dealAllHoleCards();
 			Dealer.dealFlop();
+			if (EvalData.manyHands) {
+				IndexArrayClassification.doFlop();
+			}
 			newGame();
 			seat = seatSB;
 			players[SB].playerBetSB(seatSB);
@@ -232,12 +235,18 @@ public class GameControl implements Constants {
 				}
 			}
 			Dealer.dealTurnCard();
+			if (EvalData.manyHands) {
+				IndexArrayClassification.doTurn();
+			}
 			for (int i = 0; i < PLAYERS; i++) {
 				if (!EvalData.playerFolded[i]) {
 					Evaluate.doTurn(i);
 				}
 			}
 			Dealer.dealRiverCard();
+			if (EvalData.manyHands) {
+				IndexArrayClassification.doRiver();
+			}
 			for (int i = 0; i < PLAYERS; i++) {
 				if (!EvalData.playerFolded[i]) {
 					Evaluate.doRiver(i);
@@ -574,18 +583,16 @@ public class GameControl implements Constants {
 		playHandPreflop();
 	}
 
-
-
-/*- **************************************************************************** 
-	* This method handles uncalled bets.
-	* If a player has more money in that was not called, return that money.
-	* 
-	* In order for an uncalled bet to be returned:
-	* 		There must be only 1 player still active.
-	* 		If 1 player is active then all others have folded. If the active player made a
-	* 		bet or raise that was not called it is returned to him.
-	* 		
-	**************************************************************************** */
+	/*- **************************************************************************** 
+		* This method handles uncalled bets.
+		* If a player has more money in that was not called, return that money.
+		* 
+		* In order for an uncalled bet to be returned:
+		* 		There must be only 1 player still active.
+		* 		If 1 player is active then all others have folded. If the active player made a
+		* 		bet or raise that was not called it is returned to him.
+		* 		
+		**************************************************************************** */
 	private static void uncalledBet() {
 		final int active = PLAYERS - EvalData.foldCount;
 		if (!EvalData.betCalled && EvalData.betType == CHECK) {
@@ -638,10 +645,6 @@ public class GameControl implements Constants {
 		EvalData.streetComplete = true;
 		return true;
 	}
-
-
-
-
 
 	/*- *******************************************************************************************
 	 * TODO
@@ -705,10 +708,11 @@ public class GameControl implements Constants {
 		}
 
 	}
+
 	/*- *****************************************************************************************
 	*
 	*	Play Turn.
- 	*
+	*
 	******************************************************************************************* */
 	private static void playTurn() {
 		EvalData.streetComplete = false;
@@ -1113,12 +1117,12 @@ public class GameControl implements Constants {
 			if (EvalData.foldCount - EvalData.PLAYERS == 2) {
 				// Heads up
 				// EvalData.rule[EvalData.seat] = RULEHU;
-				if (EvalData.street== EvalData.FLOP) {
+				if (EvalData.street == EvalData.FLOP) {
 					// rulePlay =
 					// EvalData.strategy[stratIndex].flopFirstRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 					return;
 				}
-				if (EvalData.street== EvalData.TURN) {
+				if (EvalData.street == EvalData.TURN) {
 					// rulePlay =
 					// EvalData.strategy[stratIndex].turnFirstRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 					return;
@@ -1129,12 +1133,12 @@ public class GameControl implements Constants {
 			}
 			// Not heads up
 			// EvalData.rule[EvalData.seat] = RULE;
-			if (EvalData.street== EvalData.FLOP) {
+			if (EvalData.street == EvalData.FLOP) {
 				// rulePlay =
 				// EvalData.strategy[stratIndex].flopFirstRulesHU.ruleArray[handValue[EvalData.seat]][EvalData.betType];
 				return;
 			}
-			if (EvalData.street== EvalData.TURN) {
+			if (EvalData.street == EvalData.TURN) {
 				// rulePlay =
 				// EvalData.strategy[stratIndex].turnFirstRulesHU.ruleArray[handValue[EvalData.seat]][EvalData.betType];
 				return;
@@ -1149,12 +1153,12 @@ public class GameControl implements Constants {
 			if (EvalData.foldCount - EvalData.PLAYERS == 2) {// Heads up
 				// Heads up
 				// EvalData.rule[EvalData.seat] = RULEHU;
-				if (EvalData.street== EvalData.FLOP) {
+				if (EvalData.street == EvalData.FLOP) {
 					// rulePlay =
 					// EvalData.strategy[stratIndex].flopLastRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 					return;
 				}
-				if (EvalData.street== EvalData.TURN) {
+				if (EvalData.street == EvalData.TURN) {
 					// rulePlay =
 					// EvalData.strategy[stratIndex].turnLastRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 					return;
@@ -1165,11 +1169,11 @@ public class GameControl implements Constants {
 			}
 			// Not heads up
 			// EvalData.rule[EvalData.seat] = RULE;
-			if (EvalData.street== EvalData.FLOP) {
+			if (EvalData.street == EvalData.FLOP) {
 				// rulePlay =
 				// EvalData.strategy[stratIndex].flopLastRulesHU.ruleArray[handValue[EvalData.seat]][EvalData.betType];
 				return;
-			} else if (EvalData.street== EvalData.TURN) {
+			} else if (EvalData.street == EvalData.TURN) {
 				// rulePlay =
 				// EvalData.strategy[stratIndex].turnLastRulesHU.ruleArray[handValue[EvalData.seat]][EvalData.betType];
 				return;
@@ -1181,12 +1185,12 @@ public class GameControl implements Constants {
 
 		// If not first or last then it has to be middle
 		// EvalData.rule[EvalData.seat] = RULE;
-		if (EvalData.street== EvalData.FLOP) {
+		if (EvalData.street == EvalData.FLOP) {
 			// rulePlay =
 			// EvalData.strategy[stratIndex].flopMiddleRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 			return;
 		}
-		if (EvalData.street== EvalData.TURN) {
+		if (EvalData.street == EvalData.TURN) {
 			// rulePlay =
 			// EvalData.strategy[stratIndex].turnMiddleRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 			return;
@@ -1651,7 +1655,5 @@ public class GameControl implements Constants {
 		*/
 		// setPlayerFoldedMsg(95, FOLD);
 	}
-
-	
 
 }

@@ -285,9 +285,6 @@ public class MadeHand implements Constants {
 			addBiggerCards();
 		}
 		if (size > 4) {
-			// System.out.println("KKK " + size + " " + cards[0] + cards[1] + cards[2] +
-			// cards[3] + cards[4] + " "
-			// + EvalData.handsPlayed);
 			SortCards.quickSortValue(this.cards, 0, 4);
 			EvalData.highCard1 = this.highCard1;
 			EvalData.highCard2 = this.highCard2;
@@ -297,7 +294,6 @@ public class MadeHand implements Constants {
 			EvalData.kicker3 = this.kicker3;
 			EvalData.highCards1[this.seat] = this.highCard1;
 			EvalData.highCards2[this.seat] = this.highCard2;
-			EvalData.suits[this.seat] = this.suit;
 			EvalData.kickers1[this.seat] = this.kicker1;
 			EvalData.kickers2[this.seat] = this.kicker2;
 			EvalData.kickers3[this.seat] = this.kicker3;

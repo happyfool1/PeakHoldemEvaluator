@@ -55,7 +55,7 @@ public class IndexArrayReport implements Constants {
 
 	private static final int DRAW_COL = DRAW_SIZE;
 	private static final int MADE_COL = MADE_FLUSH + 1;
-	 
+
 	private JFrame frame1 = null;
 	private JFrame frame2 = null;
 	private JFrame frame3 = null;
@@ -75,7 +75,7 @@ public class IndexArrayReport implements Constants {
 	static Font ff1 = new Font(Font.SERIF, Font.BOLD, 14);
 
 	private Object[] columnsDraw = { "Index", "No draw", "Gutshot",
-			"Straight", "OESD", "Flush", "Flush OESD", "Total" };
+			"Sttaight Draw", "OESD", "Flush Draw", "Total" };
 
 	private Object[][] dataDraw = { { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
@@ -109,8 +109,8 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" } };
 
 	private Object[] columnsMade = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
-			"Top Pair", "Over Pair",  "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
-			  "Set", "Straight", "Flush","Total" };
+			"Top Pair", "Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
+			"Set", "Straight", "Flush", "Total" };
 
 	private Object[][] dataMade = {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", },
@@ -153,8 +153,8 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" } };
 
 	private Object[] columnsShowdown = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
-			"Top Pair", "Over Pair",  "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
-			  "Set", "Straight", "Flush","Total" };
+			"Top Pair", "Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
+			"Set", "Straight", "Flush", "Total" };
 
 	private Object[][] dataShowdown = {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", },
@@ -197,7 +197,7 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" } };
 
 	private Object[] columnsDraw2 = { "Index", "No draw", "Gutshot",
-			"Straight", "OESD", "Flush", "Flush OESD", "Total" };
+			"Sttaight Draw", "OESD", "Flush Draw", "Total" };
 
 	private Object[][] dataDraw2 = { { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
@@ -230,9 +230,9 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" } };
 
-	private Object[] columnsMade2 =  { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
-			"Top Pair", "Over Pair",  "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
-			  "Set", "Straight", "Flush","Total" };
+	private Object[] columnsMade2 = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
+			"Top Pair", "Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
+			"Set", "Straight", "Flush", "Total" };
 
 	private Object[][] dataMade2 = {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", },
@@ -275,8 +275,8 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" } };
 
 	private Object[] columnsShowdown2 = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
-			"Top Pair", "Over Pair",  "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
-			  "Set", "Straight", "Flush","Total" };
+			"Top Pair", "Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
+			"Set", "Straight", "Flush", "Total" };
 
 	private Object[][] dataShowdown2 = {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", },
@@ -341,27 +341,35 @@ public class IndexArrayReport implements Constants {
 	void reportDraw(int c, int r, String title, IndexArrayDrawMadeWin arrays) {
 		int rr = 0;
 		int cc = 0;
+		int[] l = new int[3];
+		int w = 0;
 		if (frame1 == null) {
 			frame1 = new JFrame(title);
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame1.setLocation(c, r);
 			int x = (arrays.drawArray.length * 30) + 70;
 			frame1.setPreferredSize(new Dimension(750, x));
-		
 		}
 
 		tableModel1 = new DefaultTableModel(dataDraw, columnsDraw);
 		if (tableModel1.getRowCount() > 0) {
-			for (int i = tableModel1.getRowCount() - 1; i > arrays.drawArray.length; i--) {
+			for (int i = tableModel1.getRowCount() - 1; i > arrays.allArrayRowNames.length; i--) {
 				tableModel1.removeRow(i);
 			}
 		}
 		table1 = new JTable(tableModel1);
 		table1.setFont(ff1);
 		table1.setRowHeight(25);
+		for (int i = 0; i < arrays.allArrayRowNames.length; ++i) {
+			if (arrays.allArrayRowNames[i].length() > w) {
+				w = arrays.allArrayRowNames[i].length();
+			}
+		}
+		w = (w * 10)  ;
+		table1.getColumnModel().getColumn(0).setPreferredWidth(w);
 		int row = 0;
 		int col = 0;
-		for (int i = 0; i < arrays.drawArray.length; ++i) {
+		for (int i = 0; i < arrays.allArrayRowNames.length; ++i) {
 			table1.setValueAt(arrays.allArrayRowNames[i], row, 0);
 			col = 1;
 			for (int j = 0; j < DRAW_COL; ++j) {
@@ -412,6 +420,10 @@ public class IndexArrayReport implements Constants {
 	 * Same as above but for Made hands
 	 ********************************************************************************** */
 	void reportMade(int c, int r, String title, IndexArrayDrawMadeWin arrays) {
+		int rr = 0;
+		int cc = 0;
+		int[] l = new int[3];
+		int w = 0;
 		if (frame2 == null) {
 			frame2 = new JFrame(title);
 			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -421,17 +433,25 @@ public class IndexArrayReport implements Constants {
 		}
 
 		tableModel2 = new DefaultTableModel(dataMade, columnsMade);
-		if (tableModel2.getRowCount() > 0) {
-			for (int i = tableModel2.getRowCount() - 1; i > arrays.madeArray.length; i--) {
-				tableModel2.removeRow(i);
+		for (int i = 0; i < arrays.allArrayRowNames.length; ++i) {
+			if (arrays.allArrayRowNames[i].length() > w) {
+				w = arrays.allArrayRowNames[i].length();
 			}
 		}
+		w = (w * 10)  ;
+
 		table2 = new JTable(tableModel2);
 		table2.setFont(ff1);
 		table2.setRowHeight(25);
+		table2.getColumnModel().getColumn(0).setPreferredWidth(w);
+		if (tableModel2.getRowCount() > 0) {
+			for (int i = tableModel2.getRowCount() - 1; i > arrays.allArrayRowNames.length; i--) {
+				tableModel2.removeRow(i);
+			}
+		}
 		int row = 0;
 		int col = 0;
-		for (int i = 0; i < arrays.madeArray.length; ++i) {
+		for (int i = 0; i < arrays.allArrayRowNames.length; ++i) {
 			table2.setValueAt(arrays.allArrayRowNames[i], row, 0);
 			col = 1;
 			for (int j = 0; j < MADE_COL; ++j) {
@@ -445,8 +465,6 @@ public class IndexArrayReport implements Constants {
 			col = 1;
 			++row;
 		}
-		int rr = 0;
-		int cc = 0;
 		CustomRenderer customRendererMade = new CustomRenderer();
 		for (int i = 0; i < arrays.bestMade5Row.length; ++i) {
 			rr = arrays.bestMade5Row[i];
@@ -469,7 +487,6 @@ public class IndexArrayReport implements Constants {
 		for (int i = 0; i < arrays.bestMadeCols.length; ++i) {
 			rr = row;
 			cc = arrays.bestMadeCols[i] + 1;
-				System.out.println("XXX " + rr + " " + cc);
 			customRendererMade.setColorAt(rr, cc, Color.GREEN);
 			table2.setDefaultRenderer(Object.class, customRendererMade);
 		}
@@ -483,6 +500,10 @@ public class IndexArrayReport implements Constants {
 	 * Same as above but for Made hands
 	 ********************************************************************************** */
 	void reportShowdown(int c, int r, String title, IndexArrayDrawMadeWin arrays) {
+		int rr = 0;
+		int cc = 0;
+		int[] l = new int[3];
+		int w = 0;
 		if (frame3 == null) {
 			frame3 = new JFrame(title);
 			frame3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -492,14 +513,22 @@ public class IndexArrayReport implements Constants {
 		}
 
 		tableModel3 = new DefaultTableModel(dataShowdown, columnsShowdown);
-		if (tableModel3.getRowCount() > 0) {
-			for (int i = tableModel3.getRowCount() - 1; i > arrays.showdownArray.length; i--) {
-				tableModel3.removeRow(i);
+		for (int i = 0; i < arrays.allArrayRowNames.length; ++i) {
+			if (arrays.allArrayRowNames[i].length() > w) {
+				w = arrays.allArrayRowNames[i].length();
 			}
 		}
+		w = (w * 10) ;
+
 		table3 = new JTable(tableModel3);
 		table3.setFont(ff1);
 		table3.setRowHeight(25);
+		table3.getColumnModel().getColumn(0).setPreferredWidth(w);
+		if (tableModel3.getRowCount() > 0) {
+			for (int i = tableModel3.getRowCount() - 1; i > arrays.allArrayRowNames.length; i--) {
+				tableModel3.removeRow(i);
+			}
+		}
 		int row = 0;
 		int col = 0;
 		for (int i = 0; i < arrays.showdownArray.length; ++i) {
@@ -516,8 +545,6 @@ public class IndexArrayReport implements Constants {
 			col = 1;
 			++row;
 		}
-		int rr = 0;
-		int cc = 0;
 		CustomRenderer customRendererShowdown = new CustomRenderer();
 		for (int i = 0; i < arrays.bestShowdown5Row.length; ++i) {
 			rr = arrays.bestShowdown5Row[i];

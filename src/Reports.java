@@ -184,16 +184,7 @@ public class Reports implements Constants {
 			table1.setValueAt("handIndex", row, 0);
 			table1.setValueAt(String.valueOf(EvalData.handIndex), row++, 1);
 		}
-				if (EvalData.flop1755Index != -1) {
-			table1.setValueAt("flop1755Index", row, 0);
-			table1.setValueAt(String.valueOf(EvalData.flop1755Index), row++, 1);
-		}
-		if (EvalData.typeOf1755Index != -1) {
-			table1.setValueAt("flopTypeOf1755", row, 0);
-			table1.setValueAt(TYPE_OF_1755_ST[EvalData.typeOf1755Index], row++, 1);
-		}
-
-		if (EvalData.winnerShowdown != -1) {
+			if (EvalData.winnerShowdown != -1) {
 			table1.setValueAt("winnerShowdown", row, 0);
 			table1.setValueAt(String.valueOf(EvalData.winnerShowdown), row++, 1);
 		}
