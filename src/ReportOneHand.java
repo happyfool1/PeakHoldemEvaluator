@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 /*-  *********************************************************************************************
  * This is a quick and dirty Class that is used to help in the testing and debug 
  * of this project.
@@ -241,18 +241,7 @@ public class ReportOneHand implements Constants {
 			table1.setValueAt("handIndex", row, 0);
 			table1.setValueAt(String.valueOf(EvalData.handIndex), row++, 1);
 		}
-		if (EvalData.hmlIndex != -1) {
-			table1.setValueAt("hmlIndex", row, 0);
-			table1.setValueAt(String.valueOf(EvalData.hmlIndex), row++, 1);
-		}
-		if (EvalData.flop1755Index != -1) {
-			table1.setValueAt("flop1755Index", row, 0);
-			table1.setValueAt(String.valueOf(EvalData.flop1755Index), row++, 1);
-		}
-		if (EvalData.flopTypeOf1755 != -1) {
-			table1.setValueAt("flopTypeOf1755", row, 0);
-			table1.setValueAt(TYPE_OF_1755_ST[EvalData.flopTypeOf1755], row++, 1);
-		}
+		
 
 		if (EvalData.winnerShowdown != -1) {
 			table1.setValueAt("winnerShowdown", row, 0);

@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 public class IndexArrayClassification implements Constants {
 
@@ -90,14 +90,104 @@ public class IndexArrayClassification implements Constants {
 	Remember, the key to a successful poker strategy is flexibility. Use the results of your 
 	simulations as a guide, but always be ready to adap
 	
-	*
+	
+		Flop Classification thoughts
+		 Characterizing a flop can be done in many ways depending on what is important to the player.
+		Here are a few easy ways to classify a flop that are simple enough to do quickly in your head:
+		
+		Suit distribution: The three cards on the flop could all be the same suit (3 suited),
+		two could share a suit while the third is a different suit (2 suited), or all three could be
+		different suits (rainbow). This is easy to count quickly and gives a lot of information 
+		about the possibility of flush draws.
+		
+		Paired or not: This is also very straightforward: either the flop contains a pair of cards (paired) 
+		or it does not (unpaired). This is very important to consider for the potential of a full house or four of a kind.
+		
+		Connectedness: You could classify the flop as either connected (three consecutive cards),
+		semi-connected (two consecutive cards and one card of a different value), or unconnected 
+		(all three cards of different values). This tells you about the likelihood of straights.
+		
+		High, Medium, or Low: You can also classify the flop as high (one or more face cards), 
+		medium (no face cards, but one or more cards 8 through 10), or low (all cards 7 or lower). 
+		This could be important if you have hole cards that match these categories.
+		
+		Rank distribution: You can categorize the flop based on the number of different values present, 
+		which could be three (e.g., K-8-3), two (e.g., J-J-4), or one (e.g., 5-5-5).
+		
+		These are just some possibilities. The key is to pick a method of characterization that 
+		provides useful information for the particular style of play or strategy that you are using.
+		
+		Rank distribution is a way to categorize the flop in Texas Hold'em poker based on the 
+		number of distinct values that appear among the three community cards. Here's how you 
+		could classify the flop:
+		
+		Three values: This means that all three cards on the flop have different values. 
+		For example, a flop of 7-9-Jack would be classified as "three values". 
+		This type of flop doesn't complete any sets but may create possibilities for 
+		straights and flushes.
+		
+		Two values: This means that two of the three cards on the flop have the same value, 
+		and the third card has a different value. For example, a flop of 4-4-8 would be 
+		classified as "two values". This type of flop is said to be paired, which increases 
+		the likelihood of hands like three-of-a-kind or full houses.
+		
+		One value: This means that all three cards on the flop have the same value. 
+		For example, a flop of 2-2-2 would be classified as "one value". 
+		This is a highly unusual flop and immediately completes four-of-a-kind for anyone 
+		holding a card of the same value. It also makes full houses possible for all players still in the hand.
+		
+		Rank distribution provides insight into the likelihood of certain hands and can 
+		inform a player's decision-making about whether to bet, check, or fold.
+		
+		
+		One way to characterize a flop could be by assessing its Texture: 
+		The texture of a flop can help in predicting the possible hands that an opponent 
+		might have, and hence can assist in formulating a strategy. Here's a way to do that:
+		
+		Monotone: All three flop cards are of the same suit. This increases the chances
+		of flushes. If you have a suited hand, this is good for you; otherwise, 
+		it can be risky if an opponent is likely to have a flush.
+		
+		Two-tone: Two cards on the flop are of the same suit. This creates the 
+		possibility of flush draws.
+		
+		Rainbow: Each card is a different suit. This reduces the likelihood of flushes significantly.
+		
+		And you can combine this with:
+		
+		Connected: All three cards are numerically sequential, such as 4-5-6. 
+		This increases the likelihood of straights.
+		
+		Semi-connected: Two of the three cards are numerically sequential, such as 
+		4-5-7. This leaves some potential for straights.
+		
+		Unconnected: The cards do not have any numeric connection, like 3-7-Jack.
+		
+		So, you can classify a flop as being "Monotone Connected" or "Two-tone Semi-connected" 
+		or "Rainbow Unconnected" and so on.
+		
+		Knowing this, you can assess whether the flop is more likely to have helped your 
+		opponents based on their pre-flop actions. For instance, players who raise pre-flop
+		are more likely to have high cards or suited cards, and thus may be more likely to 
+		benefit from a high, monotone, or connected flop.
+		
+		Please note that this way of categorizing flop texture simplifies the complexities
+		of the game. You'd need to combine this with other reads and strategies to improve 
+		your overall gameplay.
+		
+		In this method, we sort the three cards by rank. We then determine the suit type by checking
+		if all suits are the same (Monotone), two are the same (Two-tone), or all are different (Rainbow).
+		 We then determine the connectivity type by checking if all ranks are sequential 
+		 (Connected), two are sequential (Semi-connected), or none are sequential (Unconnected). 
+		 Finally, we return the combined characterization of the flop.
+	
 	* @author PEAK_
 	***************************************************************************** */
 
 	private static boolean initialized = false;
 
 	/*- ***********************************************************************************
-	*Data used for HML
+	* Variables used for HML
 	 *************************************************************************************/
 	private static boolean l1 = false;
 	private static boolean m1 = false;
@@ -129,11 +219,23 @@ public class IndexArrayClassification implements Constants {
 			Logger.logError("ERROR HML index invalid " + EvalData.hmlIndexFlop);
 		}
 
-		flopType();
 		wetDry();
+		if (EvalData.boardArray[BOARD_WET]) {
+			EvalData.wetDryIndexFlop = WET;
+		} else if (EvalData.boardArray[BOARD_DRY]) {
+			EvalData.wetDryIndexFlop = DRY;
+		} else {
+			EvalData.wetDryIndexFlop = NOT_WET_DRY;
+		}
 
-		boardIndexesFlop();
+		EvalData.flop1755IndexFlop = Flop1755Methods.getFlopIndex(EvalData.board[0], EvalData.board[1],
+				EvalData.board[2]);
+		EvalData.typeOf1755IndexFlop = Flop1755Methods.lookupFlopType(EvalData.board[0], EvalData.board[1],
+				EvalData.board[2]);
 
+		flopTextureSCBP();
+
+		edMillerFlopType();
 		flopTextureSuitednessConnectedness();
 		flopTexturePairBroadway();
 		flopTextureStrengthSuitedness();
@@ -142,15 +244,9 @@ public class IndexArrayClassification implements Constants {
 		flopTextureValueSpreadX();
 		flopTextureA();
 		flopTexturB();
-		flopTexturC();
+
 		flopTexturD();
 
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			if (EvalData.boardArray[i]) {
-				EvalData.wetDryIndex = i;
-				break;
-			}
-		}
 	}
 
 	/*- ************************************************************************************
@@ -171,35 +267,6 @@ public class IndexArrayClassification implements Constants {
 		if (EvalData.hmlIndexRiver == -1 || EvalData.hmlIndexRiver >= HML_RIVER_SIZE) {
 			Logger.logError("ERROR HML River index invalid " + EvalData.hmlIndexRiver);
 		}
-	}
-
-	/*- *****************************************************************************F
-	 * This method looks Calculate indexes for Flop and put in EvalData.
-	 * Somewhat still experimental. 
-	 * I will be testing to determine if these indexes are useful, running
-	 * millions of hands and determining how an index relates to best hand.
-	 * If there is good correlation then figure out howe to use.
-	 * 
-	 * Flop only.
-	 * 
-	 * EvalData is updated. 
-	 *		EvalData.sumOfHoleCardSuited 
-	 *		EvalData.sumOfHoleCardOffsuit   
-	 *		EvalData.sumOfHoleCardPair   	
-	 *		EvalData.sumOfFlopCards
-	  ******************************************************************************/
-	private static void boardIndexesFlop() {
-
-		// Sum of board values
-		EvalData.sumOfBoardValuesFlop = EvalData.board[0].value + EvalData.board[1].value + EvalData.board[2].value;
-
-		EvalData.sumOfHoleCardValues = EvalData.holeCard1.value + EvalData.holeCard2.value;
-
-		EvalData.flopIndex = Flop1755Methods.getFlopIndex(EvalData.board[0], EvalData.board[1], EvalData.board[2]);
-
-		EvalData.flop1755Index = EvalData.flopIndex;
-		EvalData.flopTypeOf1755 = Flop1755Methods.lookupFlopType(EvalData.board[0], EvalData.board[1],
-				EvalData.board[2]);
 	}
 
 	/*- *****************************************************************************
@@ -503,6 +570,56 @@ public class IndexArrayClassification implements Constants {
 		Logger.logError("hmlBoardRiver() error ");
 	}
 
+	/*-***************************************************************************
+	* This method will classify Flop using:
+	* 	Suitedness
+	*   Connectivity	
+	*   Big card
+	* 	Paired
+	*
+	* Some compromises were used in order to keep the number of different Intrger
+	* index values small. There are 16
+	*****************************************************************************/
+	static int x = 0;
+
+	private static void flopTextureSCBP() {
+		// Determine suit type
+		int suitedType = 0;
+		if (EvalData.boardF2) {
+			suitedType = 8;
+		}
+		// Determine connectivity type
+		int connectivityType = 0;
+		if ((EvalData.boardGap1_2 == 1 || EvalData.boardGap2_3 == 1)
+				|| (EvalData.boardGap1_2 == 2 && EvalData.boardGap2_3 == 2)) {
+			connectivityType = 4;
+		}
+		// Determine pair type
+		int pairType = 0;
+		if (EvalData.boardPair) {
+			pairType = 2;
+		}
+		// Determine big card type
+		int bigCardType = 0;
+		if (EvalData.boardValue1 >= TEN && EvalData.boardValue2 >= TEN) {
+			bigCardType = 1;
+		}
+
+		// Calculate the index
+		EvalData.SCBPIndexFlop = suitedType + connectivityType + pairType * bigCardType;
+		if (x < 10) {
+			++x;
+			// System.out.println(EvalData.SCBPIndexFlop + " " + EvalData.boardF2 + " " +
+			// EvalData.boardGap1_2
+			// + " " + EvalData.boardGap2_3 + " " + EvalData.boardPair + " " +
+			// EvalData.boardValue1);
+			// System.out.println(suitedType + " " + connectivityType+ " " + pairType + " "
+			// + bigCardType);
+			// System.out.println(EvalData.board[0] + " " + EvalData.board[1] + " " +
+			// EvalData.board[2]);
+		}
+	}
+
 	/*- ************************************************************************************************
 	 * Type 1 flops have the characteristic that people either hit these flops hard, or not at all.
 	 * Ed Miller
@@ -517,7 +634,7 @@ public class IndexArrayClassification implements Constants {
 	 * These are flops that lead to boards that tend to be won by straights, flushes, 
 	 * full houses and big two pair hands.
 	***************************************************************************************************/
-	private static void flopType() {
+	private static void edMillerFlopType() {
 		EvalData.type = TYPE_NONE;
 		// Type1 people either hit these flops hard, or not at all.
 		// K32 rainbow
@@ -545,8 +662,6 @@ public class IndexArrayClassification implements Constants {
 			EvalData.type = TYPE3;
 		}
 
-		EvalData.sumOfHandValuesFlop[EvalData.seat] = EvalData.both[0].value + EvalData.both[1].value
-				+ EvalData.both[2].value + EvalData.both[3].value + EvalData.both[4].value;
 	}
 
 	/*- *****************************************************************************
@@ -898,7 +1013,8 @@ public class IndexArrayClassification implements Constants {
 		}
 
 		// Return the combined characterization as an integer
-		EvalData.suitednessConnectednessIndex = (suitType - 1) * 3 + connectivityType;
+		// EvalData.suitednessConnectednessIndex = (suitType - 1) * 3 +
+		// connectivityType;
 	}
 
 	/*- *****************************************************************************
@@ -942,7 +1058,7 @@ public class IndexArrayClassification implements Constants {
 		int broadwayPotentialType;
 		int broadwayCount = 0;
 		for (int i = 0; i < 3; i++) {
-			if (EvalData.board[i].value >= TEN && EvalData.board[i].value  <= ACE) { // 10, J, Q, K, A
+			if (EvalData.board[i].value >= TEN && EvalData.board[i].value <= ACE) { // 10, J, Q, K, A
 				broadwayCount++;
 			}
 		}
@@ -1203,160 +1319,25 @@ public class IndexArrayClassification implements Constants {
 		}
 	}
 
-	/*-***************************************************************************
-	* This method will classify aTurn
-	*This method works similarly to the previous one, but with an additional gap to consider.
-	We calculate the three gaps and then categorize the turn based on those gaps. 
-	Please note that this method will only categorize the turns into six groups based 
-	on the specific gap patterns we discussed. In reality, there are many other 
-	possible gap patterns on the turn.
-	*****************************************************************************/
 	private static String flopTexturB() {
 		// Calculate the gaps
 		int gap1 = EvalData.board[1].value - EvalData.board[0].value;
 		int gap2 = EvalData.board[2].value - EvalData.board[1].value;
-	
+
 		// Compare the gaps to determine the category
 		if (gap1 == 0 && gap2 == 0) {
 			return "Group 0";
-		} else if ((gap1 == 0 && gap2 == 0) ) {
+		} else if ((gap1 == 0 && gap2 == 0)) {
 			return "Group 1";
-		} else if ((gap1 == 1 && gap2 == 1)  ) {
+		} else if ((gap1 == 1 && gap2 == 1)) {
 			return "Group 2";
-		} else if ((gap1 == 0 && gap2 == 2) ) {
+		} else if ((gap1 == 0 && gap2 == 2)) {
 			return "Group 3";
-		} else if ((gap1 == 1 && gap2 == 2) ) {
+		} else if ((gap1 == 1 && gap2 == 2)) {
 			return "Group 4";
 		} else {
 			return "Group 5";
 		}
-	}
-
-	/*-***************************************************************************
-	* This method will classify a Flop.
-	* Characterizing a flop can be done in many ways depending on what is important to the player.
-	Here are a few easy ways to classify a flop that are simple enough to do quickly in your head:
-	
-	Suit distribution: The three cards on the flop could all be the same suit (3 suited),
-	two could share a suit while the third is a different suit (2 suited), or all three could be
-	 different suits (rainbow). This is easy to count quickly and gives a lot of information 
-	 about the possibility of flush draws.
-	
-	Paired or not: This is also very straightforward: either the flop contains a pair of cards (paired) 
-	or it does not (unpaired). This is very important to consider for the potential of a full house or four of a kind.
-	
-	Connectedness: You could classify the flop as either connected (three consecutive cards),
-	 semi-connected (two consecutive cards and one card of a different value), or unconnected 
-	 (all three cards of different values). This tells you about the likelihood of straights.
-	
-	High, Medium, or Low: You can also classify the flop as high (one or more face cards), 
-	medium (no face cards, but one or more cards 8 through 10), or low (all cards 7 or lower). 
-	This could be important if you have hole cards that match these categories.
-	
-	Rank distribution: You can categorize the flop based on the number of different values present, 
-	which could be three (e.g., K-8-3), two (e.g., J-J-4), or one (e.g., 5-5-5).
-	
-	These are just some possibilities. The key is to pick a method of characterization that 
-	provides useful information for the particular style of play or strategy that you are using.
-	
-	
-	
-	
-	
-	User
-	explain value distribution
-	ChatGPT
-	Rank distribution is a way to categorize the flop in Texas Hold'em poker based on the 
-	number of distinct values that appear among the three community cards. Here's how you 
-	could classify the flop:
-	
-	Three values: This means that all three cards on the flop have different values. 
-	For example, a flop of 7-9-Jack would be classified as "three values". 
-	This type of flop doesn't complete any sets but may create possibilities for 
-	straights and flushes.
-	
-	Two values: This means that two of the three cards on the flop have the same value, 
-	and the third card has a different value. For example, a flop of 4-4-8 would be 
-	classified as "two values". This type of flop is said to be paired, which increases 
-	the likelihood of hands like three-of-a-kind or full houses.
-	
-	One value: This means that all three cards on the flop have the same value. 
-	For example, a flop of 2-2-2 would be classified as "one value". 
-	This is a highly unusual flop and immediately completes four-of-a-kind for anyone 
-	holding a card of the same value. It also makes full houses possible for all players still in the hand.
-	
-	Rank distribution provides insight into the likelihood of certain hands and can 
-	inform a player's decision-making about whether to bet, check, or fold.
-	
-	
-	One way to characterize a flop could be by assessing its Texture: 
-	The texture of a flop can help in predicting the possible hands that an opponent 
-	might have, and hence can assist in formulating a strategy. Here's a way to do that:
-	
-	Monotone: All three flop cards are of the same suit. This increases the chances
-	of flushes. If you have a suited hand, this is good for you; otherwise, 
-	it can be risky if an opponent is likely to have a flush.
-	
-	Two-tone: Two cards on the flop are of the same suit. This creates the 
-	possibility of flush draws.
-	
-	Rainbow: Each card is a different suit. This reduces the likelihood of flushes significantly.
-	
-	And you can combine this with:
-	
-	Connected: All three cards are numerically sequential, such as 4-5-6. 
-	This increases the likelihood of straights.
-	
-	Semi-connected: Two of the three cards are numerically sequential, such as 
-	4-5-7. This leaves some potential for straights.
-	
-	Unconnected: The cards do not have any numeric connection, like 3-7-Jack.
-	
-	So, you can classify a flop as being "Monotone Connected" or "Two-tone Semi-connected" 
-	or "Rainbow Unconnected" and so on.
-	
-	Knowing this, you can assess whether the flop is more likely to have helped your 
-	opponents based on their pre-flop actions. For instance, players who raise pre-flop
-	are more likely to have high cards or suited cards, and thus may be more likely to 
-	benefit from a high, monotone, or connected flop.
-	
-	Please note that this way of categorizing flop texture simplifies the complexities
-	of the game. You'd need to combine this with other reads and strategies to improve 
-	your overall gameplay.
-	
-	In this method, we sort the three cards by rank. We then determine the suit type by checking
-	 if all suits are the same (Monotone), two are the same (Two-tone), or all are different (Rainbow).
-	  We then determine the connectivity type by checking if all ranks are sequential 
-	  (Connected), two are sequential (Semi-connected), or none are sequential (Unconnected). 
-	  Finally, we return the combined characterization of the flop.
-	
-	*****************************************************************************/
-	private static String flopTexturC() {
-		// Determine suit type
-		String suitType;
-		if (EvalData.board[0].suit == EvalData.board[1].suit && EvalData.board[1].suit == EvalData.board[2].suit) {
-			suitType = "Monotone";
-		} else if (EvalData.board[0].suit == EvalData.board[1].suit || EvalData.board[1].suit == EvalData.board[2].suit
-				|| EvalData.board[0].suit == EvalData.board[2].suit) {
-			suitType = "Two-tone";
-		} else {
-			suitType = "Rainbow";
-		}
-
-		// Determine connectivity type
-		String connectivityType;
-		if (EvalData.board[1].value - EvalData.board[0].value == 1
-				&& EvalData.board[2].value - EvalData.board[1].value == 1) {
-			connectivityType = "Connected";
-		} else if (EvalData.board[1].value - EvalData.board[0].value == 1
-				|| EvalData.board[2].value - EvalData.board[1].value == 1) {
-			connectivityType = "Semi-connected";
-		} else {
-			connectivityType = "Unconnected";
-		}
-
-		// Return the combined characterization
-		return suitType + " " + connectivityType;
 	}
 
 	/*-***************************************************************************

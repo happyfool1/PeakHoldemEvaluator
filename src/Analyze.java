@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 class Analyze implements Constants {
 
@@ -32,7 +32,6 @@ class Analyze implements Constants {
 
 		cardsAndBoardFlop(seat);
 
-		BoardAnalysis.doFlop();
 		final int result = DrawAnalysis.doFlopDraw();
 		EvalData.draw[seat].draw(result);
 
@@ -72,7 +71,6 @@ class Analyze implements Constants {
 		}
 
 		if (EvalData.manyHands) {
-			IndexArrayClassification.doFlop();
 			IndexArrayUpdate.updateFlop();
 		}
 	}
@@ -101,8 +99,6 @@ class Analyze implements Constants {
 		EvalData.seat = seat;
 		cardsAndBoardTurn(seat);
 
-		BoardAnalysis.doTurn();
-
 		HandStatus.findPairsSetsFullHouse();
 		HandStatus.findStraight();
 		HandStatus.findFlush();
@@ -117,11 +113,7 @@ class Analyze implements Constants {
 		}
 		EvalData.boardLowCardValue = EvalData.board[3].value;
 
-		int result = DrawAnalysis.doFlopDraw();
-		if (result == DRAW_NONE) {
-			result = DrawAnalysis.doTurnDraw();
-		}
-
+		int result = DrawAnalysis.doTurnDraw();
 		EvalData.draw[seat].draw(result);
 
 		int r = MADE_NONE;
@@ -151,7 +143,6 @@ class Analyze implements Constants {
 		}
 
 		if (EvalData.manyHands) {
-			IndexArrayClassification.doTurn();
 			IndexArrayUpdate.updateTurn();
 		}
 	}
@@ -179,7 +170,6 @@ class Analyze implements Constants {
 
 		cardsAndBoardRiver(seat);
 
-		BoardAnalysis.doRiver();
 		HandStatus.findPairsSetsFullHouse();
 		HandStatus.findStraight();
 		HandStatus.findFlush();
@@ -220,7 +210,6 @@ class Analyze implements Constants {
 		}
 
 		if (EvalData.manyHands) {
-			IndexArrayClassification.doRiver();
 			IndexArrayUpdate.updateRiver();
 		}
 
@@ -261,28 +250,17 @@ class Analyze implements Constants {
 		EvalData.bothCards[1] = EvalData.holeCard2;
 
 		EvalData.both[2] = EvalData.board[0];
-		EvalData.boardCards[0] = EvalData.board[0];
 		EvalData.bothCards[2] = EvalData.both[2];
 
 		EvalData.both[3] = EvalData.board[1];
-		EvalData.boardCards[1] = EvalData.board[1];
 		EvalData.bothCards[3] = EvalData.both[3];
 
 		EvalData.both[4] = EvalData.board[2];
-		EvalData.boardCards[2] = EvalData.board[2];
 		EvalData.bothCards[4] = EvalData.both[4];
 
-		if (EvalData.both[0] == null || EvalData.both[1] == null ||
-				EvalData.both[2] == null || EvalData.both[3] == null || EvalData.both[4] == null) {
-			Logger.logError("Error:Flop cardsAndBoardFlop: both arrays are null");
-		}
-
-		EvalData.boardCount = 3;
 		EvalData.bothCount = 5;
-
 		SortCards.quickSortValue(EvalData.both, 0, 4);
 		SortCards.quickSortCard(EvalData.bothCards, 0, 4);
-		SortCards.quickSortCard(EvalData.boardCards, 0, 2);
 
 		// hole cards
 		EvalData.holeValue1 = EvalData.holeCard1.value;
@@ -312,15 +290,6 @@ class Analyze implements Constants {
 		EvalData.bothGap2_4 = EvalData.bothValue2 - EvalData.bothValue4;
 		EvalData.bothGap2_5 = EvalData.bothValue2 - EvalData.bothValue5;
 
-		// Board values
-		EvalData.boardValue1 = EvalData.board[0].value;
-		EvalData.boardValue2 = EvalData.board[1].value;
-		EvalData.boardValue3 = EvalData.board[2].value;
-
-		// Gaps between board cards
-		EvalData.boardGap1_2 = EvalData.boardValue1 - EvalData.boardValue2;
-		EvalData.boardGap2_3 = EvalData.boardValue2 - EvalData.boardValue3;
-
 	}
 
 	/*- *****************************************************************************
@@ -340,24 +309,21 @@ class Analyze implements Constants {
 			EvalData.bothCards[i + 2] = EvalData.boardUnsorted[i];
 		}
 
-		if (EvalData.both[0] == null || EvalData.both[1] == null ||
-				EvalData.both[2] == null || EvalData.both[3] == null
+		if (EvalData.both[0] == null || EvalData.both[1] == null || EvalData.both[2] == null || EvalData.both[3] == null
 				|| EvalData.both[4] == null || EvalData.both[5] == null) {
-			Logger.logError("Error:TurnB " + EvalData.both[0] + " " + EvalData.both[1] +
-					" " + EvalData.both[2] + " " + EvalData.both[3] + " " + EvalData.both[4]
-					+ " " + EvalData.both[5] + "    " + EvalData.boardUnsorted[3]);
+			// Logger.logError("Error:TurnB " + EvalData.both[0] + " " + EvalData.both[1] +
+			// " " + EvalData.both[2] + " "
+			// + EvalData.both[3] + " " + EvalData.both[4] + " " + EvalData.both[5] + " "
+			// + EvalData.boardUnsorted[3]);
 		}
 
-		EvalData.boardCount = 4;
 		EvalData.bothCount = 6;
-
 		SortCards.quickSortValue(EvalData.both, 0, 5);
 		SortCards.quickSortCard(EvalData.bothCards, 0, 5);
 
-		if (EvalData.both[0] == null || EvalData.both[1] == null ||
-				EvalData.both[2] == null || EvalData.both[3] == null
+		if (EvalData.both[0] == null || EvalData.both[1] == null || EvalData.both[2] == null || EvalData.both[3] == null
 				|| EvalData.both[4] == null || EvalData.both[5] == null) {
-			Logger.logError("Error:TurnC cardsAndBoardFlop: both arrays are null");
+//			Logger.logError("Error:TurnC cardsAndBoardFlop: both arrays are null");
 		}
 
 		// hole cards
@@ -392,12 +358,6 @@ class Analyze implements Constants {
 		EvalData.bothGap2_4 = EvalData.bothValue2 - EvalData.bothValue4;
 		EvalData.bothGap2_5 = EvalData.bothValue2 - EvalData.bothValue5;
 		EvalData.bothGap4_6 = EvalData.bothValue4 - EvalData.bothValue6;
-
-		// Gaps between board cards
-		EvalData.boardGap1_2 = EvalData.boardValue1 - EvalData.boardValue2;
-		EvalData.boardGap2_3 = EvalData.boardValue2 - EvalData.boardValue3;
-		EvalData.boardGap3_4 = EvalData.boardValue3 - EvalData.boardValue4;
-
 	}
 
 	/*- *****************************************************************************
@@ -417,13 +377,11 @@ class Analyze implements Constants {
 			EvalData.bothCards[i + 2] = EvalData.boardUnsorted[i];
 		}
 
-		EvalData.boardCount = 5;
 		EvalData.bothCount = 7;
 
-		if (EvalData.both[0] == null || EvalData.both[1] == null ||
-				EvalData.both[2] == null || EvalData.both[3] == null || EvalData.both[4] == null ||
-				EvalData.both[5] == null || EvalData.both[6] == null) {
-			Logger.logError("Error:Flop cardsAndBoardFlop: both arrays are null");
+		if (EvalData.both[0] == null || EvalData.both[1] == null || EvalData.both[2] == null || EvalData.both[3] == null
+				|| EvalData.both[4] == null || EvalData.both[5] == null || EvalData.both[6] == null) {
+//			Logger.logError("Error:Flop cardsAndBoardFlop: both arrays are null");
 		}
 
 		SortCards.quickSortValue(EvalData.both, 0, 6);
@@ -434,12 +392,7 @@ class Analyze implements Constants {
 		// hole cards
 		EvalData.holeValue1 = EvalData.holeCard1.value;
 		EvalData.holeValue2 = EvalData.holeCard2.value;
-		// Board values
-		EvalData.boardValue1 = EvalData.board[0].value;
-		EvalData.boardValue2 = EvalData.board[1].value;
-		EvalData.boardValue3 = EvalData.board[2].value;
-		EvalData.boardValue4 = EvalData.board[3].value;
-		EvalData.boardValue5 = EvalData.board[4].value;
+
 		// Card values
 		EvalData.bothValue1 = EvalData.both[0].value;
 		EvalData.bothValue2 = EvalData.both[1].value;
@@ -471,7 +424,6 @@ class Analyze implements Constants {
 		EvalData.bothGap2_5 = EvalData.bothValue2 - EvalData.bothValue5;
 		EvalData.bothGap4_6 = EvalData.bothValue4 - EvalData.bothValue6;
 		EvalData.bothGap5_7 = EvalData.bothValue5 - EvalData.bothValue7;
-
 	}
 
 }

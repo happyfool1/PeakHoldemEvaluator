@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /* - This class creates hand histories */
 import java.io.BufferedWriter;
@@ -465,16 +465,16 @@ class HandHistory implements Constants {
 						.append(Format.format(sidePotBD)).append(st).toString();
 			}
 		}
-		if (EvalData.street== FLOP) {
+		if (EvalData.street == FLOP) {
 			reportSt[lines++] = new StringBuilder().append("Board [").append(EvalData.board[0]).append(" ")
 					.append(EvalData.board[1]).append(" ").append(EvalData.board[2]).append("]\r\n").toString();
 		}
-		if (EvalData.street== TURN) {
+		if (EvalData.street == TURN) {
 			reportSt[lines++] = new StringBuilder().append("Board [").append(EvalData.board[0]).append(" ")
 					.append(EvalData.board[1]).append(" ").append(EvalData.board[2]).append(" ")
 					.append(EvalData.board[3]).append("]\r\n").toString();
 		}
-		if (EvalData.street== RIVER) {
+		if (EvalData.street == RIVER) {
 			reportSt[lines++] = new StringBuilder().append("Board [").append(EvalData.board[0]).append(" ")
 					.append(EvalData.board[1]).append(" ").append(EvalData.board[2]).append(" ")
 					.append(EvalData.board[3]).append(" ").append(EvalData.board[4]).append("]\r\n").toString();

@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,11 +14,8 @@ public class SearchAll implements Constants {
 	*******************************************************************************/
 
 	public static void main(String[] args) {
-		// "C:\\users\\PEAK_\\git\\repository\\hand_history_analysis\\src\\hand_history_analysis";
-
-		final var directoryPath = "C:\\PeakHoldemEvaluator\\src";
-		// "C:\\users\\PEAK_\\git\\repository\\evaluate_streets\\src\\evaluate_streets";
-		final var searchString = "xxx";
+		final var directoryPath = "C:\\users\\PEAK_\\eclipse-workspace\\PeakHoldemEvaluator\\src\\PeakHoldemEvaluator";
+		final var searchString = "rotatePositions();";
 
 		searchInDirectory(directoryPath, searchString);
 	}

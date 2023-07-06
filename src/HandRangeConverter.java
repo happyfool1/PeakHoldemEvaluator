@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 /*-  ******************************************************************************
 * This is a one time only application used to move hand ranges from PeakHoldemDatabase
 * to the directory for this project PeakHoldemEvaluator.

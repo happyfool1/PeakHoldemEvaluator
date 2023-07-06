@@ -1,5 +1,5 @@
 
-//package evaluate_streets;
+//package peakholdemevaluator;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

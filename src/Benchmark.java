@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 import java.util.concurrent.TimeUnit;
 

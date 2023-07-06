@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 public class Evaluate implements Constants {
 
@@ -180,7 +180,7 @@ public class Evaluate implements Constants {
 	  ********************************************************************************/
 	static void shuffle() {
 		Deck.shuffle();
-		}
+	}
 
 	/*- ******************************************************************************
 	 * This method removes a card from the deck
@@ -234,7 +234,7 @@ public class Evaluate implements Constants {
 		EvalData.flop[1] = card2;
 		EvalData.flop[2] = card3;
 		Dealer.flopGlobalValues();
-	
+
 		Deck.setDeadCard(card1);
 		Deck.setDeadCard(card2);
 		Deck.setDeadCard(card3);
@@ -254,7 +254,7 @@ public class Evaluate implements Constants {
 		EvalData.boardUnsorted[3] = card;
 		Deck.setDeadCard(card);
 		Dealer.turnGlobalValues();
-			}
+	}
 
 	/*- ******************************************************************************
 	* This method sets River card.
@@ -299,8 +299,6 @@ public class Evaluate implements Constants {
 		Showdown.showdownValue(seat);
 	}
 
-	
-
 	/*- ******************************************************************************
 	 * This method will do the River and Showdown value for all players that have not
 	 * folded. 
@@ -343,7 +341,7 @@ public class Evaluate implements Constants {
 	* hand_history_analysis project that uses tens of millions of hands from Hand
 	* History files from  PokerStars.
 	* The Preflop simulator produces partial Hand History files.
-	* Two classes are unique ti simulation, GameControl and Player.
+	* Two classes are unique to simulation, GameControl and Player.
 	* GameControl controls the sequencing of play.
 	* Player simulates play of one position and there is an instance for each seat.
 	* 
@@ -352,17 +350,15 @@ public class Evaluate implements Constants {
 		GameControl.preflopSimulationOneHand();
 	}
 
-/*- ******************************************************************************
-	* This method will do Preflop full simulation.
-	* We do the number of hands in Arg0.
-	* Like preflopSimulation except for no hand history created.
-	* Arg0 - NUmber of hands to run
-	 ********************************************************************************/
+	/*- ******************************************************************************
+		* This method will do Preflop full simulation.
+		* We do the number of hands in Arg0.
+		* Like preflopSimulation except for no hand history created.
+		* Arg0 - NUmber of hands to run
+		 ********************************************************************************/
 	static void doSimulationDataCollection(int number) {
 		GameControl.simulationDataCollection(number);
 	}
-
-	
 
 	/*- ******************************************************************************
 	 * This method does partial simulation mode.  // TODO
@@ -395,18 +391,17 @@ public class Evaluate implements Constants {
 		EvalData.applicationDirectory = path;
 	}
 
-/*- ******************************************************************************
-	 * Set the value of a seed number for random hand generation.
-	 * The seed is used to generate an infinite number of random hands.
-	 * But, if restarted the same random hands will be generated, very useful
-	 * in debug and evaluation.
-	 * A seed of 0L will result in a new random sequence every time.
-	 * The seed is then also random. 
-	  ********************************************************************************/
-	  static void setSeed(Long seed) {
+	/*- ******************************************************************************
+		 * Set the value of a seed number for random hand generation.
+		 * The seed is used to generate an infinite number of random hands.
+		 * But, if restarted the same random hands will be generated, very useful
+		 * in debug and evaluation.
+		 * A seed of 0L will result in a new random sequence every time.
+		 * The seed is then also random. 
+		  ********************************************************************************/
+	static void setSeed(Long seed) {
 		EvalData.seed = seed;
 	}
-
 
 	/*- ******************************************************************************
 	 * This boolean controls the behavior of Analyze.

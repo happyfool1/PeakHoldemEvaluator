@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*- *********************************************************************************************
  * These are flops that I analyzed for wet/dry and know the results.

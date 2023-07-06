@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,8 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.*;
 
 /*- **************************************************************************** 
 * This is the primary GUI for this project. The other is GUIAnalyzeMany.
@@ -32,7 +32,7 @@ import javax.swing.*;
 *
 * There are options to automatically deal random cards for hole cards or for
 * the board cards. All hands are evaluated when Run is selected and the results
-* are displayed for DRaws, Made Hands, and an analysis of the board for the street
+* are displayed for Draws, Made Hands, and an analysis of the board for the street
 * selected.
 *
 * If the preflop simulation is selected a fairly realistic preflop is played using
@@ -119,7 +119,7 @@ public class GUI extends JFrame implements ActionListener, Constants {
 
 	private static final JCheckBox preflopSimulation = new JCheckBox("Preflop Simulation");
 
-	private static final JCheckBox randomHoleCards = new JCheckBox("Random Hole");
+	private static final JCheckBox randomHoleCards = new JCheckBox("Random Hole Cards");
 
 	private static final JCheckBox randomBoard = new JCheckBox("Random Board");
 
@@ -641,37 +641,36 @@ public class GUI extends JFrame implements ActionListener, Constants {
 	private void buttonStreet(String action) {
 		final var st = action;
 		switch (st) {
-			case "Preflop" -> {
-				selectedStreet = PREFLOP;
-				if (displayActive) {
-					doExecute();
-				}
+		case "Preflop" -> {
+			selectedStreet = PREFLOP;
+			if (displayActive) {
+				doExecute();
 			}
-			case "Flop" -> {
-				selectedStreet = FLOP;
-				if (displayActive) {
-					doExecute();
-				}
+		}
+		case "Flop" -> {
+			selectedStreet = FLOP;
+			if (displayActive) {
+				doExecute();
 			}
-			case "Turn" -> {
-				selectedStreet = TURN;
-				if (displayActive) {
-					doExecute();
-				}
+		}
+		case "Turn" -> {
+			selectedStreet = TURN;
+			if (displayActive) {
+				doExecute();
 			}
-			case "River" -> {
-				selectedStreet = RIVER;
-				if (displayActive) {
-					doExecute();
-				}
+		}
+		case "River" -> {
+			selectedStreet = RIVER;
+			if (displayActive) {
+				doExecute();
 			}
-			case "Showdown" -> {
-				selectedStreet = SHOWDOWN;
-				if (displayActive) {
-					doExecute();
-				}
+		}
+		case "Showdown" -> {
+			selectedStreet = SHOWDOWN;
+			if (displayActive) {
 			}
-			default -> Logger.log("//ERROR  buttonStreet() invalid street " + action);
+		}
+		default -> Logger.log("//ERROR  buttonStreet() invalid street " + action);
 		}
 	}
 
@@ -694,26 +693,44 @@ public class GUI extends JFrame implements ActionListener, Constants {
 	 * 		Check board array and call Evaluate methods to set board cards. 
 	 *  ****************************************************************************** */
 	private void doExecute() {
-		String st = "";
+		var st = "";
 		if (preflopSimulationOption) {
-			boolean done = false;
-			int limit = 100;
-			while (!done) {
-				Evaluate.shuffle();
-				randomHoleCards();
-				Evaluate.doPreflopSimulation();
-				--limit;
-				if (EvalData.foldCount < 2 || limit == 0) {
-					done = true;
+			final boolean condition = !randomHoleCardsOption && !anyHoleCards();
+			if (condition) {
+				Popup.popup("Error, Please fill in at least one Hole Cards unless Random Hole Cards selected");
+				return;
+			}
+			if (!randomBoardOption) {
+				boolean ok = true;
+				if (selectedStreet == FLOP && !flopCards()) {
+					ok = false;
+				} else if (selectedStreet == TURN && !turnCards()) {
+					ok = false;
+				} else if (selectedStreet == RIVER && !riverCards()) {
+					ok = false;
+				}
+				if (!ok) {
+					Popup.popup("Error, Please fill in Board unless Random Board selected");
+					return;
 				}
 			}
-			holeCardsFolded();
+			Evaluate.shuffle();
+			if (randomHoleCardsOption) {
+				randomHoleCards();
+			}
+			if (preflopSimulationOption) {
+				boolean done = false;
+				while (!done) {
+					Evaluate.doPreflopSimulation();
+					if (EvalData.foldCount < 2) {
+						done = true;
+					}
+				}
+				holeCardsFolded();
+			}
 		}
 
 		if (randomHoleCardsOption || randomBoardOption) {
-			if (!preflopSimulationOption) {
-				Evaluate.shuffle();
-			}
 			restoreCardArray();
 		}
 		if (randomHoleCardsOption) {
@@ -726,11 +743,11 @@ public class GUI extends JFrame implements ActionListener, Constants {
 		displayActive = true;
 		// Set hole cards
 		if (!randomHoleCardsOption) {
-			// setHoleCards();
+			// TODO setHoleCards();
 		}
 		// Set board cards
 		if (!randomBoardOption) {
-			// setBoardCards();
+			// TODO setBoardCards();
 		}
 		// Run for selected street
 		for (int i = 0; i < PLAYERS; i++) {
@@ -743,7 +760,8 @@ public class GUI extends JFrame implements ActionListener, Constants {
 					Evaluate.doRiver(i);
 					if (!EvalData.playerFolded[i]) {
 						st = showdownValue.getText();
-						st = st + Showdown.showdownValueString(i) + "\r\n";
+						st = new StringBuilder().append(st).append(Showdown.showdownValueString(i)).append("\r\n")
+								.toString();
 						showdownValue.setText(st);
 					}
 				}
@@ -761,7 +779,7 @@ public class GUI extends JFrame implements ActionListener, Constants {
 				}
 			}
 		}
-		if (selectedStreet == SHOWDOWN || selectedStreet == RIVER){
+		if (selectedStreet == SHOWDOWN || selectedStreet == RIVER) {
 			Showdown.showdown();
 			showdown.setText(Showdown.showdownString());
 		}
@@ -772,6 +790,50 @@ public class GUI extends JFrame implements ActionListener, Constants {
 		// Update hand data
 		updateDrawsAndMade();
 
+	}
+
+	/*-  ******************************************************************************
+	 * Check to see if there are any hole cards
+	 *  ****************************************************************************** */
+	private boolean anyHoleCards() {
+		for (int i = 0; i < 6; i++) {
+			if (!"h".equals(hole1Array[i].getText().substring(0, 1))
+					&& !"h".equals(hole2Array[i].getText().substring(0, 1))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/*-  ******************************************************************************
+	 * Check to see if there are cards in board
+	 *  ****************************************************************************** */
+	private boolean flopCards() {
+		if ("b".equals(boardArray[0].getText().substring(0, 1)) || "b".equals(boardArray[1].getText().substring(0, 1))
+				|| "b".equals(boardArray[2].getText().substring(0, 1))) {
+			return false;
+		}
+		return true;
+	}
+
+	/*-  ******************************************************************************
+	 * Check to see if there are cards in board
+	 *  ****************************************************************************** */
+	private boolean turnCards() {
+		if (flopCards() && !"b".equals(boardArray[3].getText().substring(0, 1))) {
+			return true;
+		}
+		return false;
+	}
+
+	/*-  ******************************************************************************
+	 * Check to see if there are cards in board
+	 *  ****************************************************************************** */
+	private boolean riverCards() {
+		if (turnCards() && !"b".equals(boardArray[4].getText().substring(0, 1))) {
+			return true;
+		}
+		return false;
 	}
 
 	/*-  ******************************************************************************
@@ -897,9 +959,10 @@ public class GUI extends JFrame implements ActionListener, Constants {
 	 *  ****************************************************************************** */
 	private void randomBoard() {
 		Dealer.dealFlop();
+
 		Dealer.dealTurnCard();
 		Dealer.dealRiverCard();
-		// NDealer.ow remove these cards from card array
+		// remove these cards from card array
 		for (int i = 0; i < 5; i++) {
 			final var card1 = EvalData.board[i];
 			final var cardSt = card1.toString();
@@ -1096,43 +1159,43 @@ public class GUI extends JFrame implements ActionListener, Constants {
 	private void buttonSeat(String action) {
 		final var st = action;
 		switch (st) {
-			case "Seat1" -> {
-				selectedSeat = 0;
-				if (seatActive[0] && displayActive) {
-					doExecute();
-				}
+		case "Seat1" -> {
+			selectedSeat = 0;
+			if (seatActive[0] && displayActive) {
+				doExecute();
 			}
-			case "Seat2" -> {
-				selectedSeat = 1;
-				if (seatActive[0] && displayActive) {
-					doExecute();
-				}
+		}
+		case "Seat2" -> {
+			selectedSeat = 1;
+			if (seatActive[0] && displayActive) {
+				doExecute();
 			}
-			case "Seat3" -> {
-				selectedSeat = 2;
-				if (seatActive[0] && displayActive) {
-					doExecute();
-				}
+		}
+		case "Seat3" -> {
+			selectedSeat = 2;
+			if (seatActive[0] && displayActive) {
+				doExecute();
 			}
-			case "Seat4" -> {
-				selectedSeat = 3;
-				if (seatActive[0] && displayActive) {
-					doExecute();
-				}
+		}
+		case "Seat4" -> {
+			selectedSeat = 3;
+			if (seatActive[0] && displayActive) {
+				doExecute();
 			}
-			case "Seat5" -> {
-				selectedSeat = 4;
-				if (seatActive[0] && displayActive) {
-					doExecute();
-				}
+		}
+		case "Seat5" -> {
+			selectedSeat = 4;
+			if (seatActive[0] && displayActive) {
+				doExecute();
 			}
-			case "Seat6" -> {
-				selectedSeat = 5;
-				if (seatActive[0] && displayActive) {
-					doExecute();
-				}
+		}
+		case "Seat6" -> {
+			selectedSeat = 5;
+			if (seatActive[0] && displayActive) {
+				doExecute();
 			}
-			default -> Logger.log("//ERROR  buttonSeat() invalid seat " + action);
+		}
+		default -> Logger.log("//ERROR  buttonSeat() invalid seat " + action);
 		}
 	}
 
@@ -1415,18 +1478,18 @@ public class GUI extends JFrame implements ActionListener, Constants {
 			// Click must be a location with a card in it
 			st = loc.substring(0, 1);
 			switch (st) {
-				case "h" -> {
-					buttonHoleClickHasCard(action, loc);
-					clearClicks();
-				}
-				case "b" -> {
-					buttonBoardClickHasCard(action, loc);
-					clearClicks();
-				}
-				default -> {
-					Logger.log("//ERROR location HashMap returned impossible location " + loc);
-					Crash.log("//Program bug ");
-				}
+			case "h" -> {
+				buttonHoleClickHasCard(action, loc);
+				clearClicks();
+			}
+			case "b" -> {
+				buttonBoardClickHasCard(action, loc);
+				clearClicks();
+			}
+			default -> {
+				Logger.log("//ERROR location HashMap returned impossible location " + loc);
+				Crash.log("//Program bug ");
+			}
 			}
 			return;
 		}
@@ -1454,23 +1517,23 @@ public class GUI extends JFrame implements ActionListener, Constants {
 		st = action.substring(0, 4);
 		clearClicks();
 		switch (st) {
-			case "Seat" -> buttonSeat(action);
-			case "Flop" -> buttonStreet(action);
-			case "Turn" -> buttonStreet(action);
-			case "Rive" -> buttonStreet(action);
-			case "Show" -> buttonStreet(action);
-			default -> {
-			}
+		case "Seat" -> buttonSeat(action);
+		case "Flop" -> buttonStreet(action);
+		case "Turn" -> buttonStreet(action);
+		case "Rive" -> buttonStreet(action);
+		case "Show" -> buttonStreet(action);
+		default -> {
+		}
 		}
 
 		switch (action) {
-			case "Execute" -> doExecute();
-			case "Reset" -> doReset();
-			case "Help" -> Popup.popup(helpString);
-			case "Exit" -> {
-			}
-			default -> {
-			}
+		case "Execute" -> doExecute();
+		case "Reset" -> doReset();
+		case "Help" -> Popup.popup(helpString);
+		case "Exit" -> {
+		}
+		default -> {
+		}
 		}
 	}
 

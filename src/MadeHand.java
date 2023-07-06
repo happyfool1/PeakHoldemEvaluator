@@ -1,4 +1,4 @@
-//package evaluate_streets;
+ //package peakholdemevaluator;
 
 /*- **************************************************************************************
 * This Class contains several methods used to  gather information about 
@@ -51,7 +51,7 @@
 * 
 ***************************************************************************************/
 
-public class Made implements Constants {
+public class MadeHand implements Constants {
 	int type;
 	boolean ok; // Is hand valid
 	Card[] cards = new Card[7];
@@ -76,7 +76,7 @@ public class Made implements Constants {
 	int result;
 
 	// Constructor
-	public Made() {
+	public MadeHand() {
 
 	}
 
@@ -285,9 +285,6 @@ public class Made implements Constants {
 			addBiggerCards();
 		}
 		if (size > 4) {
-			// System.out.println("KKK " + size + " " + cards[0] + cards[1] + cards[2] +
-			// cards[3] + cards[4] + " "
-			// + EvalData.handsPlayed);
 			SortCards.quickSortValue(this.cards, 0, 4);
 			EvalData.highCard1 = this.highCard1;
 			EvalData.highCard2 = this.highCard2;
@@ -297,7 +294,6 @@ public class Made implements Constants {
 			EvalData.kicker3 = this.kicker3;
 			EvalData.highCards1[this.seat] = this.highCard1;
 			EvalData.highCards2[this.seat] = this.highCard2;
-			EvalData.suits[this.seat] = this.suit;
 			EvalData.kickers1[this.seat] = this.kicker1;
 			EvalData.kickers2[this.seat] = this.kicker2;
 			EvalData.kickers3[this.seat] = this.kicker3;
@@ -358,13 +354,9 @@ public class Made implements Constants {
 		if (EvalData.boardPair && isPair()) {
 			return MADE_BOARD_PAIR;
 		}
-		if (EvalData.boardTwoPair && isTwoPair()) {
-			return MADE_BOARD_TWO_PAIR;
-		}
-		if (EvalData.boardSet && isSet()) {
-			return MADE_BOARD_SET;
-		}
-		return MADE_NONE;
+
+		
+	return MADE_NONE;
 	}
 
 	/*- ************************************************************************************
@@ -563,12 +555,9 @@ public class Made implements Constants {
 	
 	/*- ************************************************************************************/
 	int whatKindOfTwoPair() {
-		if (EvalData.boardPair) {
-			if (this.pair1Value >= EvalData.boardHighCardValue1) {
-				return MADE_BOARD_PAIR_PLUS_OVER_PAIR;
-			} else {
-				return MADE_BOARD_PAIR_PLUS_UNDER_PAIR;
-			}
+		if (EvalData.boardTwoPair) {
+			return MADE_NONE;
+			
 		}
 		if (this.pair1Value >= EvalData.boardHighCardValue1 && this.pair2Value >= EvalData.boardHighCardValue2) {
 			return MADE_TOP_TWO_PAIR;

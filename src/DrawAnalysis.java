@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 public class DrawAnalysis implements Constants {
 	/*- **************************************************************************** 
@@ -23,81 +23,67 @@ public class DrawAnalysis implements Constants {
 	* Flop drawing hands
 	*******************************************************************************/
 	static int doFlopDraw() {
+		boolean hitf = false;
 		boolean hit = false;
+		boolean hit2 = false;
+		// ssssx xssss
+		int suit = EvalData.bothCardsSuit1;
+		if (suit == EvalData.bothCardsSuit2 && suit == EvalData.bothCardsSuit3 && suit == EvalData.bothCardsSuit4) {
+			hitf = true;
+		}
+		suit = EvalData.bothCardsSuit2;
+		if (suit == EvalData.bothCardsSuit3 && suit == EvalData.bothCardsSuit4 && suit == EvalData.bothCardsSuit5) {
+			hitf = true;
+		}
+		// ssssx xssss
+		if (EvalData.bothGap1_2 == 1 && EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1
+				&& EvalData.bothGap4_5 != 1) {
+			hit = true;
+		} else if (EvalData.bothGap1_2 != 1 && EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1
+				&& EvalData.bothGap4_5 == 1) {
+			hit2 = true;
+		}
+		// Flush
+		if (hitf) {
+			if (EvalData.draw[EvalData.seat].draw(DRAW_FLUSH)) {
+				return DRAW_FLUSH;
+			} else if (EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
+				return DRAW_OESD;
+			}
+		}
+
+		if (hit && EvalData.bothValue1 != ACE && EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
+			return DRAW_OESD;
+		}
+		if (hit2 && EvalData.bothValue5 != TWO && EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
+			return DRAW_OESD;
+		}
+		if (hit && EvalData.bothValue1 == ACE) {
+			return DRAW_STRAIGHT;
+		}
+		if (hit2 && EvalData.bothValue5 == TWO) {
+			return DRAW_STRAIGHT;
+		}
+
+		if (hit && EvalData.bothValue1 == ACE && EvalData.draw[EvalData.seat].draw(DRAW_STRAIGHT)) {
+			return DRAW_STRAIGHT;
+		}
+		if (hit2 && EvalData.bothValue5 == TWO && EvalData.draw[EvalData.seat].draw(DRAW_STRAIGHT)) {
+			return DRAW_STRAIGHT;
+		}
+
+		hit = false;
 		// x_xxx xx_xx xxx_x
 		if (EvalData.bothGap1_2 == 2 && EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1) {
 			hit = true;
-		} else if (EvalData.bothGap1_2 == 1 && EvalData.bothGap2_4 == 3 && EvalData.bothGap3_4 == 1) {
+		} else if (EvalData.bothGap1_2 == 1 && EvalData.bothGap2_4 == 2 && EvalData.bothGap3_4 == 1) {
 			hit = true;
 		} else if (EvalData.bothGap1_2 == 1 && EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 2) {
 			hit = true;
 		}
 		if (hit && EvalData.draw[EvalData.seat].draw(DRAW_GUTSHOT)) {
-			EvalData.bothGutshotDraw = true;
 			return DRAW_GUTSHOT;
 		}
-
-		// ssssx xssss
-		hit = false;
-		int suit = EvalData.bothCardsSuit1;
-		if (suit == EvalData.bothCardsSuit2 && suit == EvalData.bothCardsSuit3 && suit == EvalData.bothCardsSuit4) {
-			hit = true;
-		}
-		suit = EvalData.bothCardsSuit2;
-		if (suit == EvalData.bothCardsSuit3 && suit == EvalData.bothCardsSuit4 && suit == EvalData.bothCardsSuit5) {
-			hit = true;
-		}
-		if (hit && EvalData.draw[EvalData.seat].draw(DRAW_FLUSH)) {
-			EvalData.bothFlushDraw = true;
-			return DRAW_FLUSH;
-		}
-
-		// ssssx xssss Assss
-		hit = false;
-		if (EvalData.bothGap1_2 == 1 && EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1
-				&& EvalData.bothGap4_5 != 1) {
-			hit = true;
-		}
-		if (EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 1
-				&& EvalData.bothValue1 != ACE) {
-			hit = true;
-		}
-		if (hit && EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
-			EvalData.bothOesdDraw = true;
-			return DRAW_OESD;
-		}
-
-		hit = false;
-		// ssssx xssss
-		if (EvalData.bothGap1_2 == 1 && EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1
-				&& EvalData.bothGap4_5 != 1) {
-			hit = true;
-		}
-		if (EvalData.bothGap1_2 != 1 && EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1
-				&& EvalData.bothGap4_5 == 1) {
-			hit = true;
-		}
-		if (hit) {
-			if (EvalData.bothValue5 == TWO) {
-				if (EvalData.draw[EvalData.seat].draw(DRAW_STRAIGHT)) {
-					EvalData.bothStraightDraw = true;
-					return DRAW_STRAIGHT;
-				}
-			} else if (EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
-				EvalData.bothOesdDraw = true;
-				return DRAW_OESD;
-			}
-		}
-
-		final boolean condition = EvalData.bothOesdDraw
-				&& ((EvalData.bothGap2_3 == 1) && (EvalData.bothGap3_4 == 1) && (EvalData.bothGap4_5 == 1)
-						&& (EvalData.bothGap5_6 != 1) && (EvalData.bothValue5 == TWO))
-				&& EvalData.draw[EvalData.seat].draw(DRAW_STRAIGHT);
-		if (condition) {
-			EvalData.bothStraightDraw = true;
-			return DRAW_STRAIGHT;
-		}
-		EvalData.bothNone = true;
 		return DRAW_NONE;
 	}
 
@@ -105,55 +91,56 @@ public class DrawAnalysis implements Constants {
 	* Turn drawing hands
 	*******************************************************************************/
 	static int doTurnDraw() {
+		int result = doFlopDraw();
+		if (result >= DRAW_FLUSH) {
+			return result;
+		}
+		boolean hitf = false;
 		boolean hit = false;
-		if (EvalData.bothGap2_3 == 2 && EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 1) {
+		// __ssss
+		hit = false;
+		int suit = EvalData.bothCardsSuit3;
+		if (suit == EvalData.bothCardsSuit4 && suit == EvalData.bothCardsSuit6 && suit == EvalData.bothCardsSuit6) {
+			hitf = true;
+		}
+		if (EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 1 && EvalData.bothGap5_6 == 1) {
 			hit = true;
-		} else if (EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 2 && EvalData.bothGap4_5 == 1) {
+		}
+		if (hitf) {
+			if (EvalData.draw[EvalData.seat].draw(DRAW_FLUSH)) {
+				return DRAW_FLUSH;
+			} else if (result >= DRAW_OESD) {
+				return result;
+			} else if (EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
+				return DRAW_OESD;
+			}
+		}
+		if (hit && EvalData.bothValue6 != TWO && EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
+			return DRAW_OESD;
+		}
+		if (result >= DRAW_STRAIGHT) {
+			return result;
+		}
+
+		if (hit && EvalData.bothValue6 == TWO && EvalData.draw[EvalData.seat].draw(DRAW_STRAIGHT)) {
+			return DRAW_STRAIGHT;
+		}
+		if (result >= DRAW_GUTSHOT) {
+			return result;
+		}
+		// __x_xxx _xx_xx _xxx_x
+		hit = false;
+		if (EvalData.bothGap3_4 == 2 && EvalData.bothGap4_5 == 1 && EvalData.bothGap5_6 == 1) {
 			hit = true;
-		} else if (EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 2) {
+		} else if (EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 2 && EvalData.bothGap5_6 == 1) {
+			hit = true;
+		} else if (EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 1 && EvalData.bothGap5_6 == 2) {
 			hit = true;
 		}
 		if (hit && EvalData.draw[EvalData.seat].draw(DRAW_GUTSHOT)) {
-			EvalData.bothGutshotDraw = true;
 			return DRAW_GUTSHOT;
 		}
-		hit = false;
 
-		int suit = EvalData.bothCardsSuit1;
-		if (suit == EvalData.bothCardsSuit3 && suit == EvalData.bothCardsSuit4 && suit == EvalData.bothCardsSuit5) {
-			hit = true;
-		} else {
-			suit = EvalData.bothCardsSuit2;
-			if (suit == EvalData.bothCardsSuit3 && suit == EvalData.bothCardsSuit4 && suit == EvalData.bothCardsSuit5) {
-				hit = true;
-			}
-		}
-		if (EvalData.draw[EvalData.seat].draw(DRAW_FLUSH)) {
-			EvalData.bothFlushDraw = true;
-			return DRAW_FLUSH;
-		}
-
-		if (EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 1
-				&& EvalData.bothGap6_7 != 1) {
-			hit = true;
-		} else if (EvalData.bothGap2_3 != 1 && EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 1
-				&& EvalData.bothGap5_6 == 1) {
-			hit = true;
-		}
-		if (hit) {
-			if (EvalData.both[5].value == TWO) {
-				if (EvalData.draw[EvalData.seat].draw(DRAW_STRAIGHT)) {
-					EvalData.bothStraightDraw = true;
-					return DRAW_STRAIGHT;
-				}
-			} else {
-				if (EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
-					EvalData.bothOesdDraw = true;
-					return DRAW_OESD;
-				}
-			}
-		}
-		EvalData.bothNone = true;
 		return DRAW_NONE;
 	}
 

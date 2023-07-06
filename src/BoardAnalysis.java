@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 public class BoardAnalysis implements Constants {
 
@@ -56,49 +56,26 @@ public class BoardAnalysis implements Constants {
 	* For Flop
 	*******************************************************************************/
 	static void doFlop() {
-		EvalData.boardSet = false;
-		EvalData.boardTwoPair = false;
-		EvalData.boardPair = false;
-		EvalData.boardF2 = false;
-		EvalData.boardF3 = false;
-		EvalData.boardArray[BOARD_RAINBOW] = true;
-
-		EvalData.flopOverPair = false;
-		EvalData.flopWeakPair = false;
-		EvalData.flopOverCards = false;
-		EvalData.flopAceHigh = false;
-		EvalData.flopMiddlePair = false;
-		EvalData.flopSet = false;
-		EvalData.flopBoardPair = false;
-
 		boardGaps();
 		boardGapScore();
-	
+
 		if (EvalData.holeCard1.value >= TEN && EvalData.holeCard2.value >= TEN) {
 			EvalData.flopArray[FLOP_POCKET_HIGH_CARDS] = true;
 			EvalData.flopHighCards = true;
 		}
 
-		if ((EvalData.holeCard1.value > EvalData.board[0].value) && (EvalData.holeCard2.value > EvalData.board[0].value)
-				&& (EvalData.holeCard1.value > EvalData.board[1].value)
-				&& (EvalData.holeCard2.value > EvalData.board[1].value)
-				&& (EvalData.holeCard1.value > EvalData.board[2].value)
-				&& (EvalData.holeCard2.value > EvalData.board[2].value)
-				&& (EvalData.holeCard1.value > EvalData.board[3].value)
-				&& (EvalData.holeCard2.value > EvalData.board[3].value)) {
+		if ((EvalData.holeCard1.value > EvalData.board[0].value)
+				&& (EvalData.holeCard2.value > EvalData.board[0].value)) {
 			EvalData.flopArray[FLOP_POCKET_OVERCARDS] = true;
 			EvalData.flopOverCards = true;
 		}
 
 		// Pocket pair combinations
 		if (EvalData.holeCard1.value == EvalData.holeCard2.value) {
-			if (EvalData.holeCard1.value > EvalData.board[0].value && EvalData.holeCard1.value > EvalData.board[1].value
-					&& EvalData.holeCard1.value > EvalData.board[2].value) {
+			if (EvalData.holeCard1.value > EvalData.board[0].value) {
 				EvalData.flopArray[FLOP_OVER_PAIR] = true;
 				EvalData.flopOverPair = true;
-			} else if ((EvalData.holeCard1.value < EvalData.board[0].value)
-					&& (EvalData.holeCard1.value < EvalData.board[1].value)
-					&& (EvalData.holeCard1.value < EvalData.board[2].value)) {
+			} else if (EvalData.holeCard1.value < EvalData.board[0].value) {
 				EvalData.flopArray[FLOP_WEAK_PAIR] = true;
 				EvalData.flopWeakPair = true;
 			} else {
@@ -157,21 +134,6 @@ public class BoardAnalysis implements Constants {
 	* Turn drawing hands
 	*******************************************************************************/
 	static void doTurn() {
-		EvalData.boardSet = false;
-		EvalData.boardTwoPair = false;
-		EvalData.boardPair = false;
-		EvalData.boardF2 = false;
-		EvalData.boardF3 = false;
-		EvalData.boardArray[BOARD_RAINBOW] = true;
-
-		EvalData.flopOverPair = false;
-		EvalData.flopWeakPair = false;
-		EvalData.flopOverCards = false;
-		EvalData.flopAceHigh = false;
-		EvalData.flopMiddlePair = false;
-		EvalData.flopSet = false;
-		EvalData.flopBoardPair = false;
-
 		boolean hit = false;
 		if (EvalData.bothGap2_3 == 2 && EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 1) {
 			hit = true;
@@ -181,7 +143,7 @@ public class BoardAnalysis implements Constants {
 			hit = true;
 		}
 		if (hit && EvalData.draw[EvalData.seat].draw(DRAW_GUTSHOT)) {
-			EvalData.bothGutshotDraw = true;
+			// ?? TODO
 		}
 		hit = false;
 
@@ -196,8 +158,9 @@ public class BoardAnalysis implements Constants {
 				hit = true;
 			}
 		}
+
 		if (EvalData.draw[EvalData.seat].draw(DRAW_FLUSH)) {
-			EvalData.bothFlushDraw = true;
+			return;
 		}
 
 		if (EvalData.bothGap2_3 == 1 && EvalData.bothGap3_4 == 1 && EvalData.bothGap4_5 == 1
@@ -210,17 +173,13 @@ public class BoardAnalysis implements Constants {
 		if (hit) {
 			if (EvalData.both[5].value == TWO) {
 				if (EvalData.draw[EvalData.seat].draw(DRAW_STRAIGHT)) {
-					EvalData.bothStraightDraw = true;
-				}
-			} else {
-				if (EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
-					EvalData.bothOesdDraw = true;
+					return;
+				} else {
+					if (EvalData.draw[EvalData.seat].draw(DRAW_OESD)) {
+						return;
+					}
 				}
 			}
-		}
-		// And if there is nothing
-		if (!(!EvalData.bothPair && !EvalData.both2Pair && !EvalData.bothSet && !EvalData.bothQuad && !EvalData.bothFull
-				&& !EvalData.bothStraight && !EvalData.bothFlush)) {
 		}
 		doBoard4();
 	}
@@ -303,21 +262,6 @@ public class BoardAnalysis implements Constants {
 	* For River - no draws
 	*******************************************************************************/
 	static void doRiver() {
-		EvalData.boardSet = false;
-		EvalData.boardTwoPair = false;
-		EvalData.boardPair = false;
-		EvalData.boardF2 = false;
-		EvalData.boardF3 = false;
-		EvalData.boardArray[BOARD_RAINBOW] = true;
-
-		EvalData.flopOverPair = false;
-		EvalData.flopWeakPair = false;
-		EvalData.flopOverCards = false;
-		EvalData.flopAceHigh = false;
-		EvalData.flopMiddlePair = false;
-		EvalData.flopSet = false;
-		EvalData.flopBoardPair = false;
-
 		if (EvalData.board[0].value == ACE) {
 			EvalData.boardArray[BOARD_ACE_HIGH] = true;
 			EvalData.boardAceHigh = true;

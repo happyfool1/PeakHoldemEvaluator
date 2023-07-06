@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*-  *****************************************************************************
  *Card class represents a  single card in a standard 52-card deck.

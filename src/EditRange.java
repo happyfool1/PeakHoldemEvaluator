@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 /*-  ******************************************************************************
 
  *  @author PEAK_ 
@@ -16,9 +16,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
-
-import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -293,7 +292,7 @@ class EditRange implements Constants {
 			final var panel5 = new JPanel();
 			panel5.setBackground(Color.gray);
 			panel5.setLayout(new BoxLayout(panel5, BoxLayout.X_AXIS));
-		
+
 			final var panel6 = new JPanel();
 			panel6.setBackground(Color.gray);
 			panel6.setLayout(new BoxLayout(panel6, BoxLayout.X_AXIS));

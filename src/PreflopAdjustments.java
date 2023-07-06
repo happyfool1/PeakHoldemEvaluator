@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

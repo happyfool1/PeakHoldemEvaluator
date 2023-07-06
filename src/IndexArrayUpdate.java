@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*-  ******************************************************************************
  * This Class simply updates the arrays in the Class IndexArrays.
@@ -113,6 +113,24 @@ public class IndexArrayUpdate implements Constants {
 		++IndexArrays.madeFlop[EvalData.seat];
 		++IndexArrays.flopArraysCount;
 		++IndexArrays.boardArrayFlopCount;
+
+		++IndexArrays.wetDryDrawFlop[EvalData.wetDryIndexFlop][EvalData.drawTypeFlop[EvalData.seat]];
+		++IndexArrays.wetDryMadeFlop[EvalData.wetDryIndexFlop][EvalData.madeTypeFlop[EvalData.seat]];
+
+		++IndexArrays.typeOf1755DrawFlop[EvalData.typeOf1755IndexFlop][EvalData.drawTypeFlop[EvalData.seat]];
+		++IndexArrays.typeOf1755MadeFlop[EvalData.typeOf1755IndexFlop][EvalData.madeTypeFlop[EvalData.seat]];
+
+		++IndexArrays.SCBPDrawFlop[EvalData.SCBPIndexFlop][EvalData.drawTypeFlop[EvalData.seat]];
+		++IndexArrays.SCBPMadeFlop[EvalData.SCBPIndexFlop][EvalData.madeTypeFlop[EvalData.seat]];
+
+		for (int i = 0; i < BOARD_SIZE; ++i) {
+			if (EvalData.boardArray[i]) {
+				++IndexArrays.hmlBoardFlop[EvalData.hmlIndexFlop][i];
+				++IndexArrays.wetDryBoardFlop[EvalData.wetDryIndexFlop][i];
+				++IndexArrays.typeOf1755BoardFlop[EvalData.typeOf1755IndexFlop][i];
+				++IndexArrays.SCBPBoardFlop[EvalData.SCBPIndexFlop][i];
+			}
+		}
 	}
 
 	/*-  ******************************************************************************
@@ -130,6 +148,16 @@ public class IndexArrayUpdate implements Constants {
 		++IndexArrays.drawTurn[EvalData.seat];
 		++IndexArrays.hmlMadeTurn[index][EvalData.madeTypeTurn[EvalData.seat]];
 		++IndexArrays.madeTurn[EvalData.seat];
+
+		for (int i = 0; i < BOARD_SIZE; ++i) {
+			if (EvalData.boardArray[i]) {
+				++IndexArrays.hmlBoardFlop[EvalData.hmlIndexFlop][i];
+				++IndexArrays.hmlBoardTurn[EvalData.hmlIndexTurn][i];
+				++IndexArrays.wetDryBoardTurn[EvalData.wetDryIndexFlop][i];
+				++IndexArrays.typeOf1755BoardTurn[EvalData.typeOf1755IndexFlop][i];
+				++IndexArrays.SCBPBoardTurn[EvalData.SCBPIndexFlop][i];
+			}
+		}
 	}
 
 	/*-  ******************************************************************************
@@ -148,6 +176,16 @@ public class IndexArrayUpdate implements Constants {
 		++IndexArrays.hmlDrawFlopToMadeRiver[EvalData.hmlIndexFlop][EvalData.drawTypeFlop[EvalData.seat]][EvalData.madeTypeRiver[EvalData.seat]];
 		++IndexArrays.hmlMadeTurnToMadeRiver[EvalData.hmlIndexTurn][EvalData.madeTypeTurn[EvalData.seat]][EvalData.madeTypeRiver[EvalData.seat]];
 		++IndexArrays.hmlDrawTurnToMadeRiver[EvalData.hmlIndexTurn][EvalData.drawTypeTurn[EvalData.seat]][EvalData.madeTypeRiver[EvalData.seat]];
+
+		for (int i = 0; i < BOARD_SIZE; ++i) {
+			if (EvalData.boardArray[i]) {
+				++IndexArrays.hmlBoardRiver[EvalData.hmlIndexRiver][i];
+				++IndexArrays.wetDryBoardRiver[EvalData.wetDryIndexFlop][i];
+				++IndexArrays.typeOf1755BoardRiver[EvalData.typeOf1755IndexFlop][i];
+				++IndexArrays.SCBPBoardRiver[EvalData.SCBPIndexFlop][i];
+
+			}
+		}
 	}
 
 	/*-  ****************************************************************************
@@ -164,6 +202,11 @@ public class IndexArrayUpdate implements Constants {
 				++IndexArrays.hmlShowdownRiver[EvalData.hmlIndexRiver][EvalData.showdownHand[i]];
 				++IndexArrays.hmlShowdownMadeWinsRiver[EvalData.hmlIndexRiver][EvalData.showdownHand[i]];
 				++IndexArrays.hmlShowdownMadeWinsRiver[EvalData.hmlIndexFlop][EvalData.showdownHand[i]];
+
+				++IndexArrays.wetDryShowdownFlop[EvalData.wetDryIndexFlop][EvalData.showdownHand[i]];
+				++IndexArrays.typeOf1755ShowdownFlop[EvalData.typeOf1755IndexFlop][EvalData.showdownHand[i]];
+				++IndexArrays.SCBPShowdownFlop[EvalData.SCBPIndexFlop][EvalData.showdownHand[i]];
+
 				++IndexArrays.showdownCount;
 			}
 		}
@@ -173,6 +216,21 @@ public class IndexArrayUpdate implements Constants {
 				++IndexArrays.hmlDrawFlopToMadeWon[EvalData.hmlIndexFlop][EvalData.drawTypeFlop[i]][EvalData.showdownHand[i]];
 				++IndexArrays.hmlMadeTurnToMadeWon[EvalData.hmlIndexTurn][EvalData.madeTypeTurn[i]][EvalData.showdownHand[i]];
 				++IndexArrays.hmlDrawTurnToMadeWon[EvalData.hmlIndexTurn][EvalData.drawTypeTurn[i]][EvalData.showdownHand[i]];
+
+				++IndexArrays.wetDryMadeFlopToMadeWon[EvalData.wetDryIndexFlop][EvalData.madeTypeFlop[i]][EvalData.showdownHand[i]];
+				++IndexArrays.wetDryDrawFlopToMadeWon[EvalData.wetDryIndexFlop][EvalData.drawTypeFlop[i]][EvalData.showdownHand[i]];
+				++IndexArrays.wetDryMadeTurnToMadeWon[EvalData.wetDryIndexFlop][EvalData.madeTypeTurn[i]][EvalData.showdownHand[i]];
+				++IndexArrays.wetDryDrawTurnToMadeWon[EvalData.wetDryIndexFlop][EvalData.drawTypeTurn[i]][EvalData.showdownHand[i]];
+
+				++IndexArrays.typeOf1755MadeFlopToMadeWon[EvalData.typeOf1755IndexFlop][EvalData.madeTypeFlop[i]][EvalData.showdownHand[i]];
+				++IndexArrays.typeOf1755DrawFlopToMadeWon[EvalData.typeOf1755IndexFlop][EvalData.drawTypeFlop[i]][EvalData.showdownHand[i]];
+				++IndexArrays.typeOf1755MadeTurnToMadeWon[EvalData.typeOf1755IndexFlop][EvalData.madeTypeTurn[i]][EvalData.showdownHand[i]];
+				++IndexArrays.typeOf1755DrawTurnToMadeWon[EvalData.typeOf1755IndexFlop][EvalData.drawTypeTurn[i]][EvalData.showdownHand[i]];
+
+				++IndexArrays.SCBPMadeFlopToMadeWon[EvalData.SCBPIndexFlop][EvalData.madeTypeFlop[i]][EvalData.showdownHand[i]];
+				++IndexArrays.SCBPDrawFlopToMadeWon[EvalData.SCBPIndexFlop][EvalData.drawTypeFlop[i]][EvalData.showdownHand[i]];
+				++IndexArrays.SCBPMadeTurnToMadeWon[EvalData.SCBPIndexFlop][EvalData.madeTypeTurn[i]][EvalData.showdownHand[i]];
+				++IndexArrays.SCBPDrawTurnToMadeWon[EvalData.SCBPIndexFlop][EvalData.drawTypeTurn[i]][EvalData.showdownHand[i]];
 			}
 		}
 	}

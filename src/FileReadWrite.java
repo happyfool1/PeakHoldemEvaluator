@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*- *********************************************************************************************
  * Methods to read and write a file

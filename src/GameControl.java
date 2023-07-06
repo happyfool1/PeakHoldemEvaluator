@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 public class GameControl implements Constants {
 	/*- **************************************************************************** 
@@ -93,7 +93,6 @@ public class GameControl implements Constants {
 			createRanges();
 			createPlayers();
 		}
-
 		newGame(); // Get player positions and such
 		seat = seatSB;
 		players[SB].playerBetSB(seatSB);
@@ -103,10 +102,12 @@ public class GameControl implements Constants {
 		if (EvalData.hh) {
 			HandHistory.initialize();
 		}
-		playPreflop();
+		if (!playPreflop()) {
+			return;
+		}
 		uncalledBet();
 
-		// If every one but onelast player is winner
+		// If every one but one, last player is winner
 		if (EvalData.foldCount == 5) {
 			for (int i = 0; i < PLAYERS; i++) {
 				if (!EvalData.playerFolded[i]) {
@@ -154,7 +155,6 @@ public class GameControl implements Constants {
 		EvalData.handsPlayed = 0;
 		while (EvalData.handsPlayed <= numToPlay) {
 			Deck.shuffle();
-			Dealer.rotatePositions();
 			Dealer.dealAllHoleCards();
 			Dealer.dealFlop();
 			newGame();
@@ -163,10 +163,12 @@ public class GameControl implements Constants {
 			seat = seatBB;
 			players[BB].playerBetBB(seatBB);
 			EvalData.betType = LIMP;
-			playPreflop();
+			if (!playPreflop()) {
+				return;
+			}
 			uncalledBet();
 
-			// If every one but onelast player is winner
+			// If every one but one last player is winner
 			if (EvalData.foldCount == 5) {
 				for (int i = 0; i < PLAYERS; i++) {
 					if (!EvalData.playerFolded[i]) {
@@ -208,23 +210,38 @@ public class GameControl implements Constants {
 		Deck.newDeck();
 		EvalData.handsPlayed = 0;
 		while (EvalData.handsPlayed <= numToPlay) {
-			if (numToPlay > 100000){
-				if (GUIAnalyzeIndexArrays.checkExit(EvalData.handsPlayed)){
+			if (numToPlay > 100000) {
+				if (GUIAnalyzeIndexArrays.checkExit(EvalData.handsPlayed)) {
 					return;
 				}
 			}
 			Deck.shuffle();
-			Dealer.rotatePositions();
 			Dealer.dealAllHoleCards();
 			Dealer.dealFlop();
+			if (EvalData.manyHands) {
+				IndexArrayClassification.doFlop();
+			}
 			newGame();
 			seat = seatSB;
 			players[SB].playerBetSB(seatSB);
 			seat = seatBB;
 			players[BB].playerBetBB(seatBB);
 			EvalData.betType = LIMP;
-			playPreflop();
+			if (!playPreflop()) {
+				return;
+			}
 			uncalledBet();
+			// If every one but one last player is winner
+			if (EvalData.foldCount == 5) {
+				for (int i = 0; i < PLAYERS; i++) {
+					if (!EvalData.playerFolded[i]) {
+						EvalData.winnerCollectedBD[i] = EvalData.potBD;
+						EvalData.winBD[0][i][EvalData.orbit] = EvalData.potBD;
+						EvalData.playerWon[i] = true;
+						break;
+					}
+				}
+			}
 
 			for (int i = 0; i < PLAYERS; i++) {
 				if (!EvalData.playerFolded[i]) {
@@ -232,12 +249,18 @@ public class GameControl implements Constants {
 				}
 			}
 			Dealer.dealTurnCard();
+			if (EvalData.manyHands) {
+				IndexArrayClassification.doTurn();
+			}
 			for (int i = 0; i < PLAYERS; i++) {
 				if (!EvalData.playerFolded[i]) {
 					Evaluate.doTurn(i);
 				}
 			}
 			Dealer.dealRiverCard();
+			if (EvalData.manyHands) {
+				IndexArrayClassification.doRiver();
+			}
 			for (int i = 0; i < PLAYERS; i++) {
 				if (!EvalData.playerFolded[i]) {
 					Evaluate.doRiver(i);
@@ -339,7 +362,7 @@ public class GameControl implements Constants {
 	static void newGame() {
 		EvalData.boardComplete = EvalData.streetComplete = false;
 		EvalData.winner = false;
-
+		Dealer.rotatePositions();
 		int p = getPosition(SB);
 		seatSB = p;
 		++p;
@@ -377,7 +400,7 @@ public class GameControl implements Constants {
 	}
 
 	/*- **************************************************************************** 
-	* This method sets the players seat number intp playerPositions array
+	* This method sets the players seat number into playerPositions array
 	* playerPositions is indexed by position returns seat
 	*******************************************************************************/
 	private static void setPlayerPositions() {
@@ -406,38 +429,47 @@ public class GameControl implements Constants {
 	/*- **************************************************************************** 
 	* This method plays one preflop hand 
 	*******************************************************************************/
-	private static void playPreflop() {
+	private static boolean playPreflop() {
+		System.out.println("//playPreflop() " + seatUTG);
 		EvalData.streetComplete = false;
 		EvalData.boardComplete = false;
+		EvalData.foldCount = 0;
+		EvalData.limpCount = 0;
+		EvalData.allinCount = 0;
 		EvalData.orbit = 0;
 		EvalData.lastOrbit[0] = 0;
+
 		preflopOrbit0();
 
 		EvalData.orbit = 1;
 		EvalData.lastOrbit[0] = 1;
 		preflopOrbit1();
 		if (EvalData.streetComplete) {
-			return;
+			System.out.println("//PPP " + seat);
+			return true;
 		}
 		if (streetComplete()) {
-			return;
+			return true;
 		}
 		EvalData.orbit = 2;
 		EvalData.lastOrbit[0] = 2;
 		preflopOrbit23();
 
 		if (streetComplete()) {
-			return;
+			return true;
 		}
 		EvalData.orbit = 3;
 		EvalData.lastOrbit[0] = 3;
 		preflopOrbit23();
 
 		if (streetComplete()) {
-			return;
+			return true;
 		}
 
 		Logger.logError("ERROR Play()   street not complete after 4 EvalData.orbits ");
+		System.out.println("YYY " + EvalData.foldCount);
+		Crash.log("");
+		return false;
 	}
 
 	/*- **************************************************************************** 
@@ -475,17 +507,21 @@ public class GameControl implements Constants {
 	private static void preflopOrbit1() {
 		seat = seatSB;
 		pos = SB;
+		System.out.println("//SB " + seat);
 		playHandPreflop();
-		if (EvalData.foldCount == MAXFOLDED || streetComplete()) {
+		if (EvalData.foldCount == MAXFOLDED) {
 			return;
 		}
 
 		seat = seatBB;
 		pos = BB;
+		System.out.println("//BB1 " + seat);
 		playHandPreflop();
 		if (EvalData.foldCount == MAXFOLDED || streetComplete()) {
+			System.out.println("//BB2 " + seat);
 			return;
 		}
+
 		seat = seatUTG;
 		pos = UTG;
 		if (!playerFolded[seatUTG] && !playerAllin[seatUTG]) {
@@ -574,18 +610,16 @@ public class GameControl implements Constants {
 		playHandPreflop();
 	}
 
-
-
-/*- **************************************************************************** 
-	* This method handles uncalled bets.
-	* If a player has more money in that was not called, return that money.
-	* 
-	* In order for an uncalled bet to be returned:
-	* 		There must be only 1 player still active.
-	* 		If 1 player is active then all others have folded. If the active player made a
-	* 		bet or raise that was not called it is returned to him.
-	* 		
-	**************************************************************************** */
+	/*- **************************************************************************** 
+		* This method handles uncalled bets.
+		* If a player has more money in that was not called, return that money.
+		* 
+		* In order for an uncalled bet to be returned:
+		* 		There must be only 1 player still active.
+		* 		If 1 player is active then all others have folded. If the active player made a
+		* 		bet or raise that was not called it is returned to him.
+		* 		
+		**************************************************************************** */
 	private static void uncalledBet() {
 		final int active = PLAYERS - EvalData.foldCount;
 		if (!EvalData.betCalled && EvalData.betType == CHECK) {
@@ -621,27 +655,24 @@ public class GameControl implements Constants {
 	 *  	All but 1 player have folded.
 	 **************************************************************************** */
 	private static boolean streetComplete() {
+		System.out.println("//SSS1 " + seat);
 		if (EvalData.foldCount == MAXFOLDED) {
 			EvalData.streetComplete = true;
 			return true;
 		}
 		for (int i = 0; i < PLAYERS; ++i) {
 			// Street is only complete if money is right
-			if (!EvalData.playerFolded[i]) {
-				// streetCompleteB 4 224.00 56.00
-			}
 			if (!EvalData.playerFolded[i] && EvalData.betNowBD.compareTo(EvalData.moneyInBD[i]) != 0
 					&& !EvalData.playerAllin[i]) {
+				System.out.println("//ZZZ " + seat + " " + i + " " + EvalData.betNowBD + " " + EvalData.moneyInBD[i]
+						+ " " + EvalData.foldCount);
 				return false;
 			}
 		}
 		EvalData.streetComplete = true;
+		System.out.println("//SSS2 " + seat);
 		return true;
 	}
-
-
-
-
 
 	/*- *******************************************************************************************
 	 * TODO
@@ -705,10 +736,11 @@ public class GameControl implements Constants {
 		}
 
 	}
+
 	/*- *****************************************************************************************
 	*
 	*	Play Turn.
- 	*
+	*
 	******************************************************************************************* */
 	private static void playTurn() {
 		EvalData.streetComplete = false;
@@ -1113,12 +1145,12 @@ public class GameControl implements Constants {
 			if (EvalData.foldCount - EvalData.PLAYERS == 2) {
 				// Heads up
 				// EvalData.rule[EvalData.seat] = RULEHU;
-				if (EvalData.street== EvalData.FLOP) {
+				if (EvalData.street == EvalData.FLOP) {
 					// rulePlay =
 					// EvalData.strategy[stratIndex].flopFirstRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 					return;
 				}
-				if (EvalData.street== EvalData.TURN) {
+				if (EvalData.street == EvalData.TURN) {
 					// rulePlay =
 					// EvalData.strategy[stratIndex].turnFirstRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 					return;
@@ -1129,12 +1161,12 @@ public class GameControl implements Constants {
 			}
 			// Not heads up
 			// EvalData.rule[EvalData.seat] = RULE;
-			if (EvalData.street== EvalData.FLOP) {
+			if (EvalData.street == EvalData.FLOP) {
 				// rulePlay =
 				// EvalData.strategy[stratIndex].flopFirstRulesHU.ruleArray[handValue[EvalData.seat]][EvalData.betType];
 				return;
 			}
-			if (EvalData.street== EvalData.TURN) {
+			if (EvalData.street == EvalData.TURN) {
 				// rulePlay =
 				// EvalData.strategy[stratIndex].turnFirstRulesHU.ruleArray[handValue[EvalData.seat]][EvalData.betType];
 				return;
@@ -1149,12 +1181,12 @@ public class GameControl implements Constants {
 			if (EvalData.foldCount - EvalData.PLAYERS == 2) {// Heads up
 				// Heads up
 				// EvalData.rule[EvalData.seat] = RULEHU;
-				if (EvalData.street== EvalData.FLOP) {
+				if (EvalData.street == EvalData.FLOP) {
 					// rulePlay =
 					// EvalData.strategy[stratIndex].flopLastRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 					return;
 				}
-				if (EvalData.street== EvalData.TURN) {
+				if (EvalData.street == EvalData.TURN) {
 					// rulePlay =
 					// EvalData.strategy[stratIndex].turnLastRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 					return;
@@ -1165,11 +1197,11 @@ public class GameControl implements Constants {
 			}
 			// Not heads up
 			// EvalData.rule[EvalData.seat] = RULE;
-			if (EvalData.street== EvalData.FLOP) {
+			if (EvalData.street == EvalData.FLOP) {
 				// rulePlay =
 				// EvalData.strategy[stratIndex].flopLastRulesHU.ruleArray[handValue[EvalData.seat]][EvalData.betType];
 				return;
-			} else if (EvalData.street== EvalData.TURN) {
+			} else if (EvalData.street == EvalData.TURN) {
 				// rulePlay =
 				// EvalData.strategy[stratIndex].turnLastRulesHU.ruleArray[handValue[EvalData.seat]][EvalData.betType];
 				return;
@@ -1181,12 +1213,12 @@ public class GameControl implements Constants {
 
 		// If not first or last then it has to be middle
 		// EvalData.rule[EvalData.seat] = RULE;
-		if (EvalData.street== EvalData.FLOP) {
+		if (EvalData.street == EvalData.FLOP) {
 			// rulePlay =
 			// EvalData.strategy[stratIndex].flopMiddleRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 			return;
 		}
-		if (EvalData.street== EvalData.TURN) {
+		if (EvalData.street == EvalData.TURN) {
 			// rulePlay =
 			// EvalData.strategy[stratIndex].turnMiddleRULE_ruleArray[handValue[EvalData.seat]][EvalData.betType];
 			return;
@@ -1651,7 +1683,5 @@ public class GameControl implements Constants {
 		*/
 		// setPlayerFoldedMsg(95, FOLD);
 	}
-
-	
 
 }

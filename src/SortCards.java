@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*-  ***********************************************************************************
 * A fast method to sort an array of Cards

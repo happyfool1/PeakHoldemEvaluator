@@ -1,5 +1,5 @@
 
-//package evaluate_streets;
+//package peakholdemevaluator;
 import java.util.Arrays;
 
 /*-  ******************************************************************************
@@ -30,7 +30,7 @@ public class IndexArrayAnalysis implements Constants {
     /*- *************************************************************************
      * 
     *************************************************************************** */
-    static void analyze(IndexArray array){
+    static void analyze(IndexArrayDrawMadeWin array){
         
     }
 

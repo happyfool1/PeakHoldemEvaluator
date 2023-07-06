@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*- ******************************************************************************
 * This Class contains methode that deal with outs and odds.

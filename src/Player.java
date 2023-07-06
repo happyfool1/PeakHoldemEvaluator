@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 import java.math.BigDecimal;
 
@@ -67,11 +67,11 @@ public class Player implements Constants {
 	 *  The decision is obtained from an instance of HandRangeMultiple
 	 * **************************************************************************** */
 	int getDecision() {
+		System.out.println("//DDD " + seat);
 		if (EvalData.betType == PREFLOP_LIMP) {
 			if (this.range.decisionRaise(handIndex, position, EvalData.betType, 0)) {
 				doOpen();
 				return PREFLOP_OPEN;
-
 			}
 			if (this.range.decisionCall(handIndex, position, EvalData.betType, 0)) {
 				doLimp();
@@ -81,7 +81,7 @@ public class Player implements Constants {
 				return PREFLOP_LIMP;
 			}
 		}
-
+		System.out.println("OOO " + this.range.decisionRaise(handIndex, position, EvalData.betType, 0));
 		if (EvalData.betType == PREFLOP_OPEN) {
 			if (this.range.decisionRaise(handIndex, position, EvalData.betType, 0)) {
 				doOpen();
@@ -170,9 +170,7 @@ public class Player implements Constants {
 		++EvalData.foldedPreflop[EvalData.orbit][this.seat];
 		EvalData.playerFoldedPreflop[this.seat] = true;
 		EvalData.playerFolded[this.seat] = true;
-		{
-			--EvalData.limpCount;
-		}
+		System.out.println("//FFF " + seat + " " + EvalData.moneyInBD[this.seat] + " " + EvalData.foldCount);
 	}
 
 	/*- **************************************************************************** 
@@ -188,10 +186,25 @@ public class Player implements Constants {
 		EvalData.isLimp[0][this.seat][EvalData.orbit] = true;
 		EvalData.playerLimpedPreflop[this.seat] = true;
 		// Money
+		if (EvalData.positions[this.seat] == BB) {
+			System.out.println("//LLLBB " + seat + " " + EvalData.moneyInBD[this.seat]);
+			return;
+		}
+		if (EvalData.positions[this.seat] == SB) {
+			BigDecimal diff = EvalData.BBBetBD.subtract(EvalData.SBBetBD);
+			EvalData.stackBD[this.seat] = EvalData.stackBD[this.seat].subtract(diff);
+			EvalData.callBD[0][this.seat][EvalData.orbit] = diff;
+			EvalData.potBD = EvalData.potBD.add(diff);
+			EvalData.moneyInBD[this.seat] = EvalData.moneyInBD[this.seat].add(diff);
+			System.out.println("//LLLSB " + seat + " " + EvalData.moneyInBD[this.seat] + " " + diff);
+			return;
+		}
+
 		EvalData.stackBD[this.seat] = EvalData.stackBD[this.seat].subtract(EvalData.BBBetBD);
 		EvalData.callBD[0][this.seat][EvalData.orbit] = EvalData.BBBetBD;
 		EvalData.potBD = EvalData.potBD.add(EvalData.BBBetBD);
 		EvalData.moneyInBD[this.seat] = EvalData.moneyInBD[this.seat].add(EvalData.BBBetBD);
+		System.out.println("//LLL " + seat + " " + EvalData.moneyInBD[this.seat] + " " + EvalData.foldCount);
 	}
 
 	/*- **************************************************************************** 
@@ -204,6 +217,7 @@ public class Player implements Constants {
 		canRaiseOrCall();
 		if (canRaise) {
 			doRaises(EvalData.BBBetBD.multiply(EvalData.preflopBetMultiplyerOpenBD));
+
 		} else {
 			doFold();
 		}
@@ -346,6 +360,7 @@ public class Player implements Constants {
 		EvalData.raisedToBD[0][this.seat][EvalData.orbit] = temp;
 		EvalData.betNowBD = temp;
 		EvalData.betCalled = false;
+		System.out.println("//RRR " + temp);
 	}
 
 	/*- **************************************************************************** 

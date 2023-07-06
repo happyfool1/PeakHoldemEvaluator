@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 public class HandStatus implements Constants {
 	private HandStatus() {

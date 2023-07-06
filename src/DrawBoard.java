@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*- **************************************************************************************
  * This Class checks and validates drawinghands only and only for the Flop and Turn.

@@ -1,4 +1,4 @@
-////package evaluate_streets;
+ package peakholdemevaluator;
 
 /*-  ******************************************************************************
  * This is a simple utility to scan all java files in a directory and replace one string 
@@ -32,14 +32,15 @@ import java.util.regex.Pattern;
  */
 public class ReplaceStringInAllJavaFiles {
 	public static void main(String[] args) {
-	//	final var directoryPath = "C:\\users\\PEAK_\\git\\repository\\evaluate_streets\\src\\evaluate_streets";
+		// final var directoryPath =
+		// "C:\\users\\PEAK_\\git\\repository\\evaluate_streets\\src\\evaluate_streets";
 		// final var directoryPath =
 		// "C:\\users\\PEAK_\\git\\repository\\hand_history_analysis\\src\\hand_history_analysis";
 		//
-		// String directoryPath = "C:\\users\\PEAK_\\git\\repository\\game\\src\\game";
-		final var directoryPath = "C:\\evaluate_streets\\evaluate\\src";
-		final var searchString = "//package evaluate_streets;";
-		final var replaceString = "//package evaluate_streets;";
+		String directoryPath = "C:\\PeakHoldemEvaluator\\src";
+		// final var directoryPath = "C:\\evaluate_streets\\evaluate\\src";
+		final var searchString = "//package ";
+		final var replaceString = "////package ";
 
 		try (var stream = Files.newDirectoryStream(Paths.get(directoryPath), "*.java")) {
 			for (var path : stream) {

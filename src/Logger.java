@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,6 +104,7 @@ public class Logger implements Constants {
 		}
 		logFile.flush();
 		logFile.close();
+
 	}
 
 }

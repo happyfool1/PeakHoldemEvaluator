@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*
  * This class contains an instance of a Flop in the format used by Flops1755.

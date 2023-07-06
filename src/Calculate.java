@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*-  *****************************************************************************
  *	A class with methods to do Holdem calculations such as Pot Odds 

@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 import java.math.BigDecimal;
 
@@ -30,7 +30,8 @@ public class EvalData implements Constants {
 	static Card holeCards[][] = new Card[PLAYERS][2];
 	static int[] bothIndexs = new int[PLAYERS];
 	static Draw[] draw = { new Draw(), new Draw(), new Draw(), new Draw(), new Draw(), new Draw() };
-	static Made[] hand = { new Made(), new Made(), new Made(), new Made(), new Made(), new Made() };
+	static MadeHand[] hand = { new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand(), new MadeHand(),
+			new MadeHand() };
 	static Card holeCard1 = null; // Copy from Hands for active seat
 	static Card holeCard2 = null;
 	static int[] handIndexes = new int[PLAYERS];
@@ -79,8 +80,8 @@ public class EvalData implements Constants {
 	static BigDecimal betToMeBD = zeroBD;
 	static BigDecimal betNowBD = zeroBD;
 
-	static BigDecimal[] stackBD = { new BigDecimal(200), new BigDecimal(200), new BigDecimal(200),
-			new BigDecimal(200), new BigDecimal(200), new BigDecimal(200) };
+	static BigDecimal[] stackBD = { new BigDecimal(200), new BigDecimal(200), new BigDecimal(200), new BigDecimal(200),
+			new BigDecimal(200), new BigDecimal(200) };
 
 	static BigDecimal[] playerMainPotBD = new BigDecimal[PLAYERS];
 	static double[] potOdds = new double[PLAYERS];
@@ -98,9 +99,9 @@ public class EvalData implements Constants {
 	static BigDecimal[] moneyInBD = { zeroBD, zeroBD, zeroBD, zeroBD, zeroBD, zeroBD };
 	static boolean[] playerWon = new boolean[PLAYERS]; // Indexed by street,seat,orbit
 
-	static int foldCount = -1;
-	static int allinCount = -1;
-	static int limpCount = -1;
+	static int foldCount = 0;
+	static int allinCount = 0;
+	static int limpCount = 0;
 	static int handsPlayed = 0;
 	static boolean streetComplete = false;
 	static boolean boardComplete = false;
@@ -194,8 +195,8 @@ public class EvalData implements Constants {
 	 ************************************************************************************** */
 	static final BigDecimal SBBetBD = new BigDecimal(1);
 	static final BigDecimal BBBetBD = new BigDecimal(2);
-	static final BigDecimal preflopBetMultiplyerOpenBD = new BigDecimal(3);; // Times BB + 1 each limp
-	static final BigDecimal preflopBetMultiplyer3BetBD = new BigDecimal(3);; // Times Open 2 Bet
+	static final BigDecimal preflopBetMultiplyerOpenBD = new BigDecimal(3); // Times BB + 1 each limp
+	static final BigDecimal preflopBetMultiplyer3BetBD = new BigDecimal(3); // Times Open 2 Bet
 	static final BigDecimal preflopBetMultiplyer4BetBD = new BigDecimal(2.5); // Times 3 Bet
 	static final BigDecimal postFlopBbetMultiplierBD = new BigDecimal(.5); // Times pot size
 	static final BigDecimal buyinBD = new BigDecimal(200);
@@ -204,10 +205,10 @@ public class EvalData implements Constants {
 	/*-  ************************************************************************************* 
 	 For the hand currently being evaluated, inderxed by player number, 
 	* A single int value is saved for each player not folded for each street.
-	* The type is the larger id fhere is more than one.
+	* The type is the larger if there is more than one.
 	* See Constamts MADE_ and DRAW_ for details.
 	*************************************************************************************** */
-	 static int[] madeTypeFlop = new int[PLAYERS];
+	static int[] madeTypeFlop = new int[PLAYERS];
 	static int[] madeTypeTurn = new int[PLAYERS];
 	static int[] madeTypeRiver = new int[PLAYERS];
 	static int[] drawTypeFlop = new int[PLAYERS];
@@ -281,27 +282,22 @@ public class EvalData implements Constants {
 	static int hmlIndexFlop = -1;
 	static int hmlIndexTurn = -1;
 	static int hmlIndexRiver = -1;
-	static int[] sumOfHandValuesFlop = new int[PLAYERS];
-	static int sumOfBoardValuesFlop = -1;
-	static int sumOfHoleCardValues = -1;
-	static int wetDryIndex = -1;
+	static int wetDryIndexFlop = -1;
+	static int typeOf1755IndexFlop = -1; // Type of 1755 flop
+	static int flop1755IndexFlop = -1; // Index into array of 1755 Flops, all possible
+	static int SCBPIndexFlop = -1; // Suited, Connected, Big card, Paired
 
-	static int bestFlopIndex = -1; // Index into drawAndMadeArray for Flop
-	static int bestTurnIndex = -1; // Index into boardArray for Turn
-	static int bestRiverIndex = -1; // Index into boardArray for River
-	static int handIndex = -1; // Hole cards
-	static int hmlIndex = -1; // Index into HMLArray
-	static int flop1755Index = -1; // Index into array of 1755 Flops, all possible
-	static int flopTypeOf1755 = -1; // Type of 1755 flop
-
-	static int suitednessConnectednessIndex = -1;
 	static int pairBroadwayIndex = -1;
 	static int strengthSuitednessIndex = -1;
 	static int distributionFlushPotentialIndex = -1;
 	static int connectednessValueIndex = -1;
 
+	static int bestFlopIndex = -1; // Index into drawAndMadeArray for Flop
+	static int bestTurnIndex = -1; // Index into boardArray for Turn
+	static int bestRiverIndex = -1; // Index into boardArray for River
+	static int handIndex = -1; // Hole cards
+
 	// Array indexes
-	static int flopIndex = -1;
 	static int boardArrayIndex = -1;
 	/*-  **************************************************************************************
 	 * Results of hand analysis individual variables
@@ -316,7 +312,6 @@ public class EvalData implements Constants {
 	static int[] showdownHand = new int[PLAYERS];
 	static int[] highCards1 = new int[PLAYERS];
 	static int[] highCards2 = new int[PLAYERS];
-	static int[] suits = new int[PLAYERS];
 	static int[] kickers1 = new int[PLAYERS];
 	static int[] kickers2 = new int[PLAYERS];
 	static int[] kickers3 = new int[PLAYERS];
@@ -461,19 +456,7 @@ public class EvalData implements Constants {
 	/*- **************************************************************************** 
 	* Combined hole cards and board
 	*******************************************************************************/
-	static boolean bothGutshotDraw = false;
-	static boolean bothFlushDraw = false;
-	static boolean bothStraightDraw = false;
-	static boolean bothOesdDraw = false;
-	static boolean bothFlush = false;
-	static boolean bothStraight = false;
-	static boolean bothStraightAce = false;
-	static boolean bothNone = false;
-	static boolean bothPair = false;
-	static boolean both2Pair = false;
-	static boolean bothSet = false;
-	static boolean bothQuad = false;
-	static boolean bothFull = false;
+
 	static boolean flopRainbow = false;
 	static boolean flop2Suited = false;
 	static boolean flop3Suited = false;
@@ -515,7 +498,6 @@ public class EvalData implements Constants {
 	static void initialize() {
 
 		for (int i = 0; i < PLAYERS; i++) {
-			sumOfHandValuesFlop[i] = -1;
 			bothIndexs[i] = -1;
 			handIndexes[i] = -1;
 			hands[i] = "";
@@ -530,7 +512,6 @@ public class EvalData implements Constants {
 			potOdds[i] = -1.;
 			relativePosition[i] = -1;
 			playerAllin[i] = false;
-			foldedPreflop = new int[4][PLAYERS];
 			stackPreflopBD[i] = zeroBD;
 			playerFoldedPreflop[i] = false;
 			playerLimpedPreflop[i] = false;
@@ -545,7 +526,6 @@ public class EvalData implements Constants {
 			showdownRank[i] = -1;
 			highCards1[i] = -1;
 			highCards2[i] = -1;
-			suits[i] = -1;
 			kickers1[i] = -1;
 			kickers2[i] = -1;
 			kickers3[i] = -1;
@@ -556,9 +536,10 @@ public class EvalData implements Constants {
 			showdownHand[i] = -1;
 		}
 
-		lastOrbit = new int[4];
 		for (int i = 0; i < 4; i++) {
+			lastOrbit[i] = 0;
 			for (int j = 0; j < PLAYERS; j++) {
+				foldedPreflop[i][j] = 0;
 				for (int k = 0; k < 4; k++) {
 					isFold[i][j][k] = false;
 					isLimp[i][j][k] = false;
@@ -580,16 +561,6 @@ public class EvalData implements Constants {
 		}
 		for (int i = 0; i < FLOP_INDEX_SIZE; i++) {
 			flopArray[i] = false;
-		}
-
-		if (street == FLOP) {
-			for (int i = 0; i < PLAYERS; i++) {
-				// drawTypeFlop[i] = -1;
-				// drawTypeTurn[i] = -1;
-				// madeTypeFlop[i] = -1;
-				// madeTypeTurn[i] = -1;
-				// madeTypeRiver[i] = -1;
-			}
 		}
 
 		maxValue = -1;
@@ -615,14 +586,13 @@ public class EvalData implements Constants {
 		mainPotBD = zeroBD;
 		betToMeBD = zeroBD;
 		betNowBD = zeroBD;
-		foldCount = -1;
-		allinCount = -1;
-		limpCount = -1;
+		foldCount = 0;
+		allinCount = 0;
+		limpCount = 0;
 		streetComplete = false;
 		boardComplete = false;
 		betType = 0;
 		orbit = 0;
-
 		boardArrayMax = -1;
 		handValue = -1;
 		position = -1;
@@ -630,37 +600,26 @@ public class EvalData implements Constants {
 		bestTurnIndex = -1;
 		bestRiverIndex = -1;
 		handIndex = -1;
-		hmlIndex = -1;
-		flop1755Index = -1;
-		flopTypeOf1755 = -1;
 		winnerShowdown = -1;
-
 		cardCount = -1;
-
 		seat = -1;
-
 		lastSeat = -1;
 		lastStreet = -1;
-
 		handStrength = -1;
 		rangeAdvantage = -1;
 		bestPossible = -1;
 		outs = -1;
 		makeHandPer = -1;
-
 		pair = false;
-
 		winnerSeat = -1;
 		showdown = false;
 		winner = false;
 		kicker1 = -1;
 		kicker2 = -1;
 		kicker3 = -1;
-
 		highCard1 = -1;
 		highCard2 = -1;
 		suit = -1;
-
 		holeValue1 = -1;
 		onePair = false;
 		twoPair = false;
@@ -670,60 +629,6 @@ public class EvalData implements Constants {
 		anyPaired = false;
 		straight = false;
 		flush = false;
-
-		boardAceHigh = false;
-		boardPair = false;
-		boardPairValue = -1;
-		boardTwoPair = false;
-		boardTwoPairValue1 = -1;
-		boardTwoPairValue2 = -1;
-		boardSet = false;
-		boardSetValue = -1;
-		boardHighCard = false;
-		boardHighCardValue = -1;
-		boardF0 = false;
-		boardF2 = false;
-		boardF3 = false;
-		boardF4 = false;
-		boardF4Draw = false;
-		boardFlushDraw = false;
-		boardStraightDraw = false;
-		boardOesdDraw = false;
-
-		flopHighCards = false;
-		flopOverCards = false;
-		flopAceHigh = false;
-		flopHoleCardPairedWithBoard = false;
-		flopPocketPair = false;
-		flopOverPair = false;
-		flopWeakPair = false;
-		flopMiddlePair = false;
-		flopBoardPair = false;
-		flopSet = false;
-		flopPaired = false;
-
-		bothGutshotDraw = false;
-		bothFlushDraw = false;
-		bothStraightDraw = false;
-		bothOesdDraw = false;
-		bothFlush = false;
-		bothStraight = false;
-		bothStraightAce = false;
-		bothNone = false;
-		bothPair = false;
-		both2Pair = false;
-		bothSet = false;
-		bothQuad = false;
-		bothFull = false;
-		flopRainbow = false;
-		flop2Suited = false;
-		flop3Suited = false;
-		gap0 = -1;
-		gap1 = -1;
-		gap2 = -1;
-		gap0Score = -1;
-		gap1Score = -1;
-		gap2Score = -1;
 		handsToPlay = 0;
 		interactive = false;
 

@@ -1,4 +1,4 @@
-//package evaluate_streets;
+//package peakholdemevaluator;
 
 /*-
  * Reducing the number of combinations is one key to increasing performance and 
@@ -48,11 +48,11 @@
 * 		Number			Type					Starting index
 * 		13 					sets								  0
 * 	 	156					pairs suited  				 13
-* 		156 					pairs offsuit			   169
+* 		156 				pairs offsuit			   169
 * 		286				 	suited  						325
-* 		286 					offsuit  						611
+* 		286 				offsuit  						611
 * 		286  				2 suited low 				897
-* 		286 					2  suited high 			1183
+* 		286 				2  suited high 			1183
 * 		286  				2 suited high and low 1469
 * 		1755																	 
 * Because of the structure, we know that if a flop has a pair and one of the pair is the same suit as 
