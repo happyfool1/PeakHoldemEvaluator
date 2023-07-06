@@ -12,8 +12,16 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+<<<<<<< HEAD
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+=======
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.table.*;
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 /*-  ******************************************************************************
  * This Class
 *  
@@ -80,7 +88,12 @@ public class IndexArrayReport implements Constants {
 
 	static Font ff1 = new Font(Font.SERIF, Font.BOLD, 14);
 
+<<<<<<< HEAD
 	private Object[] columnsDraw = { "Index", "No draw", "Gutshot", "Sttaight Draw", "OESD", "Flush Draw", "Total" };
+=======
+	private Object[] columnsDraw = { "Index", "No draw", "Gutshot",
+			"Sttaight Draw", "OESD", "Flush Draw", "Total" };
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 
 	private Object[][] dataDraw = { { "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
@@ -113,8 +126,14 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" } };
 
+<<<<<<< HEAD
 	private Object[] columnsMade = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair", "Top Pair",
 			"Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair", "Set", "Straight", "Flush", "Total" };
+=======
+	private Object[] columnsMade = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
+			"Top Pair", "Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
+			"Set", "Straight", "Flush", "Total" };
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 
 	private Object[][] dataMade = {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", },
@@ -156,8 +175,14 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" } };
 
+<<<<<<< HEAD
 	private Object[] columnsShowdown = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair", "Top Pair",
 			"Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair", "Set", "Straight", "Flush", "Total" };
+=======
+	private Object[] columnsShowdown = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
+			"Top Pair", "Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
+			"Set", "Straight", "Flush", "Total" };
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 
 	private Object[][] dataShowdown = {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", },
@@ -199,9 +224,16 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" } };
 
+<<<<<<< HEAD
 	private Object[] columnsDraw2 = { "Index", "No draw", "Gutshot", "Sttaight Draw", "OESD", "Flush Draw", "Total" };
 
 	private Object[][] dataDraw2 = { { "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
+=======
+	private Object[] columnsDraw2 = { "Index", "No draw", "Gutshot",
+			"Sttaight Draw", "OESD", "Flush Draw", "Total" };
+
+	private Object[][] dataDraw2 = { { "", "", "", "", "", "", "", "", "" },
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
@@ -230,10 +262,18 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" },
+<<<<<<< HEAD
 			{ "", "", "", "", "", "", "", "", "" } };
 
 	private Object[] columnsMade2 = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair", "Top Pair",
 			"Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair", "Set", "Straight", "Flush", "Total" };
+=======
+			{ "", "", "", "", "", "", "", "", "" }, { "", "", "", "", "", "", "", "", "" } };
+
+	private Object[] columnsMade2 = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
+			"Top Pair", "Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
+			"Set", "Straight", "Flush", "Total" };
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 
 	private Object[][] dataMade2 = {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", },
@@ -275,8 +315,14 @@ public class IndexArrayReport implements Constants {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" } };
 
+<<<<<<< HEAD
 	private Object[] columnsShowdown2 = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair", "Top Pair",
 			"Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair", "Set", "Straight", "Flush", "Total" };
+=======
+	private Object[] columnsShowdown2 = { "Index", "No hand", "Board Pair", "Bottom Pair", "Middle Pair",
+			"Top Pair", "Over Pair", "Bottom 2Pair", "Middle 2Pair", "Top 2Pair",
+			"Set", "Straight", "Flush", "Total" };
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 
 	private Object[][] dataShowdown2 = {
 			{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", },
@@ -365,7 +411,11 @@ public class IndexArrayReport implements Constants {
 				w = arrays.allArrayRowNames[i].length();
 			}
 		}
+<<<<<<< HEAD
 		w = (w * 10);
+=======
+		w = (w * 10)  ;
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 		table1.getColumnModel().getColumn(0).setPreferredWidth(w);
 		int row = 0;
 		int col = 0;
@@ -438,7 +488,11 @@ public class IndexArrayReport implements Constants {
 				w = arrays.allArrayRowNames[i].length();
 			}
 		}
+<<<<<<< HEAD
 		w = (w * 10);
+=======
+		w = (w * 10)  ;
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 
 		table2 = new JTable(tableModel2);
 		table2.setFont(ff1);
@@ -518,7 +572,11 @@ public class IndexArrayReport implements Constants {
 				w = arrays.allArrayRowNames[i].length();
 			}
 		}
+<<<<<<< HEAD
 		w = (w * 10);
+=======
+		w = (w * 10) ;
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 
 		table3 = new JTable(tableModel3);
 		table3.setFont(ff1);

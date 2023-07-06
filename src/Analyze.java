@@ -113,8 +113,13 @@ class Analyze implements Constants {
 		}
 		EvalData.boardLowCardValue = EvalData.board[3].value;
 
+<<<<<<< HEAD
 		int result = DrawAnalysis.doTurnDraw();
 		EvalData.draw[seat].draw(result);
+=======
+	 	int result =   DrawAnalysis.doTurnDraw();
+		 EvalData.draw[seat].draw(result);
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 
 		int r = MADE_NONE;
 		if (EvalData.flush && EvalData.straight) {

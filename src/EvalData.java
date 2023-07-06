@@ -456,7 +456,11 @@ public class EvalData implements Constants {
 	/*- **************************************************************************** 
 	* Combined hole cards and board
 	*******************************************************************************/
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> ab8268c27b735166a13c143eac67dad58a78835e
 	static boolean flopRainbow = false;
 	static boolean flop2Suited = false;
 	static boolean flop3Suited = false;
